@@ -75,10 +75,9 @@
 		4D6230BE1282461C004ADBAF /* PDX911.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D6230BD1282461C004ADBAF /* PDX911.m */; };
 		4D6230CD1282473E004ADBAF /* pdx911a.kml in Resources */ = {isa = PBXBuildFile; fileRef = 4D6230CC1282473E004ADBAF /* pdx911a.kml */; };
 		4D7F55B5126945360069A64B /* elevation_grid_25km_100s.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4D7F55B4126945360069A64B /* elevation_grid_25km_100s.txt */; };
-		4DD9204B12674E9C0055BB3B /* lib3DAR_v4_0_6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD9204A12674E9C0055BB3B /* lib3DAR_v4_0_6.a */; };
 		4DD9214A126905760055BB3B /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD92149126905760055BB3B /* GridView.m */; };
 		4DE67857125CBBBE0080EEB0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE67856125CBBBE0080EEB0 /* CoreLocation.framework */; };
-		4DE67859125CBBBE0080EEB0 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE67858125CBBBE0080EEB0 /* CoreMotion.framework */; };
+		4DE67859125CBBBE0080EEB0 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE67858125CBBBE0080EEB0 /* CoreMotion.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4DE6785B125CBBBE0080EEB0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE6785A125CBBBE0080EEB0 /* MapKit.framework */; };
 		4DE6785D125CBBBE0080EEB0 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE6785C125CBBBE0080EEB0 /* OpenGLES.framework */; };
 		4DE6785F125CBBBE0080EEB0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE6785E125CBBBE0080EEB0 /* QuartzCore.framework */; };
@@ -123,6 +122,7 @@
 		4DF1E3F7126194C600DD1E46 /* 3dar.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4DF1E3F2126194C600DD1E46 /* 3dar.plist */; };
 		4DF1E3F8126194C600DD1E46 /* 3dar_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF1E3F3126194C600DD1E46 /* 3dar_logo.png */; };
 		4DF1E3FA126194C600DD1E46 /* SM3DAR_keys.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */; };
+		A6CFCE1212AB10610074EA17 /* lib3DAR_v4_0_7_b1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6CFCE1112AB10610074EA17 /* lib3DAR_v4_0_7_b1.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -258,7 +258,6 @@
 		4D6230BD1282461C004ADBAF /* PDX911.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDX911.m; sourceTree = "<group>"; };
 		4D6230CC1282473E004ADBAF /* pdx911a.kml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = pdx911a.kml; sourceTree = "<group>"; };
 		4D7F55B4126945360069A64B /* elevation_grid_25km_100s.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = elevation_grid_25km_100s.txt; sourceTree = "<group>"; };
-		4DD9204A12674E9C0055BB3B /* lib3DAR_v4_0_6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = lib3DAR_v4_0_6.a; sourceTree = "<group>"; };
 		4DD92148126905760055BB3B /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
 		4DD92149126905760055BB3B /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
 		4DE67856125CBBBE0080EEB0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -350,6 +349,7 @@
 		4DF1E3F5126194C600DD1E46 /* SM3DAR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SM3DAR.h; sourceTree = "<group>"; };
 		4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SM3DAR_keys.txt; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* BezierGarden-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BezierGarden-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		A6CFCE1112AB10610074EA17 /* lib3DAR_v4_0_7_b1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = lib3DAR_v4_0_7_b1.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,7 +366,7 @@
 				4DE6785D125CBBBE0080EEB0 /* OpenGLES.framework in Frameworks */,
 				4DE6785F125CBBBE0080EEB0 /* QuartzCore.framework in Frameworks */,
 				4DE67948125CBFE70080EEB0 /* SystemConfiguration.framework in Frameworks */,
-				4DD9204B12674E9C0055BB3B /* lib3DAR_v4_0_6.a in Frameworks */,
+				A6CFCE1212AB10610074EA17 /* lib3DAR_v4_0_7_b1.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -795,7 +795,7 @@
 		4DF1E3F1126194C600DD1E46 /* 3DAR */ = {
 			isa = PBXGroup;
 			children = (
-				4DD9204A12674E9C0055BB3B /* lib3DAR_v4_0_6.a */,
+				A6CFCE1112AB10610074EA17 /* lib3DAR_v4_0_7_b1.a */,
 				4DF1E3F2126194C600DD1E46 /* 3dar.plist */,
 				4DF1E3F3126194C600DD1E46 /* 3dar_logo.png */,
 				4DF1E3F5126194C600DD1E46 /* SM3DAR.h */,
@@ -1010,7 +1010,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Lib/3DAR\"",
-					"\"$(SRCROOT)/../../SM3DARLibrary/SM3DARLibrary/build\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",
@@ -1032,8 +1031,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D3051713-72A1-4C8F-814D-DE7DDB4398FD";
-				SDKROOT = iphoneos4.1;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "24581E24-9BB9-4F26-869B-8D4BC853EAAD";
+				SDKROOT = iphoneos4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = AdHoc;
 		};
@@ -1071,7 +1071,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1086,7 +1087,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

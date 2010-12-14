@@ -3,9 +3,9 @@
  *  3DAR API header
  *
  *  Copyright 2010 Spot Metrix, Inc. All rights reserved.
- *  http://spotmetrix.com
+ *  Please see http://spotmetrix.com
  *
- *  Version 4.0.6
+ *  Version 4.0.7 Beta 1
  *
  */
 

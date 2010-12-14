@@ -12,7 +12,8 @@
 #import "PDX911.h"
 #import "DotView.h"
 
-#define MAX_CAMERA_ALTITUDE_METERS 3000.0
+#define MIN_CAMERA_ALTITUDE_METERS 500.0
+#define MAX_CAMERA_ALTITUDE_METERS 4000.0
 
 @implementation BezierGardenViewController
 
@@ -79,7 +80,8 @@
     
     [self addCityNamePoints];
     
-    [self setCameraAltitude:1.8];
+//    [self setCameraAltitude:1.8];
+    sm3dar.cameraAltitudeMeters = MIN_CAMERA_ALTITUDE_METERS;
     
 //    [self add911IncidentPoints];
     
@@ -88,6 +90,11 @@
 - (void)viewDidLoad 
 {
     [super viewDidLoad];   
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"3darDisableLocationServices"])
+    {
+        [self loadPointsOfInterest];
+    }
     
 }
 
@@ -130,7 +137,7 @@
 
 - (void) screenTouched:(CGPoint)p {
     CGFloat max = MAX_CAMERA_ALTITUDE_METERS;
-    CGFloat altitude = (p.y / 480.0) * max;
+    CGFloat altitude = (p.y / 480.0) * max + MIN_CAMERA_ALTITUDE_METERS;
     
     sm3dar.cameraAltitudeMeters = altitude;
 }
