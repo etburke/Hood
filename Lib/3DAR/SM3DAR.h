@@ -89,7 +89,7 @@ typedef NSObject<SM3DAR_PointProtocol> SM3DAR_Point;
 @property (nonatomic, retain) UILabel *statusLabel;
 @property (nonatomic, retain) UIImagePickerController *camera;
 @property (nonatomic, assign) NSObject<SM3DAR_Delegate> *delegate;
-@property (nonatomic, retain) NSMutableDictionary *pointsOfInterest;
+@property (nonatomic, retain) NSArray *pointsOfInterest;
 @property (nonatomic, retain) SM3DAR_Point *focusedPOI;
 @property (nonatomic, retain) SM3DAR_Point *selectedPOI;
 @property (nonatomic, assign) Class markerViewClass;

@@ -35,7 +35,7 @@
 }
 
 - (void) loadView 
-{
+{    
     sm3dar = [SM3DAR_Controller sharedController];
     sm3dar.delegate = self;
     sm3dar.view.backgroundColor = [UIColor viewFlipsideBackgroundColor];
@@ -174,6 +174,7 @@
     self.elevationGrid = [[[ElevationGrid alloc] initFromFile:@"elevation_grid_25km_100s.txt"] autorelease];
     
     CLLocation *theOffice = [[[CLLocation alloc] initWithLatitude:45.523563 longitude:-122.675099] autorelease];
+    elevationGrid.gridOrigin = theOffice;
     //    [sm3dar setCurrentLocation:theOffice];
     
     
@@ -231,6 +232,8 @@
         
         sm3dar.markerViewClass = [DotView class];
         
+        CLLocation *locx = nil;
+        
         for (NSDictionary *city in cities)
         {
             NSString *poiTitle = [city objectForKey:@"name"];
@@ -250,9 +253,19 @@
                                     //markerViewClass:[SM3DAR_IconMarkerView class] 
                                          properties:nil];
             
+         
+            if (!locx)
+            {
+                locx = [[[CLLocation alloc] initWithLatitude:latitude longitude:longitude] autorelease];
+            }
+            
             [allPoints addObject:point];
             [point release];            
         }
+
+        //////////////////////////
+        [elevationGrid elevationAtLocation:locx];
+
         
         [sm3dar addPointsOfInterest:allPoints];
         

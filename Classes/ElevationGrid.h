@@ -12,20 +12,26 @@
 
 #define GOOGLE_ELEVATION_API_URL_FORMAT @"http://maps.googleapis.com/maps/api/elevation/json?path=%@&samples=%i&sensor=false"
 
-#define ELEVATION_PATH_SAMPLES 100
-#define ELEVATION_LINE_LENGTH 25000
+#define ELEVATION_PATH_SAMPLES 100.0
+#define ELEVATION_LINE_LENGTH 25000.0
 #define GRID_CELL_SIZE ELEVATION_LINE_LENGTH/ELEVATION_PATH_SAMPLES
 
 //#define ELEVATION_PATH_SAMPLES 150
 //#define ELEVATION_LINE_LENGTH 660000
 
-CLLocationDistance elevationData[ELEVATION_PATH_SAMPLES][ELEVATION_PATH_SAMPLES];
-Coord3D worldCoordinateData[ELEVATION_PATH_SAMPLES][ELEVATION_PATH_SAMPLES];
+CLLocationDistance elevationData[(int)ELEVATION_PATH_SAMPLES][(int)ELEVATION_PATH_SAMPLES];
+Coord3D worldCoordinateData[(int)ELEVATION_PATH_SAMPLES][(int)ELEVATION_PATH_SAMPLES];
+
+typedef struct
+{
+    Coord3D a, b, c, d, u;
+} BoundingBox;
 
 
 @interface ElevationGrid : NSObject 
 {
 	CLLocation *gridOrigin;
+    CLLocation *gridPointNW;
 }
 
 @property (nonatomic, retain) CLLocation *gridOrigin;

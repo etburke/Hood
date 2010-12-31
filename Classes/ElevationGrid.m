@@ -26,6 +26,7 @@
 - (void) dealloc
 {
 	self.gridOrigin = nil;
+    [gridPointNW release];
     [super dealloc];
 }
 
@@ -324,7 +325,16 @@
 
             elevationData[j][i] = tmpLocation.altitude;
             
-            worldCoordinateData[j][i] = [SM3DAR_Controller worldCoordinateFor:tmpLocation];
+//            worldCoordinateData[j][i] = [SM3DAR_Controller worldCoordinateFor:tmpLocation];
+            
+            Coord3D c = {
+                i * GRID_CELL_SIZE,
+                j * GRID_CELL_SIZE,
+                tmpLocation.altitude
+            };
+            
+            worldCoordinateData[j][i] = c;
+            
         }
     }
 
@@ -533,9 +543,13 @@
                         
                         @try 
                         {
-                            coord.x = [[xyz objectAtIndex:0] floatValue];
-                            coord.y = [[xyz objectAtIndex:1] floatValue];
+                            coord.x = i * GRID_CELL_SIZE;
+                            coord.y = j * GRID_CELL_SIZE;
                             coord.z = [[xyz objectAtIndex:2] floatValue];
+
+//                            coord.x = [[xyz objectAtIndex:0] floatValue];
+//                            coord.y = [[xyz objectAtIndex:1] floatValue];
+//                            coord.z = [[xyz objectAtIndex:2] floatValue];
                         }
                         @catch (NSException *e) 
                         {
@@ -570,13 +584,180 @@
         NSLog(@"[EG] No cache file.");
         [self release];
     }
-    
 }
+
+- (BoundingBox) boundingBox:(CLLocation *)referenceLocation
+{
+    // Elevation at location equals elevation of nearest elevation grid array value
+    // Define distance from origin variables in meters
+    
+    CLLocationDistance xWorldCoordDistanceFromOrigin, yWorldCoordDistanceFromOrigin;    
+    
+    // Compute variables based on referenceLocation and ElevationGrid origin
+    
+    CLLocation *xDummy = [[CLLocation alloc] initWithLatitude:gridPointNW.coordinate.latitude longitude:referenceLocation.coordinate.longitude];
+    CLLocation *yDummy = [[CLLocation alloc] initWithLatitude:referenceLocation.coordinate.latitude longitude:gridPointNW.coordinate.longitude];    
+    
+    NSLog(@"NW:  %@", gridPointNW);
+    NSLog(@"ref: %@", referenceLocation);
+    
+    xWorldCoordDistanceFromOrigin = [xDummy distanceFromLocation:gridPointNW];
+    yWorldCoordDistanceFromOrigin = [yDummy distanceFromLocation:gridPointNW];
+    
+    int gridOriginIndex = 0; // ELEVATION_PATH_SAMPLES/2;
+    int yIndexOffset = yWorldCoordDistanceFromOrigin/GRID_CELL_SIZE;// + gridOriginIndex;  // rows up
+    int xIndexOffset = xWorldCoordDistanceFromOrigin/GRID_CELL_SIZE;// + gridOriginIndex;  // columns over    
+
+    /*
+    BOOL originIsSouthOfReference = (gridOrigin.coordinate.latitude < referenceLocation.coordinate.latitude);
+    
+    if (originIsSouthOfReference) 
+    {
+        yIndexOffset *= -1;
+    }
+    
+    // TO DO:Resolve -180,180 problem
+    BOOL originIsWestOfReference = (gridOrigin.coordinate.longitude < referenceLocation.coordinate.longitude);
+    
+    if (originIsWestOfReference) 
+    {
+        xIndexOffset *= -1;
+    }
+    */
+    
+    Coord3D a, b, c, d, u;
+    
+    int row, col;
+    
+    row = (gridOriginIndex + xIndexOffset + 0);
+    col = (gridOriginIndex + yIndexOffset + 0);
+    a.x = row * GRID_CELL_SIZE;
+    a.y = col * GRID_CELL_SIZE;    
+    a.z = worldCoordinateData[row][col].z;
+    
+    row = (gridOriginIndex + xIndexOffset + 1);
+    col = (gridOriginIndex + yIndexOffset + 0);
+    b.x = row * GRID_CELL_SIZE;
+    b.y = col * GRID_CELL_SIZE;    
+    b.z = worldCoordinateData[row][col].z;
+
+    row = (gridOriginIndex + xIndexOffset + 1);
+    col = (gridOriginIndex + yIndexOffset + 1);
+    c.x = row * GRID_CELL_SIZE;
+    c.y = col * GRID_CELL_SIZE;    
+    c.z = worldCoordinateData[row][col].z;
+    
+    row = (gridOriginIndex + xIndexOffset + 0);
+    col = (gridOriginIndex + yIndexOffset + 1);
+    d.x = row * GRID_CELL_SIZE;
+    d.y = col * GRID_CELL_SIZE;    
+    d.z = worldCoordinateData[row][col].z;
+    
+    int axMeters = a.x;
+    int ayMeters = a.y;
+    int originMeters = gridOriginIndex * GRID_CELL_SIZE;
+    
+    int somethingX = axMeters - originMeters;
+    int somethingY = ayMeters - originMeters;
+
+    u.x = xWorldCoordDistanceFromOrigin - somethingX;
+    u.y = yWorldCoordDistanceFromOrigin - somethingY;
+//    u.z = worldCoordinateData[(int)a.x][(int)a.y].z;  // Snap to point a's elevation
+    
+    BoundingBox bbox = {
+        a, b, c, d, u
+    };
+
+    return bbox;    
+}
+
+- (CGFloat) interpolatedElevationForPoint:(Coord3D)u 
+                                  topLeft:(Coord3D)a 
+                                 topRight:(Coord3D)b 
+                              bottomRight:(Coord3D)c 
+                               bottomLeft:(Coord3D)d
+{
+    CGFloat avg1, avg2, avg3, avg4;
+    CGFloat co1, co2, co3, co4;
+    CGFloat diff1, diff2, diff3, diff4;
+    
+    co1 = fabs(a.x - u.x) / fabs(b.x - a.x);
+    co2 = fabs(b.y - u.y) / fabs(c.y - b.y);
+    co3 = fabs(c.x - u.x) / fabs(d.x - c.x);
+    co4 = fabs(d.y - u.y) / fabs(a.y - d.y);
+    
+    diff1 = fabs(a.z - b.z);
+    diff2 = fabs(b.z - c.z);
+    diff3 = fabs(c.z - d.z);
+    diff4 = fabs(d.z - a.z);
+    
+    avg1 = a.z - (co1 * diff1);
+    avg2 = b.z - (co2 * diff2);
+    avg3 = c.z + (co3 * diff3);
+    avg4 = d.z + (co4 * diff4);
+    
+    u.z = (avg1 + avg2 + avg3 + avg4) / 4.0;
+    
+    NSLog(@"Elevation at point: %0.1f", u.z);
+    
+    return u.z;
+}
+
+- (CGFloat) elevationAtLocation:(CLLocation*)referenceLocation
+{
+    ////////////////////////////////////////////////////////////////////////////
+    // TODO: move this elsewhere...
+    CGFloat halfLineLength = ELEVATION_LINE_LENGTH / 2;    
+    CGFloat cornerPointDistanceMeters = sqrtf( 2 * (halfLineLength * halfLineLength) );
+    CGFloat bearingDegrees = -45.0;
+    
+    // Get the north-west point location.
+    gridPointNW = [[self locationAtDistanceInMeters:cornerPointDistanceMeters 
+                                     bearingDegrees:bearingDegrees
+                                       fromLocation:gridOrigin] retain];
+    
+    ////////////////////////////////////////////////////////////////////////////
+    
+    
+/*
+    Coord3D a, b, c, d;  // Corner points
+    Coord3D u;  // Target point
+
+    // TODO: set Z values for each point.
+    u.x = 7;
+    u.y = 8;
+    
+    a.x = 0;
+    a.y = 0;
+    a.z = 150;
+    
+    b.x = 10;
+    b.y = 0;
+    b.z = 120;
+    
+    c.x = 10;
+    c.y = 10;
+    c.z = 110;
+    
+    d.x = 0;
+    d.y = 10;
+    d.z = 100;    
+*/
+    
+    BoundingBox bbox = [self boundingBox:referenceLocation];
+    
+    return [self interpolatedElevationForPoint:bbox.u
+                                       topLeft:bbox.a 
+                                      topRight:bbox.b 
+                                   bottomRight:bbox.c 
+                                    bottomLeft:bbox.d];    
+}
+
 
 // Given a point within this elevation grid's bounds,
 // find which 2D array index contains the point
 // and return the elevation value at that index.
-- (CGFloat) elevationAtLocation:(CLLocation*)referenceLocation
+- (CGFloat) elevationAtLocationWithSnap:(CLLocation*)referenceLocation
 {//Elevation at location equals elevation of nearest elevation grid array value
  // Define distance from origin variables in meters
     CLLocationDistance xWorldCoordDistanceFromOrigin, yWorldCoordDistanceFromOrigin;
