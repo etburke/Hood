@@ -21,12 +21,16 @@
 
 @implementation ElevationGrid
 
+@synthesize gridCenter;
 @synthesize gridOrigin;
+@synthesize gridPointNW;
 
 - (void) dealloc
 {
 	self.gridOrigin = nil;
-    [gridPointNW release];
+    self.gridCenter = nil;
+    self.gridPointNW = nil;
+    
     [super dealloc];
 }
 
@@ -55,11 +59,11 @@
     return self;
 }
 
-- (id) initAroundLocation:(CLLocation*)origin
+- (id) initAroundLocation:(CLLocation*)center
 {
     if (self = [super init])
     {
-        self.gridOrigin = origin;
+        self.gridCenter = center;
         
         [self buildArray];
     }
@@ -172,7 +176,7 @@
          "elevation": 3303.3430176
      }
     */
-    
+        
 	NSArray *results = [self getChildren:data parent:@"results"];        
     //NSLog(@"RESULTS:\n\n%@", results);
     
@@ -264,7 +268,107 @@
     
 }
 
+// Returns an array of unsorted [X, Y, Z] arrays.
+- (NSArray*) fetchElevationPoints:(CLLocation*)pointNW pointSE:(CLLocation*)pointSE
+{
+    // fetch data
+    
+    NSString *pathString = [NSString stringWithFormat:
+                            @"%f,%f,%f,%f",
+                            pointNW.coordinate.longitude,
+                            pointNW.coordinate.latitude, 
+                            pointSE.coordinate.longitude, 
+                            pointSE.coordinate.latitude];
+    
+    NSString *requestURI = [NSString stringWithFormat:
+                            SM3DAR_ELEVATION_API_URL_FORMAT,
+                            [self urlEncode:pathString]];
+    
+	// Fetch the elevations from geocouch as JSON.
+    NSError *error;
+    NSLog(@"[EG] URL:\n\n%@\n\n", requestURI);
+    
+    // parse JSON
+    NSString *responseJSON = [NSString stringWithContentsOfURL:[NSURL URLWithString:requestURI] 
+                                                      encoding:NSUTF8StringEncoding error:&error];    
+    
+    
+    if ([responseJSON length] == 0)
+    {
+        NSLog(@"[EG] Empty response. %@, %@", [error localizedDescription], [error userInfo]);
+        return nil;
+    }
+    
+    // Parse the JSON response.
+    id data = [NSDictionary dictionaryWithJSONString:responseJSON];
+    
+    // Get the result data items. See example below.
+    /* 
+     {
+        "data": 
+        [
+            -118.2620657,
+            36.5718491,
+            616.032
+        ]
+     }
+     */
+    
+	NSArray *results = [self getChildren:data parent:@"rows"];
+    //NSLog(@"RESULTS:\n\n%@", results);
+    
+    NSArray *tmpRow;
+    
+    NSMutableArray *unsortedRows = [NSMutableArray arrayWithCapacity:[results count]];
+    
+    for (NSDictionary *tmpResult in results)
+    {
+        tmpRow = [tmpResult valueForKeyPath:@"value.data"];
+
+        [unsortedRows addObject:tmpRow];        
+    }
+
+    return unsortedRows;
+}
+
 - (void) buildArray
+{
+    // Compute NW corner point
+    CGFloat halfLineLength = ELEVATION_LINE_LENGTH / 2;    
+    CGFloat cornerPointDistanceMeters = sqrtf( 2 * (halfLineLength * halfLineLength) );
+    CGFloat bearingDegrees = -45.0;
+    
+    // Get the north-west point location.
+    self.gridPointNW = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
+                                            bearingDegrees:bearingDegrees
+                                              fromLocation:gridCenter];
+    self.gridOrigin = gridPointNW;
+    
+    // Get the south-east point location.
+    CLLocation *pointSE = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
+                                            bearingDegrees:bearingDegrees+180.0
+                                              fromLocation:gridOrigin];
+    
+    
+    
+    // Now that we have the bbox lets go grab some data from our fancy SM3DAR_ELEVATION_SERVER.
+    NSArray *unsortedPoints = [self fetchElevationPoints:gridPointNW pointSE:pointSE];
+    
+    // Sort points into ordered rows.
+    
+    NSLog(@"ROWS: %i", [unsortedPoints count]);
+    NSLog(@"ROWS: %@", unsortedPoints);
+
+    
+//    NSComparator 
+//    *unsortedPoints
+    
+    // Populate worldCoordinateData.
+
+
+}
+
+- (void) buildArrayOld
 {    
     CGFloat halfLineLength = ELEVATION_LINE_LENGTH / 2;    
     CGFloat cornerPointDistanceMeters = sqrtf( 2 * (halfLineLength * halfLineLength) );
