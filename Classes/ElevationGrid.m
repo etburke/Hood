@@ -347,9 +347,7 @@
     // Get the south-east point location.
     CLLocation *pointSE = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
                                             bearingDegrees:bearingDegrees+180.0
-                                              fromLocation:gridOrigin];
-    
-    
+                                              fromLocation:gridCenter];
     
     // Now that we have the bbox lets go grab some data from our fancy SM3DAR_ELEVATION_SERVER.
     NSArray *unsortedPoints = [self fetchElevationPoints:gridPointNW pointSE:pointSE];
