@@ -24,12 +24,14 @@
 @synthesize gridCenter;
 @synthesize gridOrigin;
 @synthesize gridPointNW;
+@synthesize gridPointSE;
 
 - (void) dealloc
 {
 	self.gridOrigin = nil;
     self.gridCenter = nil;
     self.gridPointNW = nil;
+    self.gridPointSE = nil;
     
     [super dealloc];
 }
@@ -275,10 +277,10 @@
     
     NSString *pathString = [NSString stringWithFormat:
                             @"%f,%f,%f,%f",
-                            pointNW.coordinate.longitude,
-                            pointNW.coordinate.latitude, 
-                            pointSE.coordinate.longitude, 
-                            pointSE.coordinate.latitude];
+                            pointSE.coordinate.longitude,
+                            pointSE.coordinate.latitude, 
+                            pointNW.coordinate.longitude, 
+                            pointNW.coordinate.latitude];
     
     NSString *requestURI = [NSString stringWithFormat:
                             SM3DAR_ELEVATION_API_URL_FORMAT,
@@ -345,21 +347,74 @@
     self.gridOrigin = gridPointNW;
     
     // Get the south-east point location.
-    CLLocation *pointSE = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
+    self.gridPointSE = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
                                             bearingDegrees:bearingDegrees+180.0
                                               fromLocation:gridCenter];
     
     // Now that we have the bbox lets go grab some data from our fancy SM3DAR_ELEVATION_SERVER.
-    NSArray *unsortedPoints = [self fetchElevationPoints:gridPointNW pointSE:pointSE];
+    NSArray *unsortedPoints = [self fetchElevationPoints:gridPointNW pointSE:gridPointSE];
     
     // Sort points into ordered rows.
     
     NSLog(@"ROWS: %i", [unsortedPoints count]);
-    NSLog(@"ROWS: %@", unsortedPoints);
+    //NSLog(@"ROWS: %@", unsortedPoints);
+
+    NSMutableDictionary *rowsByLat = [NSMutableDictionary dictionary];
+
+    CLLocationDegrees minLat = 90.0;
+    CLLocationDegrees maxLat = -90.0;
+
+    NSLog(@"NW: %@", gridPointNW);
+    NSLog(@"SE: %@", gridPointSE);
+
+    for (NSArray *tmpPoint in unsortedPoints)
+    {
+        NSString *lat = [tmpPoint objectAtIndex:1];
+        CLLocationDegrees latDeg = [lat doubleValue];
+        
+        if (latDeg < minLat)
+            minLat = latDeg;
+        if (latDeg > maxLat)
+            maxLat = latDeg;
+
+        /*
+        // Ignore latitudes outside the bbox.
+        if (latDeg > gridPointNW.coordinate.latitude)
+        {
+            NSLog(@"lat north of bbox: %.6f > %.6f", latDeg, gridPointNW.coordinate.latitude);
+            continue;
+        } 
+        else if (latDeg < gridPointSE.coordinate.latitude)
+        {
+            NSLog(@"lat south of bbox: %.6f < %.6f", latDeg, gridPointSE.coordinate.latitude);
+            continue;
+        }
+        */
+
+
+        // Get this latitude's row.
+        NSMutableArray *tmpRow = [rowsByLat objectForKey:lat];
+        
+        if (!tmpRow)
+        {
+            tmpRow = [NSMutableArray array];
+        }
+
+        // Add this point to this row.
+        [tmpRow addObject:tmpPoint];        
+
+        // Save the row back into the dictionary.
+        [rowsByLat setObject:tmpRow forKey:lat];
+    }
+
+    NSLog(@"lat range: %.6f, %.6f", minLat, maxLat);
+    NSLog(@"ROWS: %@", rowsByLat);
 
     
-//    NSComparator 
-//    *unsortedPoints
+//    for (
+
+//    NSComparator *comparator;
+//    NSArray *sorted = 
     
     // Populate worldCoordinateData.
 

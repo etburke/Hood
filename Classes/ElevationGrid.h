@@ -15,7 +15,7 @@
 
 #define ELEVATION_PATH_SAMPLES 100.0
 //#define ELEVATION_LINE_LENGTH 20000.0
-#define ELEVATION_LINE_LENGTH 100.0
+#define ELEVATION_LINE_LENGTH 10.0
 
 #define GRID_CELL_SIZE ELEVATION_LINE_LENGTH/ELEVATION_PATH_SAMPLES
 
@@ -36,11 +36,13 @@ typedef struct
 	CLLocation *gridCenter;
 	CLLocation *gridOrigin;
     CLLocation *gridPointNW;
+    CLLocation *gridPointSE;
 }
 
 @property (nonatomic, retain) CLLocation *gridCenter;
 @property (nonatomic, retain) CLLocation *gridOrigin;
 @property (nonatomic, retain) CLLocation *gridPointNW;
+@property (nonatomic, retain) CLLocation *gridPointSE;
 
 - (id) initFromCache;
 - (id) initFromFile:(NSString*)bundleFileName;
