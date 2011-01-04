@@ -186,7 +186,12 @@
     //    [sm3dar setCurrentLocation:centerOfOregon];
     
     CLLocation *mtHood = [[[CLLocation alloc] initWithLatitude:45.373831 longitude:-121.698032] autorelease];
-    [sm3dar setCurrentLocation:mtHood];
+//    [sm3dar setCurrentLocation:mtHood];
+    [sm3dar changeCurrentLocation:mtHood];
+
+    Coord3D wc = [SM3DAR_Controller worldCoordinateFor:mtHood];
+    NSLog(@"\n\nPROBLEM? %.0f, %.0f\n\n", wc.x, wc.y);
+
     self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:mtHood] autorelease];
 
 //    Coord3D gridCoord = [SM3DAR_Controller worldCoordinateFor:mtHood];

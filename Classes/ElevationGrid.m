@@ -357,6 +357,10 @@
     // Sort points into ordered rows.
     
     NSLog(@"ROWS: %i", [unsortedPoints count]);
+    return;
+    
+    // TODO: figure out how to put the points in the grid.
+    
     //NSLog(@"ROWS: %@", unsortedPoints);
 
     NSMutableDictionary *rowsByLat = [NSMutableDictionary dictionary];
@@ -369,8 +373,10 @@
 
     for (NSArray *tmpPoint in unsortedPoints)
     {
+        NSString *lng = [tmpPoint objectAtIndex:0];
         NSString *lat = [tmpPoint objectAtIndex:1];
         CLLocationDegrees latDeg = [lat doubleValue];
+        CLLocationDegrees lngDeg = [lng doubleValue];
         
         if (latDeg < minLat)
             minLat = latDeg;
@@ -391,6 +397,12 @@
         }
         */
 
+/*        
+        CLLocation *tmpLocation = [[CLLocation alloc] initWithLatitude:latDeg longitude:lngDeg];
+        Coord3D wc = [SM3DAR_Controller worldCoordinateFor:tmpLocation];
+        NSLog(@"%.0f, %.0f", wc.x, wc.y);
+*/
+        /*
 
         // Get this latitude's row.
         NSMutableArray *tmpRow = [rowsByLat objectForKey:lat];
@@ -405,6 +417,7 @@
 
         // Save the row back into the dictionary.
         [rowsByLat setObject:tmpRow forKey:lat];
+         */
     }
 
     NSLog(@"lat range: %.6f, %.6f", minLat, maxLat);
