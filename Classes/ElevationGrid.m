@@ -23,15 +23,15 @@
 
 @synthesize gridCenter;
 @synthesize gridOrigin;
-@synthesize gridPointNW;
-@synthesize gridPointSE;
+@synthesize gridPointSW;
+@synthesize gridPointNE;
 
 - (void) dealloc
 {
 	self.gridOrigin = nil;
     self.gridCenter = nil;
-    self.gridPointNW = nil;
-    self.gridPointSE = nil;
+    self.gridPointSW = nil;
+    self.gridPointNE = nil;
     
     [super dealloc];
 }
@@ -271,16 +271,16 @@
 }
 
 // Returns an array of unsorted [X, Y, Z] arrays.
-- (NSArray*) fetchElevationPoints:(CLLocation*)pointNW pointSE:(CLLocation*)pointSE
+- (NSArray*) fetchElevationPoints:(CLLocation*)pointSW pointNE:(CLLocation*)pointNE
 {
     // fetch data
     
     NSString *pathString = [NSString stringWithFormat:
                             @"%f,%f,%f,%f",
-                            pointSE.coordinate.longitude,
-                            pointSE.coordinate.latitude, 
-                            pointNW.coordinate.longitude, 
-                            pointNW.coordinate.latitude];
+                            pointSW.coordinate.longitude,
+                            pointSW.coordinate.latitude, 
+                            pointNE.coordinate.longitude, 
+                            pointNE.coordinate.latitude];
     
     NSString *requestURI = [NSString stringWithFormat:
                             SM3DAR_ELEVATION_API_URL_FORMAT,
@@ -338,21 +338,21 @@
     // Compute NW corner point
     CGFloat halfLineLength = ELEVATION_LINE_LENGTH / 2;    
     CGFloat cornerPointDistanceMeters = sqrtf( 2 * (halfLineLength * halfLineLength) );
-    CGFloat bearingDegrees = -45.0;
+    CGFloat bearingDegrees = -135.0;
     
     // Get the north-west point location.
-    self.gridPointNW = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
+    self.gridPointSW = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
                                             bearingDegrees:bearingDegrees
                                               fromLocation:gridCenter];
-    self.gridOrigin = gridPointNW;
+    self.gridOrigin = gridPointSW;
     
     // Get the south-east point location.
-    self.gridPointSE = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
+    self.gridPointNE = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
                                             bearingDegrees:bearingDegrees+180.0
                                               fromLocation:gridCenter];
     
     // Now that we have the bbox lets go grab some data from our fancy SM3DAR_ELEVATION_SERVER.
-    NSArray *unsortedPoints = [self fetchElevationPoints:gridPointNW pointSE:gridPointSE];
+    NSArray *unsortedPoints = [self fetchElevationPoints:gridPointSW pointNE:gridPointNE];
     
     // Sort points into ordered rows.
     
@@ -364,8 +364,8 @@
     CLLocationDegrees minLat = 90.0;
     CLLocationDegrees maxLat = -90.0;
 
-    NSLog(@"NW: %@", gridPointNW);
-    NSLog(@"SE: %@", gridPointSE);
+    NSLog(@"NW: %@", gridPointSW);
+    NSLog(@"SE: %@", gridPointNE);
 
     for (NSArray *tmpPoint in unsortedPoints)
     {
@@ -379,14 +379,14 @@
 
         /*
         // Ignore latitudes outside the bbox.
-        if (latDeg > gridPointNW.coordinate.latitude)
+        if (latDeg > gridPointSW.coordinate.latitude)
         {
-            NSLog(@"lat north of bbox: %.6f > %.6f", latDeg, gridPointNW.coordinate.latitude);
+            NSLog(@"lat north of bbox: %.6f > %.6f", latDeg, gridPointSW.coordinate.latitude);
             continue;
         } 
-        else if (latDeg < gridPointSE.coordinate.latitude)
+        else if (latDeg < gridPointNE.coordinate.latitude)
         {
-            NSLog(@"lat south of bbox: %.6f < %.6f", latDeg, gridPointSE.coordinate.latitude);
+            NSLog(@"lat south of bbox: %.6f < %.6f", latDeg, gridPointNE.coordinate.latitude);
             continue;
         }
         */
@@ -752,14 +752,14 @@
     
     // Compute variables based on referenceLocation and ElevationGrid origin
     
-    CLLocation *xDummy = [[CLLocation alloc] initWithLatitude:gridPointNW.coordinate.latitude longitude:referenceLocation.coordinate.longitude];
-    CLLocation *yDummy = [[CLLocation alloc] initWithLatitude:referenceLocation.coordinate.latitude longitude:gridPointNW.coordinate.longitude];    
+    CLLocation *xDummy = [[CLLocation alloc] initWithLatitude:gridPointSW.coordinate.latitude longitude:referenceLocation.coordinate.longitude];
+    CLLocation *yDummy = [[CLLocation alloc] initWithLatitude:referenceLocation.coordinate.latitude longitude:gridPointSW.coordinate.longitude];    
     
-    NSLog(@"NW:  %@", gridPointNW);
+    NSLog(@"NW:  %@", gridPointSW);
     NSLog(@"ref: %@", referenceLocation);
     
-    xWorldCoordDistanceFromOrigin = [xDummy distanceFromLocation:gridPointNW];
-    yWorldCoordDistanceFromOrigin = [yDummy distanceFromLocation:gridPointNW];
+    xWorldCoordDistanceFromOrigin = [xDummy distanceFromLocation:gridPointSW];
+    yWorldCoordDistanceFromOrigin = [yDummy distanceFromLocation:gridPointSW];
     
     int gridOriginIndex = 0; // ELEVATION_PATH_SAMPLES/2;
     int yIndexOffset = yWorldCoordDistanceFromOrigin/GRID_CELL_SIZE;// + gridOriginIndex;  // rows up
@@ -869,7 +869,7 @@
     CGFloat bearingDegrees = -45.0;
     
     // Get the north-west point location.
-    gridPointNW = [[self locationAtDistanceInMeters:cornerPointDistanceMeters 
+    gridPointSW = [[self locationAtDistanceInMeters:cornerPointDistanceMeters 
                                      bearingDegrees:bearingDegrees
                                        fromLocation:gridOrigin] retain];
     

@@ -35,14 +35,14 @@ typedef struct
 {
 	CLLocation *gridCenter;
 	CLLocation *gridOrigin;
-    CLLocation *gridPointNW;
-    CLLocation *gridPointSE;
+    CLLocation *gridPointSW;
+    CLLocation *gridPointNE;
 }
 
 @property (nonatomic, retain) CLLocation *gridCenter;
 @property (nonatomic, retain) CLLocation *gridOrigin;
-@property (nonatomic, retain) CLLocation *gridPointNW;
-@property (nonatomic, retain) CLLocation *gridPointSE;
+@property (nonatomic, retain) CLLocation *gridPointSW;
+@property (nonatomic, retain) CLLocation *gridPointNE;
 
 - (id) initFromCache;
 - (id) initFromFile:(NSString*)bundleFileName;
