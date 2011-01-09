@@ -78,7 +78,7 @@
     
     [self addElevationGridPoint];
     
-    [self addCityNamePoints];
+//    [self addCityNamePoints];
     
 //    [self setCameraAltitude:1.8];
     sm3dar.cameraAltitudeMeters = MIN_CAMERA_ALTITUDE_METERS;
@@ -171,10 +171,12 @@
 
 - (void) addElevationGridPoint
 {
-    self.elevationGrid = [[[ElevationGrid alloc] initFromFile:@"elevation_grid_25km_100s.txt"] autorelease];
+//    self.elevationGrid = [[[ElevationGrid alloc] initFromFile:@"elevation_grid_25km_100s.txt"] autorelease];
     
-    CLLocation *theOffice = [[[CLLocation alloc] initWithLatitude:45.523563 longitude:-122.675099] autorelease];
-    elevationGrid.gridOrigin = theOffice;
+//    CLLocation *theOffice = [[[CLLocation alloc] initWithLatitude:45.523563 longitude:-122.675099] autorelease];
+//    elevationGrid.gridOrigin = theOffice;
+//    self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:theOffice] autorelease];
+    
     //    [sm3dar setCurrentLocation:theOffice];
     
     
@@ -183,17 +185,23 @@
     //    self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:centerOfOregon] autorelease];
     //    [sm3dar setCurrentLocation:centerOfOregon];
     
-    //    CLLocation *mtHood = [[[CLLocation alloc] initWithLatitude:45.53806 longitude:-121.56722] autorelease];
-    //    [sm3dar setCurrentLocation:mtHood];
-    //    self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:mtHood] autorelease];
+    CLLocation *mtHood = [[[CLLocation alloc] initWithLatitude:45.373831 longitude:-121.698032] autorelease];
+//    [sm3dar setCurrentLocation:mtHood];
+    [sm3dar changeCurrentLocation:mtHood];
 
-    Coord3D gridCoord = [SM3DAR_Controller worldCoordinateFor:theOffice];
+    Coord3D wc = [SM3DAR_Controller worldCoordinateFor:mtHood];
+    NSLog(@"\n\nPROBLEM? %.0f, %.0f\n\n", wc.x, wc.y);
+
+    self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:mtHood] autorelease];
+
+//    Coord3D gridCoord = [SM3DAR_Controller worldCoordinateFor:mtHood];
     
-    NSInteger gridIndex = ELEVATION_PATH_SAMPLES / 2;
-    Coord3D gridOriginElevationPoint = worldCoordinateData[gridIndex][gridIndex];
-    CGFloat gridOriginZ = gridOriginElevationPoint.z;
+//    NSInteger gridIndex = ELEVATION_PATH_SAMPLES / 2;
+//    Coord3D gridOriginElevationPoint = worldCoordinateData[gridIndex][gridIndex];
+//    CGFloat gridOriginZ = gridOriginElevationPoint.z;    
+//    [self addGridAtX:gridCoord.x Y:gridCoord.y Z:gridOriginZ];    
     
-    [self addGridAtX:gridCoord.x Y:gridCoord.y Z:gridOriginZ];    
+    [self addGridAtX:0 Y:0 Z:0];    
 }
 
 - (void) add911IncidentPoints

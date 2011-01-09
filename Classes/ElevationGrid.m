@@ -21,12 +21,18 @@
 
 @implementation ElevationGrid
 
+@synthesize gridCenter;
 @synthesize gridOrigin;
+@synthesize gridPointSW;
+@synthesize gridPointNE;
 
 - (void) dealloc
 {
 	self.gridOrigin = nil;
-    [gridPointNW release];
+    self.gridCenter = nil;
+    self.gridPointSW = nil;
+    self.gridPointNE = nil;
+    
     [super dealloc];
 }
 
@@ -55,11 +61,11 @@
     return self;
 }
 
-- (id) initAroundLocation:(CLLocation*)origin
+- (id) initAroundLocation:(CLLocation*)center
 {
     if (self = [super init])
     {
-        self.gridOrigin = origin;
+        self.gridCenter = center;
         
         [self buildArray];
     }
@@ -172,7 +178,7 @@
          "elevation": 3303.3430176
      }
     */
-    
+        
 	NSArray *results = [self getChildren:data parent:@"results"];        
     //NSLog(@"RESULTS:\n\n%@", results);
     
@@ -264,7 +270,171 @@
     
 }
 
+// Returns an array of unsorted [X, Y, Z] arrays.
+- (NSArray*) fetchElevationPoints:(CLLocation*)pointSW pointNE:(CLLocation*)pointNE
+{
+    // fetch data
+    
+    NSString *pathString = [NSString stringWithFormat:
+                            @"%f,%f,%f,%f",
+                            pointSW.coordinate.longitude,
+                            pointSW.coordinate.latitude, 
+                            pointNE.coordinate.longitude, 
+                            pointNE.coordinate.latitude];
+    
+    NSString *requestURI = [NSString stringWithFormat:
+                            SM3DAR_ELEVATION_API_URL_FORMAT,
+                            [self urlEncode:pathString]];
+    
+	// Fetch the elevations from geocouch as JSON.
+    NSError *error;
+    NSLog(@"[EG] URL:\n\n%@\n\n", requestURI);
+    
+    // parse JSON
+    NSString *responseJSON = [NSString stringWithContentsOfURL:[NSURL URLWithString:requestURI] 
+                                                      encoding:NSUTF8StringEncoding error:&error];    
+    
+    
+    if ([responseJSON length] == 0)
+    {
+        NSLog(@"[EG] Empty response. %@, %@", [error localizedDescription], [error userInfo]);
+        return nil;
+    }
+    
+    // Parse the JSON response.
+    id data = [NSDictionary dictionaryWithJSONString:responseJSON];
+    
+    // Get the result data items. See example below.
+    /* 
+     {
+        "data": 
+        [
+            -118.2620657,
+            36.5718491,
+            616.032
+        ]
+     }
+     */
+    
+	NSArray *results = [self getChildren:data parent:@"rows"];
+    //NSLog(@"RESULTS:\n\n%@", results);
+    
+    NSArray *tmpRow;
+    
+    NSMutableArray *unsortedRows = [NSMutableArray arrayWithCapacity:[results count]];
+    
+    for (NSDictionary *tmpResult in results)
+    {
+        tmpRow = [tmpResult valueForKeyPath:@"value.data"];
+
+        [unsortedRows addObject:tmpRow];        
+    }
+
+    return unsortedRows;
+}
+
 - (void) buildArray
+{
+    // Compute NW corner point
+    CGFloat halfLineLength = ELEVATION_LINE_LENGTH / 2;    
+    CGFloat cornerPointDistanceMeters = sqrtf( 2 * (halfLineLength * halfLineLength) );
+    CGFloat bearingDegrees = -135.0;
+    
+    // Get the north-west point location.
+    self.gridPointSW = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
+                                            bearingDegrees:bearingDegrees
+                                              fromLocation:gridCenter];
+    self.gridOrigin = gridPointSW;
+    
+    // Get the south-east point location.
+    self.gridPointNE = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
+                                            bearingDegrees:bearingDegrees+180.0
+                                              fromLocation:gridCenter];
+    
+    // Now that we have the bbox lets go grab some data from our fancy SM3DAR_ELEVATION_SERVER.
+    NSArray *unsortedPoints = [self fetchElevationPoints:gridPointSW pointNE:gridPointNE];
+    
+    // Sort points into ordered rows.
+    
+    NSLog(@"ROWS: %i", [unsortedPoints count]);
+    return;
+    
+    // TODO: figure out how to put the points in the grid.
+    
+    //NSLog(@"ROWS: %@", unsortedPoints);
+
+    NSMutableDictionary *rowsByLat = [NSMutableDictionary dictionary];
+
+    CLLocationDegrees minLat = 90.0;
+    CLLocationDegrees maxLat = -90.0;
+
+    NSLog(@"NW: %@", gridPointSW);
+    NSLog(@"SE: %@", gridPointNE);
+
+    for (NSArray *tmpPoint in unsortedPoints)
+    {
+        NSString *lng = [tmpPoint objectAtIndex:0];
+        NSString *lat = [tmpPoint objectAtIndex:1];
+        CLLocationDegrees latDeg = [lat doubleValue];
+        CLLocationDegrees lngDeg = [lng doubleValue];
+        
+        if (latDeg < minLat)
+            minLat = latDeg;
+        if (latDeg > maxLat)
+            maxLat = latDeg;
+
+        /*
+        // Ignore latitudes outside the bbox.
+        if (latDeg > gridPointSW.coordinate.latitude)
+        {
+            NSLog(@"lat north of bbox: %.6f > %.6f", latDeg, gridPointSW.coordinate.latitude);
+            continue;
+        } 
+        else if (latDeg < gridPointNE.coordinate.latitude)
+        {
+            NSLog(@"lat south of bbox: %.6f < %.6f", latDeg, gridPointNE.coordinate.latitude);
+            continue;
+        }
+        */
+
+/*        
+        CLLocation *tmpLocation = [[CLLocation alloc] initWithLatitude:latDeg longitude:lngDeg];
+        Coord3D wc = [SM3DAR_Controller worldCoordinateFor:tmpLocation];
+        NSLog(@"%.0f, %.0f", wc.x, wc.y);
+*/
+        /*
+
+        // Get this latitude's row.
+        NSMutableArray *tmpRow = [rowsByLat objectForKey:lat];
+        
+        if (!tmpRow)
+        {
+            tmpRow = [NSMutableArray array];
+        }
+
+        // Add this point to this row.
+        [tmpRow addObject:tmpPoint];        
+
+        // Save the row back into the dictionary.
+        [rowsByLat setObject:tmpRow forKey:lat];
+         */
+    }
+
+    NSLog(@"lat range: %.6f, %.6f", minLat, maxLat);
+    NSLog(@"ROWS: %@", rowsByLat);
+
+    
+//    for (
+
+//    NSComparator *comparator;
+//    NSArray *sorted = 
+    
+    // Populate worldCoordinateData.
+
+
+}
+
+- (void) buildArrayOld
 {    
     CGFloat halfLineLength = ELEVATION_LINE_LENGTH / 2;    
     CGFloat cornerPointDistanceMeters = sqrtf( 2 * (halfLineLength * halfLineLength) );
@@ -595,14 +765,14 @@
     
     // Compute variables based on referenceLocation and ElevationGrid origin
     
-    CLLocation *xDummy = [[CLLocation alloc] initWithLatitude:gridPointNW.coordinate.latitude longitude:referenceLocation.coordinate.longitude];
-    CLLocation *yDummy = [[CLLocation alloc] initWithLatitude:referenceLocation.coordinate.latitude longitude:gridPointNW.coordinate.longitude];    
+    CLLocation *xDummy = [[CLLocation alloc] initWithLatitude:gridPointSW.coordinate.latitude longitude:referenceLocation.coordinate.longitude];
+    CLLocation *yDummy = [[CLLocation alloc] initWithLatitude:referenceLocation.coordinate.latitude longitude:gridPointSW.coordinate.longitude];    
     
-    NSLog(@"NW:  %@", gridPointNW);
+    NSLog(@"NW:  %@", gridPointSW);
     NSLog(@"ref: %@", referenceLocation);
     
-    xWorldCoordDistanceFromOrigin = [xDummy distanceFromLocation:gridPointNW];
-    yWorldCoordDistanceFromOrigin = [yDummy distanceFromLocation:gridPointNW];
+    xWorldCoordDistanceFromOrigin = [xDummy distanceFromLocation:gridPointSW];
+    yWorldCoordDistanceFromOrigin = [yDummy distanceFromLocation:gridPointSW];
     
     int gridOriginIndex = 0; // ELEVATION_PATH_SAMPLES/2;
     int yIndexOffset = yWorldCoordDistanceFromOrigin/GRID_CELL_SIZE;// + gridOriginIndex;  // rows up
@@ -712,7 +882,7 @@
     CGFloat bearingDegrees = -45.0;
     
     // Get the north-west point location.
-    gridPointNW = [[self locationAtDistanceInMeters:cornerPointDistanceMeters 
+    gridPointSW = [[self locationAtDistanceInMeters:cornerPointDistanceMeters 
                                      bearingDegrees:bearingDegrees
                                        fromLocation:gridOrigin] retain];
     

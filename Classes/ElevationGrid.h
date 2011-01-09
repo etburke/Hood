@@ -11,9 +11,12 @@
 #import "SM3DAR.h"
 
 #define GOOGLE_ELEVATION_API_URL_FORMAT @"http://maps.googleapis.com/maps/api/elevation/json?path=%@&samples=%i&sensor=false"
+#define SM3DAR_ELEVATION_API_URL_FORMAT @"http://localhost:5984/hood1/_design/point_elevation/_spatial/points?bbox=%@"
 
 #define ELEVATION_PATH_SAMPLES 100.0
-#define ELEVATION_LINE_LENGTH 25000.0
+//#define ELEVATION_LINE_LENGTH 20000.0
+#define ELEVATION_LINE_LENGTH 1000.0
+
 #define GRID_CELL_SIZE ELEVATION_LINE_LENGTH/ELEVATION_PATH_SAMPLES
 
 //#define ELEVATION_PATH_SAMPLES 150
@@ -30,11 +33,16 @@ typedef struct
 
 @interface ElevationGrid : NSObject 
 {
+	CLLocation *gridCenter;
 	CLLocation *gridOrigin;
-    CLLocation *gridPointNW;
+    CLLocation *gridPointSW;
+    CLLocation *gridPointNE;
 }
 
+@property (nonatomic, retain) CLLocation *gridCenter;
 @property (nonatomic, retain) CLLocation *gridOrigin;
+@property (nonatomic, retain) CLLocation *gridPointSW;
+@property (nonatomic, retain) CLLocation *gridPointNE;
 
 - (id) initFromCache;
 - (id) initFromFile:(NSString*)bundleFileName;
