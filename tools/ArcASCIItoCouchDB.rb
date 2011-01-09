@@ -3,7 +3,7 @@ require "couchrest"
 
 #Set database
 
-@db = CouchRest.database!("http://127.0.0.1:5984/elevation_hood")
+@db = CouchRest.database!("http://pmark.couchone.com/elevation_pacnw")
 
 #Set source file to srtm
 
@@ -28,30 +28,32 @@ celly = 0
 
   gridline = srtm.readline
 
+  if (i >= 4200) 
 
-  gridline = gridline.split.collect { |e| e.to_i }
+      gridline = gridline.split.collect { |e| e.to_i }
 
-  #Get array position
+      #Get array position
 
-  cellx = 0
-  celly = i
+      cellx = 0
+      celly = i
 
-  #Populate passthrough array with processing point
+      #Populate passthrough array with processing point
 
-  lat = yllcorner + cellsize * celly
+      lat = yllcorner + cellsize * celly
 
-  gridline.collect do |elev| 
+      gridline.collect do |elev| 
 
-    elev = '' if (elev == -9999)
-    
-    long = xllcorner+cellsize*cellx
+        elev = '' if (elev == -9999)
+        
+        long = xllcorner+cellsize*cellx
 
-    puts "[#{long}, #{lat}, #{elev}]"
+        @db.save_doc({ :elev => elev, :geometry => { :type => 'Point', :coordinates => [long, lat] } })
 
-    @db.save_doc({ :elev => elev, :geometry => { :type => 'Point', :coordinates => [long, lat] } })
+        cellx += 1
+      end
 
-    cellx += 1
+       puts "row #{i}" if (i % 100) == 0
   end
 end
   
-puts "\nDone importing #{celly+1} rows\n"
+puts "\nDone importing #{celly+1-4200} rows\n"
