@@ -1,13 +1,22 @@
 require "rubygems"
 require "couchrest"
+require "date"
 
 #Set database
 
-@db = CouchRest.database!("http://pmark.couchone.com/elevation_pacnw")
+# @db = CouchRest.database!("http://pmark.couchone.com/elevation_pacnw")
+@db = CouchRest.database!("http://127.0.0.1:5984/elevation_pacnw")
+
+
+def post(batch)
+  puts "submitting batch"
+  @db.bulk_save(batch)
+end
+
 
 #Set source file to srtm
 
-srtm = File.open("srtm.asc")
+srtm = File.open("srtm.pdx_hood.asc")
 
 #Extract values from header constants
 
@@ -21,6 +30,10 @@ NODATA_value = srtm.readline.sub("NODATA_value", "").sub("\n", "").gsub(/\s/, ""
 #Convert elevation values string to gridline array
 
 celly = 0
+batch_size = 1000
+number_of_records_to_skip = 0  # make this 4200 for pacnw
+
+start_time = DateTime.now
 
 (0..nrows).each do |i|
 
@@ -28,7 +41,8 @@ celly = 0
 
   gridline = srtm.readline
 
-  if (i >= 4200) 
+
+  if (i >= number_of_records_to_skip) 
 
       gridline = gridline.split.collect { |e| e.to_i }
 
@@ -40,20 +54,42 @@ celly = 0
       #Populate passthrough array with processing point
 
       lat = yllcorner + cellsize * celly
+      batch = []
 
+      # parse one line
       gridline.collect do |elev| 
 
         elev = '' if (elev == -9999)
         
         long = xllcorner+cellsize*cellx
 
-        @db.save_doc({ :elev => elev, :geometry => { :type => 'Point', :coordinates => [long, lat] } })
+        # create the document
+        one_document = { :elev => elev, :geometry => { :type => 'Point', :coordinates => [long, lat] } }
+        
+        # Should the batch be submitted yet?        
+        if (cellx > 0 && cellx % batch_size == 0)
+          post(batch)
+          batch = [one_document]
+          
+        elsif cellx == (ncols - 1)
+          # on last column
+          batch << one_document
+          post(batch)
+          
+        else
+          batch << one_document
+        end
 
         cellx += 1
+        
+        # break if cellx > 9
       end
 
-       puts "row #{i}" if (i % 100) == 0
+       puts "row #{i}" if (i % 1) == 0
   end
 end
-  
-puts "\nDone importing #{celly+1-4200} rows\n"
+
+stop_time = DateTime.now
+run_time = ((stop_time - start_time) * 24 * 60 * 60).to_f
+
+puts "\n  Imported #{celly + 1 - number_of_records_to_skip} rows in #{run_time} sec\n"
