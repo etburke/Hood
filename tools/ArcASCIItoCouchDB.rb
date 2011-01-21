@@ -15,8 +15,8 @@ couch_url = ARGV.first
 
 
 def post(batch)
-  # puts "submitting batch"
-  # @db.bulk_save(batch)
+  puts "."
+  @db.bulk_save(batch)
 end
 
 
@@ -103,4 +103,31 @@ end
 stop_time = DateTime.now
 run_time = ((stop_time - start_time) * 24 * 60 * 60).to_f
 
-puts "\n  Imported #{end_row - start_row} rows in #{run_time} sec\n"
+puts "\nImported #{end_row - start_row} rows in #{run_time} sec.\n\n"
+
+
+# Add design doc if necessary
+
+def add_ddoc
+
+  ddoc_name = '_design/lon_lat_elev'
+
+  view_exists = @db.get(ddoc_name) rescue false
+
+
+  unless view_exists
+
+    puts "Adding spatial lon_lat_elev index design document.\n\n"
+
+    @db.save_doc({
+        "_id" => ddoc_name,
+        "spatial" => {
+            "points" => "function(doc) { emit(doc.geometry, doc.elev); }"
+        }
+      })
+  end
+  
+end
+
+add_ddoc
+
