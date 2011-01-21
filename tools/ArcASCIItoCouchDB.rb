@@ -1,27 +1,33 @@
+if ARGV.length < 2
+  puts "\n\nUSAGE: ruby #{$0} couch_url path_to_asc_data_file [start_row] [end_row]\n\n\n"
+  exit
+end
+
+
 require "rubygems"
 require "couchrest"
 require "date"
 
 #Set database
 
-# @db = CouchRest.database!("http://pmark.couchone.com/elevation_pacnw")
-@db = CouchRest.database!("http://127.0.0.1:5984/elevation_pacnw")
+couch_url = ARGV.first
+@db = CouchRest.database!(couch_url)
 
 
 def post(batch)
-  puts "submitting batch"
-  @db.bulk_save(batch)
+  # puts "submitting batch"
+  # @db.bulk_save(batch)
 end
 
 
 #Set source file to srtm
-
-srtm = File.open("srtm.pdx_hood.asc")
+file_path = ARGV[1]
+srtm = File.open(file_path)
 
 #Extract values from header constants
 
-ncols = srtm.readline.sub("ncols", "").sub("\n", "").gsub(/\s/, "").to_f
-nrows = srtm.readline.sub("nrows", "").sub("\n", "").gsub(/\s/, "").to_f
+ncols = srtm.readline.sub("ncols", "").sub("\n", "").gsub(/\s/, "").to_i
+nrows = srtm.readline.sub("nrows", "").sub("\n", "").gsub(/\s/, "").to_i
 xllcorner = srtm.readline.sub("xllcorner", "").sub("\n", "").gsub(/\s/, "").to_f
 yllcorner = srtm.readline.sub("yllcorner", "").sub("\n", "").gsub(/\s/, "").to_f
 cellsize = srtm.readline.sub("cellsize", "").sub("\n", "").gsub(/\s/, "").to_f
@@ -31,9 +37,11 @@ NODATA_value = srtm.readline.sub("NODATA_value", "").sub("\n", "").gsub(/\s/, ""
 
 celly = 0
 batch_size = 1000
-number_of_records_to_skip = 0  # make this 4200 for pacnw
-
 start_time = DateTime.now
+start_row = ARGV[2].to_i || 0
+end_row = ARGV[3].to_i || nrows
+
+puts "\nImporting #{end_row - start_row} rows from '#{file_path}' into '#{couch_url}'\n\n"
 
 (0..nrows).each do |i|
 
@@ -41,55 +49,58 @@ start_time = DateTime.now
 
   gridline = srtm.readline
 
-
-  if (i >= number_of_records_to_skip) 
-
-      gridline = gridline.split.collect { |e| e.to_i }
-
-      #Get array position
-
-      cellx = 0
-      celly = i
-
-      #Populate passthrough array with processing point
-
-      lat = yllcorner + cellsize * celly
-      batch = []
-
-      # parse one line
-      gridline.collect do |elev| 
-
-        elev = '' if (elev == -9999)
-        
-        long = xllcorner+cellsize*cellx
-
-        # create the document
-        one_document = { :elev => elev, :geometry => { :type => 'Point', :coordinates => [long, lat] } }
-        
-        # Should the batch be submitted yet?        
-        if (cellx > 0 && cellx % batch_size == 0)
-          post(batch)
-          batch = [one_document]
-          
-        elsif cellx == (ncols - 1)
-          # on last column
-          batch << one_document
-          post(batch)
-          
-        else
-          batch << one_document
-        end
-
-        cellx += 1
-        
-        # break if cellx > 9
-      end
-
-       puts "row #{i}" if (i % 1) == 0
+  if (i < start_row) 
+    next
+  elsif (i > end_row)
+    break
   end
+
+  gridline = gridline.split.collect { |e| e.to_i }
+
+  #Get array position
+
+  cellx = 0
+  celly = i
+
+  #Populate passthrough array with processing point
+
+  lat = yllcorner + cellsize * celly
+  batch = []
+
+  # parse one line
+  gridline.collect do |elev| 
+
+    elev = '' if (elev == -9999)
+
+    long = xllcorner+cellsize*cellx
+
+    # create the document
+    one_document = { :elev => elev, :geometry => { :type => 'Point', :coordinates => [long, lat] } }
+
+    # Should the batch be submitted yet?        
+    if (cellx > 0 && cellx % batch_size == 0)
+      post(batch)
+      batch = [one_document]
+
+    elsif cellx == (ncols - 1)
+      # on last column
+      batch << one_document
+      post(batch)
+
+    else
+      batch << one_document
+    end
+
+    cellx += 1
+
+    # break if cellx > 9
+  end
+
+  puts "row #{i}" if (i % 1) == 0
 end
+
 
 stop_time = DateTime.now
 run_time = ((stop_time - start_time) * 24 * 60 * 60).to_f
 
-puts "\n  Imported #{celly + 1 - number_of_records_to_skip} rows in #{run_time} sec\n"
+puts "\n  Imported #{end_row - start_row} rows in #{run_time} sec\n"
