@@ -5,7 +5,7 @@ require "date"
 #Set database
 
 # @db = CouchRest.database!("http://pmark.couchone.com/elevation_pacnw")
-@db = CouchRest.database!("http://127.0.0.1:5984/elevation_hood")
+@db = CouchRest.database!("http://127.0.0.1:5984/elevation_hood122")
 
 
 def post(batch)
@@ -13,10 +13,11 @@ def post(batch)
   @db.bulk_save(batch)
 end
 
+Dir.chdir("/")
 
 #Set source file to srtm
 
-srtm = File.open("srtm.pdx_hood.asc")
+srtm = File.open("hood122.txt")
 
 #Extract values from header constants
 
@@ -31,7 +32,7 @@ NODATA_value = srtm.readline.sub("NODATA_value", "").sub("\n", "").gsub(/\s/, ""
 
 celly = 0
 batch_size = 1000
-number_of_records_to_skip = 4200  # make this 4200 for pacnw
+number_of_records_to_skip = 0  # make this 4200 for pacnw
 
 start_time = DateTime.now
 

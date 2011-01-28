@@ -118,10 +118,14 @@
 		4DE67944125CBFD40080EEB0 /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DE67943125CBFD40080EEB0 /* APIClient.m */; };
 		4DE67948125CBFE70080EEB0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE67947125CBFE70080EEB0 /* SystemConfiguration.framework */; };
 		4DEA74C4126EDFB90027580D /* elevation_grid_mt_hood_25km_25s.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4DEA74C3126EDFB90027580D /* elevation_grid_mt_hood_25km_25s.txt */; };
-		4DF1E39B12617C1100DD1E46 /* ElevationGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF1E39A12617C1100DD1E46 /* ElevationGrid.m */; };
 		4DF1E3F7126194C600DD1E46 /* 3dar.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4DF1E3F2126194C600DD1E46 /* 3dar.plist */; };
 		4DF1E3F8126194C600DD1E46 /* 3dar_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF1E3F3126194C600DD1E46 /* 3dar_logo.png */; };
 		4DF1E3FA126194C600DD1E46 /* SM3DAR_keys.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */; };
+		873B8BCE12F279E000ACF089 /* HoodGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 873B8BCD12F279E000ACF089 /* HoodGrid.m */; };
+		873B8BD112F2833B00ACF089 /* Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 873B8BD012F2833B00ACF089 /* Coordinate.m */; };
+		873B8C8C12F2C12A00ACF089 /* hood_x.json in Resources */ = {isa = PBXBuildFile; fileRef = 873B8C8B12F2C12A00ACF089 /* hood_x.json */; };
+		873B8CD012F2C60500ACF089 /* hood48k.json in Resources */ = {isa = PBXBuildFile; fileRef = 873B8CCF12F2C60500ACF089 /* hood48k.json */; };
+		873B8CD212F2C62500ACF089 /* pdx_downtown.json in Resources */ = {isa = PBXBuildFile; fileRef = 873B8CD112F2C61F00ACF089 /* pdx_downtown.json */; };
 		A6CFCE1212AB10610074EA17 /* lib3DAR_v4_0_7_b1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6CFCE1112AB10610074EA17 /* lib3DAR_v4_0_7_b1.a */; };
 /* End PBXBuildFile section */
 
@@ -348,6 +352,13 @@
 		4DF1E3F3126194C600DD1E46 /* 3dar_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_logo.png; sourceTree = "<group>"; };
 		4DF1E3F5126194C600DD1E46 /* SM3DAR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SM3DAR.h; sourceTree = "<group>"; };
 		4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SM3DAR_keys.txt; sourceTree = "<group>"; };
+		873B8BCC12F279E000ACF089 /* HoodGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HoodGrid.h; sourceTree = "<group>"; };
+		873B8BCD12F279E000ACF089 /* HoodGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HoodGrid.m; sourceTree = "<group>"; };
+		873B8BCF12F2833B00ACF089 /* Coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coordinate.h; sourceTree = "<group>"; };
+		873B8BD012F2833B00ACF089 /* Coordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coordinate.m; sourceTree = "<group>"; };
+		873B8C8B12F2C12A00ACF089 /* hood_x.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hood_x.json; sourceTree = "<group>"; };
+		873B8CCF12F2C60500ACF089 /* hood48k.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hood48k.json; sourceTree = "<group>"; };
+		873B8CD112F2C61F00ACF089 /* pdx_downtown.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pdx_downtown.json; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* BezierGarden-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BezierGarden-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		A6CFCE1112AB10610074EA17 /* lib3DAR_v4_0_7_b1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = lib3DAR_v4_0_7_b1.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -390,6 +401,10 @@
 				4D6230BD1282461C004ADBAF /* PDX911.m */,
 				4D219C3E12738FEB006AE795 /* TVOutManager.h */,
 				4D219C3F12738FEB006AE795 /* TVOutManager.m */,
+				873B8BCC12F279E000ACF089 /* HoodGrid.h */,
+				873B8BCD12F279E000ACF089 /* HoodGrid.m */,
+				873B8BCF12F2833B00ACF089 /* Coordinate.h */,
+				873B8BD012F2833B00ACF089 /* Coordinate.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -427,6 +442,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				873B8C8B12F2C12A00ACF089 /* hood_x.json */,
+				873B8CCF12F2C60500ACF089 /* hood48k.json */,
 				4D7F55B4126945360069A64B /* elevation_grid_25km_100s.txt */,
 				4D4C6E1812697E8B00DCEF32 /* elevation_grid_oregon_660km_150s.txt */,
 				4DEA74C3126EDFB90027580D /* elevation_grid_mt_hood_25km_25s.txt */,
@@ -437,6 +454,7 @@
 				8D1107310486CEB800E47090 /* BezierGarden-Info.plist */,
 				4D6230CC1282473E004ADBAF /* pdx911a.kml */,
 				4D0E02BC127B491900D6F568 /* pdx_cities.json */,
+				873B8CD112F2C61F00ACF089 /* pdx_downtown.json */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -866,6 +884,9 @@
 				4DEA74C4126EDFB90027580D /* elevation_grid_mt_hood_25km_25s.txt in Resources */,
 				4D0E0315127B5BFA00D6F568 /* pdx_cities.json in Resources */,
 				4D6230CD1282473E004ADBAF /* pdx911a.kml in Resources */,
+				873B8C8C12F2C12A00ACF089 /* hood_x.json in Resources */,
+				873B8CD012F2C60500ACF089 /* hood48k.json in Resources */,
+				873B8CD212F2C62500ACF089 /* pdx_downtown.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -912,7 +933,6 @@
 				4DE67941125CBE9F0080EEB0 /* NSStringAdditions.m in Sources */,
 				4DE67944125CBFD40080EEB0 /* APIClient.m in Sources */,
 				4D0AF202126011D400B6ACE4 /* DotView.m in Sources */,
-				4DF1E39B12617C1100DD1E46 /* ElevationGrid.m in Sources */,
 				4DD9214A126905760055BB3B /* GridView.m in Sources */,
 				4D219C4012738FEB006AE795 /* TVOutManager.m in Sources */,
 				4D62306912824530004ADBAF /* ioapi.c in Sources */,
@@ -969,6 +989,8 @@
 				4D62309E12824530004ADBAF /* SimpleKMLFolder.m in Sources */,
 				4D62309F12824530004ADBAF /* SimpleKML_UIImage.m in Sources */,
 				4D6230BE1282461C004ADBAF /* PDX911.m in Sources */,
+				873B8BCE12F279E000ACF089 /* HoodGrid.m in Sources */,
+				873B8BD112F2833B00ACF089 /* Coordinate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1071,7 +1093,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.2;
+				SDKROOT = iphoneos4.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;

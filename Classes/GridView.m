@@ -5,7 +5,8 @@
 
 #import <OpenGLES/ES1/gl.h>
 #import "GridView.h"
-#import "ElevationGrid.h"
+//#import "ElevationGrid.h"
+#import "HoodGrid.h"
 
 
 @implementation GridView

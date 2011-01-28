@@ -17,11 +17,13 @@
 
 @implementation BezierGardenViewController
 
-@synthesize elevationGrid;
+//@synthesize elevationGrid;
 
 - (void)dealloc 
 {
-    self.elevationGrid = nil;
+//    self.elevationGrid = nil;
+    [hoodGrid release];
+    
     [super dealloc];
 }
 
@@ -76,12 +78,16 @@
 {
     NSLog(@"loadPointsOfInterest");
     
-    [self addElevationGridPoint];
-    
-//    [self addCityNamePoints];
-    
 //    [self setCameraAltitude:1.8];
     sm3dar.cameraAltitudeMeters = MIN_CAMERA_ALTITUDE_METERS;
+    
+
+    [self addHoodGridPoint];
+    
+    
+//    [self addElevationGridPoint];
+    
+//    [self addCityNamePoints];
     
 //    [self add911IncidentPoints];
     
@@ -169,8 +175,39 @@
 
 #pragma mark -
 
+- (void) addHoodGridPoint
+{
+    
+    
+    // Relocate camera.
+    
+//    CLLocation *mtHood = [[[CLLocation alloc] initWithLatitude:45.373831 longitude:-121.698032] autorelease];
+//    [sm3dar changeCurrentLocation:mtHood];
+// worldCoordinateFor doesn't look at new location.
+    
+    
+    NSLog(@"loc: %@", sm3dar.currentLocation);
+
+    
+    // Populate grid.
+    
+    hoodGrid = [[HoodGrid alloc] init];
+
+    
+
+    // Add a view.
+    
+    [self addGridAtX:0 Y:0 Z:0];    
+    
+    
+    // maybe put it here
+    //    [sm3dar changeCurrentLocation:mtHood];
+
+}
+
 - (void) addElevationGridPoint
 {
+/*
 //    self.elevationGrid = [[[ElevationGrid alloc] initFromFile:@"elevation_grid_25km_100s.txt"] autorelease];
     
 //    CLLocation *theOffice = [[[CLLocation alloc] initWithLatitude:45.523563 longitude:-122.675099] autorelease];
@@ -202,6 +239,7 @@
 //    [self addGridAtX:gridCoord.x Y:gridCoord.y Z:gridOriginZ];    
     
     [self addGridAtX:0 Y:0 Z:0];    
+*/
 }
 
 - (void) add911IncidentPoints
@@ -211,6 +249,7 @@
     [incidents release];    
 }
 
+#if 0
 - (void) addCityNamePoints
 {
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"pdx_cities" ofType:@"json"];            
@@ -280,13 +319,16 @@
     }
 	    
 }
+#endif
+
 
 - (void) setCameraAltitude:(CGFloat)metersAboveGround
 {
+/*
     CGFloat elevationAtCameraLocation = [elevationGrid elevationAtLocation:sm3dar.currentLocation];
 
     sm3dar.cameraAltitudeMeters = (elevationAtCameraLocation + metersAboveGround) * (2*GRID_SCALE_VERTICAL);
-    
+*/
 }
 
 

@@ -23,7 +23,7 @@
 //#define ELEVATION_LINE_LENGTH 660000
 
 CLLocationDistance elevationData[(int)ELEVATION_PATH_SAMPLES][(int)ELEVATION_PATH_SAMPLES];
-Coord3D worldCoordinateData[(int)ELEVATION_PATH_SAMPLES][(int)ELEVATION_PATH_SAMPLES];
+//Coord3D worldCoordinateData[(int)ELEVATION_PATH_SAMPLES][(int)ELEVATION_PATH_SAMPLES];
 
 typedef struct
 {

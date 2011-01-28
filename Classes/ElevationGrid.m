@@ -168,7 +168,7 @@
     }
 
     // Get the result data items. See example below.
-    /* 
+    /* GeoJSON
      {
          "location": 
          {
@@ -373,10 +373,10 @@
 
     for (NSArray *tmpPoint in unsortedPoints)
     {
-        NSString *lng = [tmpPoint objectAtIndex:0];
         NSString *lat = [tmpPoint objectAtIndex:1];
         CLLocationDegrees latDeg = [lat doubleValue];
-        CLLocationDegrees lngDeg = [lng doubleValue];
+//        NSString *lng = [tmpPoint objectAtIndex:0];
+//        CLLocationDegrees lngDeg = [lng doubleValue];
         
         if (latDeg < minLat)
             minLat = latDeg;
