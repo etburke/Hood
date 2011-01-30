@@ -62,7 +62,7 @@
 	
 	glEnable(GL_DEPTH_TEST);
 	
-	bool fill = false;
+	bool fill = true;
 	
 	if (fill)
 		glColor4f(0,0,1,1);

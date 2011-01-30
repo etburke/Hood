@@ -67,14 +67,14 @@
 */
     
     
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"pdx_downtown" ofType:@"json"];            
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"hood" ofType:@"json"];            
     NSError *error = nil;
     NSLog(@"[BGVC] Loading Mount Hood from %@", filePath);
     NSString *responseJSON = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
     
     if (error)
     {
-        NSLog(@"[BGVC] ERROR parsing cities: ", [error localizedDescription]);
+        NSLog(@"[BGVC] ERROR parsing JSON: ", [error localizedDescription]);
     }
     
     
@@ -107,8 +107,12 @@
 //    NSDictionary *lineData = [NSMutableDictionary dictionaryWithCapacity:coordCount];
     NSDictionary *lineData = [NSMutableDictionary dictionary];
     
+//    NSInteger skipper = 0;
+    
     for (NSDictionary *rowdata in results)
     {
+//        if ((skipper++ % 6) != 0) continue;
+            
         // Extract this row's 3 coordinate values.
         
         NSArray *bbox = [rowdata objectForKey:@"bbox"];
@@ -160,9 +164,6 @@
         // Sort columns by ascending longitude in bucket.
         
         [lineBucket sortedArrayUsingSelector:@selector(longitude)];
-        
-        
-        
     }
     
     NSArray *latitudeArray = [lineData allKeys];
@@ -177,8 +178,11 @@
 //    NSMutableArray *sortedRows = [NSMutableArray arrayWithCapacity:coordCount];
     NSMutableArray *sortedRows = [NSMutableArray array];
     
+//    skipper = 0;
     for (NSString *bucketKey in latitudeArray)
     {
+//        if ((skipper++ % 6) != 0) continue;
+        
         NSArray *lineBucket = [lineData objectForKey:bucketKey];
                                
         [sortedRows addObject:lineBucket];
@@ -196,20 +200,55 @@
     
     
     
+#if 0
     for (int rowNumber=0; rowNumber < [rows count]; rowNumber++)
     {
         NSArray *row = [rows objectAtIndex:rowNumber];
         
         for (int colNumber=0; colNumber < [row count]; colNumber++)
         {
-            Coordinate *coordinate = [row objectAtIndex:colNumber];
+            Coordinate *coordinate = [row objectAtIndex:colNumber];            
+            if (!coordinate) continue;
                         
-            // Populate the worldCoordinateData array
-            
             worldCoordinateData[rowNumber][colNumber] = [coordinate toCoord3D];
         }
         
     }
+    
+#else
+    CGFloat half = ELEVATION_PATH_SAMPLES / 2.0;
+    
+    for (int rowNumber=0; rowNumber < ELEVATION_PATH_SAMPLES; rowNumber++)
+    {
+        CGFloat rowpct = rowNumber / ELEVATION_PATH_SAMPLES;
+        CGFloat rowdegrees = (2 * M_PI * rowpct);
+        
+        for (int colNumber=0; colNumber < ELEVATION_PATH_SAMPLES; colNumber++)
+        {
+            Coord3D c;
+            
+            CGFloat colpct = colNumber / ELEVATION_PATH_SAMPLES;
+
+//            NSInteger rnd = (rand() % 2);
+//            CGFloat degrees = (1 * M_PI * rowpct) + (1 * M_PI * colpct);
+            CGFloat coldegrees = (2 * M_PI * colpct);
+            
+            c.x = (colNumber - half) * 20;
+            c.y = (rowNumber - half) * 20;
+//            c.z = -cosf(degrees) * 500;
+
+            c.z = (-cosf(rowdegrees) - cosf(coldegrees)) * 1000;
+            
+            
+//            if (rowpct > .5) rowpct = 1.0 - rowpct;            
+//            c.z += c.z * rowpct;
+            
+            
+            worldCoordinateData[rowNumber][colNumber] = c;
+        }
+    }    
+#endif
+    
 }
 
 
@@ -217,7 +256,8 @@
 {
     if (self = [super init])
     {
-        NSArray *gridRows = [self fetchElevationPoints];
+//        NSArray *gridRows = [self fetchElevationPoints];
+        NSArray *gridRows = nil;
         
         [self gridToWorldCoordinates:gridRows];
     }

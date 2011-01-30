@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@class BezierGardenViewController;
+@class HoodViewController;
 
 @interface BezierGardenAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
-    BezierGardenViewController *viewController;
+    HoodViewController *viewController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet BezierGardenViewController *viewController;
+@property (nonatomic, retain) IBOutlet HoodViewController *viewController;
 
 @end
 

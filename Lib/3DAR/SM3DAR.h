@@ -170,6 +170,12 @@ typedef NSObject<SM3DAR_PointProtocol> SM3DAR_Point;
 - (Coord3D)solarPositionScaled:(CGFloat)meters;
 - (void)initOrigin;
 - (Coord3D)ray:(CGPoint)screenPoint;
+
+///////////// NEW 1/30/2011
+- (void) setCameraAltitudeMeters:(CGFloat)altitude;
+- (void) setCameraOffset:(Coord3D)offset;
+/////////////
+
 @end
 
 
