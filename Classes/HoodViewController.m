@@ -152,9 +152,9 @@
 #pragma mark Touches
 
 - (void) screenTouched:(CGPoint)p {
-    CGFloat zmax = MAX_CAMERA_ALTITUDE_METERS;
-    CGFloat altitude = (p.y / 480.0) * zmax + MIN_CAMERA_ALTITUDE_METERS;
-    sm3dar.cameraAltitudeMeters = altitude;    
+//    CGFloat zmax = MAX_CAMERA_ALTITUDE_METERS;
+//    CGFloat altitude = (p.y / 480.0) * zmax + MIN_CAMERA_ALTITUDE_METERS;
+//    sm3dar.cameraAltitudeMeters = altitude;    
 }
 
 #pragma mark CLLocationManagerDelegate
@@ -343,19 +343,20 @@
 {
     [joystick updateThumbPosition];
 
-    CGFloat xspeed = joystick.velocity.x * MAX_SPEED;
-    CGFloat yspeed = -joystick.velocity.y * MAX_SPEED;
+    CGFloat s = 6.2; // 4.6052;
+    
+    CGFloat xspeed =  joystick.velocity.x * exp(fabs(joystick.velocity.x) * s);
+    CGFloat yspeed = -joystick.velocity.y * exp(fabs(joystick.velocity.y) * s);
+    
     
     if (abs(xspeed) > 0.0 || abs(yspeed) > 0.0) 
-    {
-        
+    {        
         Coord3D ray = [sm3dar ray:CGPointMake(160, 240)];
                 
         cameraOffset.x += (ray.x * yspeed);
         cameraOffset.y += (ray.y * yspeed);
+        cameraOffset.z += (ray.z * yspeed);
         
-//        NSLog(@"offset: %.1f, %.1f", cameraOffset.x, cameraOffset.y);
-
         CGPoint perp = [CGPointUtil perpendicularCounterClockwise:CGPointMake(ray.x, ray.y)];        
         cameraOffset.x += (perp.x * xspeed);
         cameraOffset.y += (perp.y * xspeed);

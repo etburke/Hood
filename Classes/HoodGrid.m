@@ -220,8 +220,10 @@
     
     for (int rowNumber=0; rowNumber < ELEVATION_PATH_SAMPLES; rowNumber++)
     {
+        NSInteger rnd = (rand() % 6);
+
         CGFloat rowpct = rowNumber / ELEVATION_PATH_SAMPLES;
-        CGFloat rowdegrees = (2 * M_PI * rowpct);
+        CGFloat rowdegrees = (rnd * M_PI * rowpct);
         
         for (int colNumber=0; colNumber < ELEVATION_PATH_SAMPLES; colNumber++)
         {
@@ -229,20 +231,13 @@
             
             CGFloat colpct = colNumber / ELEVATION_PATH_SAMPLES;
 
-//            NSInteger rnd = (rand() % 2);
-//            CGFloat degrees = (1 * M_PI * rowpct) + (1 * M_PI * colpct);
-            CGFloat coldegrees = (2 * M_PI * colpct);
+            CGFloat coldegrees = (3 * M_PI * colpct);
             
-            c.x = (colNumber - half) * 20;
-            c.y = (rowNumber - half) * 20;
-//            c.z = -cosf(degrees) * 500;
+            c.x = (colNumber - half) * 50;
+            c.y = (rowNumber - half) * 50;
+            //c.z = (sinf(rowdegrees) + cosf(coldegrees)) * 100;
 
-            c.z = (-cosf(rowdegrees) - cosf(coldegrees)) * 1000;
-            
-            
-//            if (rowpct > .5) rowpct = 1.0 - rowpct;            
-//            c.z += c.z * rowpct;
-            
+            c.z = (sinf(rowdegrees) + sinf(coldegrees)) * 800;  // Dome tarp
             
             worldCoordinateData[rowNumber][colNumber] = c;
         }
