@@ -111,7 +111,10 @@
     [self.view addSubview:joystick];    
     [NSTimer scheduledTimerWithTimeInterval:0.10f target:self selector:@selector(updateJoystick) userInfo:nil repeats:YES];    
     [self.view becomeFirstResponder];
+
     
+    [NSTimer scheduledTimerWithTimeInterval:0.3f target:hoodGrid selector:@selector(refresh) userInfo:nil repeats:YES];    
+
 }
 
 - (void)viewDidAppear:(BOOL)animated

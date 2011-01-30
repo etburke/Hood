@@ -17,6 +17,9 @@
 
 @interface GridView : SM3DAR_MarkerView
 {
+    CGFloat redColor;
+    CGFloat greenColor;
+    CGFloat blueColor;
 }
 
 @end

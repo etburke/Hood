@@ -216,14 +216,21 @@
     }
     
 #else
+    
+    // Cool maths
+    
     CGFloat half = ELEVATION_PATH_SAMPLES / 2.0;
     
     for (int rowNumber=0; rowNumber < ELEVATION_PATH_SAMPLES; rowNumber++)
     {
-        NSInteger rnd = (rand() % 6);
+        NSInteger rnd = (rand() % 3);
 
         CGFloat rowpct = rowNumber / ELEVATION_PATH_SAMPLES;
-        CGFloat rowdegrees = (rnd * M_PI * rowpct);
+        
+        CGFloat rowdegrees = (2 * M_PI * rowpct) + swellDegrees;
+
+        CGFloat zex = 110 + ((rnd/4) * 30);
+        
         
         for (int colNumber=0; colNumber < ELEVATION_PATH_SAMPLES; colNumber++)
         {
@@ -231,21 +238,49 @@
             
             CGFloat colpct = colNumber / ELEVATION_PATH_SAMPLES;
 
-            CGFloat coldegrees = (3 * M_PI * colpct);
+            CGFloat coldegrees = (2 * M_PI * colpct) + swellDegrees;
             
-            c.x = (colNumber - half) * 50;
-            c.y = (rowNumber - half) * 50;
-            //c.z = (sinf(rowdegrees) + cosf(coldegrees)) * 100;
+            CGFloat zrnd1, zrnd2;
+            
 
-            c.z = (sinf(rowdegrees) + sinf(coldegrees)) * 800;  // Dome tarp
+            
+            zrnd1 = sinf(coldegrees);
+            zrnd2 = sinf(rowdegrees);
+
+            switch (rnd) 
+            {                    
+                case 0:
+                    zrnd1 = sinf(coldegrees);
+                    zrnd2 = sinf(rowdegrees) * (1.4);
+                    break;
+                
+                default:
+                    zrnd1 = sinf(coldegrees);
+                    zrnd2 = sinf(rowdegrees);
+                    break;
+            }
+
+#endif
+            c.z = (zrnd1 + zrnd2) * zex;  
+
+            c.x = (colNumber - half) * 60; //(60 + (rnd*4));
+            c.y = (rowNumber - half) * 60;
+            
+            
+            // Dome tarp is sin + sin
             
             worldCoordinateData[rowNumber][colNumber] = c;
         }
     }    
-#endif
     
 }
 
+- (void) refresh
+{
+    swellDegrees += M_PI / 8;
+    
+    [self gridToWorldCoordinates:nil];
+}
 
 - (id) init
 {
@@ -253,6 +288,7 @@
     {
 //        NSArray *gridRows = [self fetchElevationPoints];
         NSArray *gridRows = nil;
+        swellDegrees = 0;
         
         [self gridToWorldCoordinates:gridRows];
     }

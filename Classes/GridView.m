@@ -11,9 +11,20 @@
 
 @implementation GridView
 
++ (CGFloat) randomColor
+{
+    return random() / (CGFloat)RAND_MAX;
+}
+
+
 - (void) buildView 
 {
     NSLog(@"[GV] buildView");    
+    
+    redColor = [GridView randomColor];
+    greenColor = [GridView randomColor];
+    blueColor = [GridView randomColor];
+    
 }
 
 #define MAX_LINE_LENGTH 256
@@ -35,6 +46,7 @@
 
     glEnable(GL_FOG);
 }
+
 
 - (void) drawGrid
 {
@@ -62,16 +74,32 @@
 	
 	glEnable(GL_DEPTH_TEST);
 	
-	bool fill = true;
+	BOOL fill = YES;
+	BOOL alt = YES;
 	
-	if (fill)
-		glColor4f(0,0,1,1);
-	else	
-		glColorMask(0,0,0,0);			// Turn of visible filling.
     
 	
     for (int y=0; y < gridSize-1; y++)
     {
+        fill = !fill;
+                
+        if (fill)
+        {
+            alt = !alt;
+
+//            glColorMask(1, 1, 1, 1);
+            
+            if (alt)
+                glColor4f(0, 0.66, 1, 1);
+            else
+                glColor4f(0, 0, 0.33, 1);
+        }
+        else	
+        {
+            glColor4f(0, 0, 1, 1);
+//            glColorMask(0,0,0,0);			// Turn off visible filling.
+        }
+
     	int start1 = y * gridSize;
         int start2 = start1 + gridSize;
 		
@@ -88,43 +116,44 @@
 		glDrawElements(GL_TRIANGLE_STRIP, ct, GL_UNSIGNED_SHORT, lineIndex);
     }
 	
-    // draw horizontal lines.
-
-	glColorMask(1,1,1,1);
-    glColor4f(1,1,0,1);
-	
+#if 0
+    glColorMask(1,1,1,1);
+    glColor4f(1,1,0, 0.3);
+    
     
     for (int y=0; y < gridSize; y++)
     {
-    	int start = y * gridSize;
+        int start = y * gridSize;
         
         // build index array.
         
         for (int x=0; x < gridSize; x++)
-        	lineIndex[x] = start + x;
+            lineIndex[x] = start + x;
             
-		glDrawElements(GL_LINE_STRIP, gridSize, GL_UNSIGNED_SHORT, lineIndex);
+        glDrawElements(GL_LINE_STRIP, gridSize, GL_UNSIGNED_SHORT, lineIndex);
     }
     
     // draw horizontal lines.
     
     for (int x=0; x < gridSize; x++)
     {
-    	int start = x;
+        int start = x;
         
         // build index array.
         
         for (int y=0; y < gridSize; y++)
-        	lineIndex[y] = start + (y * gridSize);
+            lineIndex[y] = start + (y * gridSize);
             
-		glDrawElements(GL_LINE_STRIP, gridSize, GL_UNSIGNED_SHORT, lineIndex);
+        glDrawElements(GL_LINE_STRIP, gridSize, GL_UNSIGNED_SHORT, lineIndex);
     }
+#endif
 }
 
 - (void) drawInGLContext 
 {
     [self drawGrid];
-    [self drawFog];
+//    [self drawFog];
 }
 
 @end
+

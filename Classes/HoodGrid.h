@@ -17,14 +17,16 @@
 
 #define ELEVATION_LINE_LENGTH 14400.0
 //#define ELEVATION_PATH_SAMPLES 400.0
-#define ELEVATION_PATH_SAMPLES 80.0
+#define ELEVATION_PATH_SAMPLES 40.0
 
 Coord3D worldCoordinateData[(int)ELEVATION_PATH_SAMPLES][(int)ELEVATION_PATH_SAMPLES];
 
 
 
 @interface HoodGrid : NSObject {
-
+    CGFloat swellDegrees;
 }
+
+- (void) refresh;
 
 @end
