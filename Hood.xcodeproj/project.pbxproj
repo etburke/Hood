@@ -123,8 +123,12 @@
 		4DF1E3FA126194C600DD1E46 /* SM3DAR_keys.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */; };
 		873B8BCE12F279E000ACF089 /* HoodGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 873B8BCD12F279E000ACF089 /* HoodGrid.m */; };
 		873B8BD112F2833B00ACF089 /* Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 873B8BD012F2833B00ACF089 /* Coordinate.m */; };
+		87D9F83D12FE0D55001F8A49 /* arc.obj in Resources */ = {isa = PBXBuildFile; fileRef = 87D9F83C12FE0D55001F8A49 /* arc.obj */; };
+		87D9F87012FE0EC6001F8A49 /* SphereBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F86B12FE0EC6001F8A49 /* SphereBackgroundView.m */; };
+		87D9F87112FE0EC6001F8A49 /* SphereView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F86D12FE0EC6001F8A49 /* SphereView.m */; };
+		87D9F87212FE0EC6001F8A49 /* TexturedGeometryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F86F12FE0EC6001F8A49 /* TexturedGeometryView.m */; };
+		87D9F87512FE0F00001F8A49 /* ObjGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F87412FE0F00001F8A49 /* ObjGridView.m */; };
 		A60F3A7212F52052005927A6 /* hood150m.json in Resources */ = {isa = PBXBuildFile; fileRef = A60F3A7112F52052005927A6 /* hood150m.json */; };
-		A6FD72CB12F52DFA005C70C2 /* hood150m.json in Resources */ = {isa = PBXBuildFile; fileRef = A6FD72CA12F52DFA005C70C2 /* hood150m.json */; };
 		A6FD73D412F55F84005C70C2 /* lib3DAR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6FD73D312F55F84005C70C2 /* lib3DAR.a */; };
 		A6FD73F012F560BB005C70C2 /* Joystick.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FD73EF12F560BB005C70C2 /* Joystick.m */; };
 		A6FD73F312F560CB005C70C2 /* CGPointUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FD73F212F560CB005C70C2 /* CGPointUtil.m */; };
@@ -359,6 +363,15 @@
 		873B8BCD12F279E000ACF089 /* HoodGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HoodGrid.m; sourceTree = "<group>"; };
 		873B8BCF12F2833B00ACF089 /* Coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coordinate.h; sourceTree = "<group>"; };
 		873B8BD012F2833B00ACF089 /* Coordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coordinate.m; sourceTree = "<group>"; };
+		87D9F83C12FE0D55001F8A49 /* arc.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = arc.obj; sourceTree = "<group>"; };
+		87D9F86A12FE0EC6001F8A49 /* SphereBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SphereBackgroundView.h; sourceTree = "<group>"; };
+		87D9F86B12FE0EC6001F8A49 /* SphereBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SphereBackgroundView.m; sourceTree = "<group>"; };
+		87D9F86C12FE0EC6001F8A49 /* SphereView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SphereView.h; sourceTree = "<group>"; };
+		87D9F86D12FE0EC6001F8A49 /* SphereView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SphereView.m; sourceTree = "<group>"; };
+		87D9F86E12FE0EC6001F8A49 /* TexturedGeometryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TexturedGeometryView.h; sourceTree = "<group>"; };
+		87D9F86F12FE0EC6001F8A49 /* TexturedGeometryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TexturedGeometryView.m; sourceTree = "<group>"; };
+		87D9F87312FE0F00001F8A49 /* ObjGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjGridView.h; sourceTree = "<group>"; };
+		87D9F87412FE0F00001F8A49 /* ObjGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjGridView.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Hood-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Hood-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		A60F3A7112F52052005927A6 /* hood150m.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hood150m.json; sourceTree = "<group>"; };
 		A6FD72CA12F52DFA005C70C2 /* hood150m.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hood150m.json; sourceTree = "<group>"; };
@@ -417,6 +430,14 @@
 				873B8BCD12F279E000ACF089 /* HoodGrid.m */,
 				873B8BCF12F2833B00ACF089 /* Coordinate.h */,
 				873B8BD012F2833B00ACF089 /* Coordinate.m */,
+				87D9F87312FE0F00001F8A49 /* ObjGridView.h */,
+				87D9F87412FE0F00001F8A49 /* ObjGridView.m */,
+				87D9F86A12FE0EC6001F8A49 /* SphereBackgroundView.h */,
+				87D9F86B12FE0EC6001F8A49 /* SphereBackgroundView.m */,
+				87D9F86C12FE0EC6001F8A49 /* SphereView.h */,
+				87D9F86D12FE0EC6001F8A49 /* SphereView.m */,
+				87D9F86E12FE0EC6001F8A49 /* TexturedGeometryView.h */,
+				87D9F86F12FE0EC6001F8A49 /* TexturedGeometryView.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -454,6 +475,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				87D9F83C12FE0D55001F8A49 /* arc.obj */,
 				A6FD740D12F5630B005C70C2 /* 84_white.png */,
 				A6FD740012F561F1005C70C2 /* 128_white.png */,
 				A6FD72CA12F52DFA005C70C2 /* hood150m.json */,
@@ -898,9 +920,9 @@
 				4D0E0315127B5BFA00D6F568 /* pdx_cities.json in Resources */,
 				4D6230CD1282473E004ADBAF /* pdx911a.kml in Resources */,
 				A60F3A7212F52052005927A6 /* hood150m.json in Resources */,
-				A6FD72CB12F52DFA005C70C2 /* hood150m.json in Resources */,
 				A6FD740112F561F1005C70C2 /* 128_white.png in Resources */,
 				A6FD740E12F5630B005C70C2 /* 84_white.png in Resources */,
+				87D9F83D12FE0D55001F8A49 /* arc.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1007,6 +1029,10 @@
 				873B8BD112F2833B00ACF089 /* Coordinate.m in Sources */,
 				A6FD73F012F560BB005C70C2 /* Joystick.m in Sources */,
 				A6FD73F312F560CB005C70C2 /* CGPointUtil.m in Sources */,
+				87D9F87012FE0EC6001F8A49 /* SphereBackgroundView.m in Sources */,
+				87D9F87112FE0EC6001F8A49 /* SphereView.m in Sources */,
+				87D9F87212FE0EC6001F8A49 /* TexturedGeometryView.m in Sources */,
+				87D9F87512FE0F00001F8A49 /* ObjGridView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1027,7 +1053,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Lib/3DAR\"",
-					"\"$(SRCROOT)/../../Library/iOS/build/Debug-iphoneos\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",

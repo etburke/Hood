@@ -32,6 +32,7 @@
 - (void) add911IncidentPoints;
 - (void) addElevationGridPoint;
 - (void) setCameraAltitude:(CGFloat)metersAboveGround;
+- (void) addElevationOBJGridPoint;
 
 @end
 

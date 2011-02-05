@@ -12,6 +12,7 @@
 #import "PDX911.h"
 #import "DotView.h"
 #import "CGPointUtil.h"
+#import "ObjGridView.h"
 
 #define MIN_CAMERA_ALTITUDE_METERS 500.0
 #define MAX_CAMERA_ALTITUDE_METERS 4000.0
@@ -85,9 +86,9 @@
 //    [self setCameraAltitude:1.8];
     sm3dar.cameraAltitudeMeters = MIN_CAMERA_ALTITUDE_METERS;
     
+    [self addElevationOBJGridPoint];
 
-    [self addHoodGridPoint];
-    
+//    [self addHoodGridPoint];
     
 //    [self addElevationGridPoint];
     
@@ -214,6 +215,35 @@
     // maybe put it here
     //    [sm3dar changeCurrentLocation:mtHood];
 
+}
+
+- (void) addElevationOBJGridPoint
+{
+    // Load obj, actually it's an SM3DAR_Fixture 
+    // with a TexturedGeometryView
+    
+    // Create point.
+    SM3DAR_Fixture *p = [[SM3DAR_Fixture alloc] init];
+    
+    Coord3D coord = {
+        0, 0, -200
+    };
+    
+    p.worldPoint = coord;
+    
+    ObjGridView *gridView = [[ObjGridView alloc] init];
+    
+    // Give the point a view.
+    gridView.point = p;
+    p.view = gridView;
+    [gridView release];
+    
+    
+    // Add point to 3DAR scene.
+    [sm3dar addPointOfInterest:p];
+    [p release];
+    
+    
 }
 
 - (void) addElevationGridPoint
