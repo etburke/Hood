@@ -123,7 +123,7 @@
 		4DF1E3FA126194C600DD1E46 /* SM3DAR_keys.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */; };
 		873B8BCE12F279E000ACF089 /* HoodGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 873B8BCD12F279E000ACF089 /* HoodGrid.m */; };
 		873B8BD112F2833B00ACF089 /* Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 873B8BD012F2833B00ACF089 /* Coordinate.m */; };
-		A60F3A7212F52052005927A6 /* hood.json in Resources */ = {isa = PBXBuildFile; fileRef = A60F3A7112F52052005927A6 /* hood.json */; };
+		A60F3A7212F52052005927A6 /* hood150m.json in Resources */ = {isa = PBXBuildFile; fileRef = A60F3A7112F52052005927A6 /* hood150m.json */; };
 		A6FD72CB12F52DFA005C70C2 /* hood150m.json in Resources */ = {isa = PBXBuildFile; fileRef = A6FD72CA12F52DFA005C70C2 /* hood150m.json */; };
 		A6FD73D412F55F84005C70C2 /* lib3DAR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6FD73D312F55F84005C70C2 /* lib3DAR.a */; };
 		A6FD73F012F560BB005C70C2 /* Joystick.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FD73EF12F560BB005C70C2 /* Joystick.m */; };
@@ -360,7 +360,7 @@
 		873B8BCF12F2833B00ACF089 /* Coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coordinate.h; sourceTree = "<group>"; };
 		873B8BD012F2833B00ACF089 /* Coordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coordinate.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Hood-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Hood-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		A60F3A7112F52052005927A6 /* hood.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hood.json; sourceTree = "<group>"; };
+		A60F3A7112F52052005927A6 /* hood150m.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hood150m.json; sourceTree = "<group>"; };
 		A6FD72CA12F52DFA005C70C2 /* hood150m.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hood150m.json; sourceTree = "<group>"; };
 		A6FD73D312F55F84005C70C2 /* lib3DAR.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = lib3DAR.a; sourceTree = "<group>"; };
 		A6FD73EE12F560BB005C70C2 /* Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Joystick.h; sourceTree = "<group>"; };
@@ -457,7 +457,7 @@
 				A6FD740D12F5630B005C70C2 /* 84_white.png */,
 				A6FD740012F561F1005C70C2 /* 128_white.png */,
 				A6FD72CA12F52DFA005C70C2 /* hood150m.json */,
-				A60F3A7112F52052005927A6 /* hood.json */,
+				A60F3A7112F52052005927A6 /* hood150m.json */,
 				4D7F55B4126945360069A64B /* elevation_grid_25km_100s.txt */,
 				4D4C6E1812697E8B00DCEF32 /* elevation_grid_oregon_660km_150s.txt */,
 				4DEA74C3126EDFB90027580D /* elevation_grid_mt_hood_25km_25s.txt */,
@@ -897,7 +897,7 @@
 				4DEA74C4126EDFB90027580D /* elevation_grid_mt_hood_25km_25s.txt in Resources */,
 				4D0E0315127B5BFA00D6F568 /* pdx_cities.json in Resources */,
 				4D6230CD1282473E004ADBAF /* pdx911a.kml in Resources */,
-				A60F3A7212F52052005927A6 /* hood.json in Resources */,
+				A60F3A7212F52052005927A6 /* hood150m.json in Resources */,
 				A6FD72CB12F52DFA005C70C2 /* hood150m.json in Resources */,
 				A6FD740112F561F1005C70C2 /* 128_white.png in Resources */,
 				A6FD740E12F5630B005C70C2 /* 84_white.png in Resources */,
@@ -1112,7 +1112,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos4.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
