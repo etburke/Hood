@@ -129,6 +129,7 @@
 		87D9F87212FE0EC6001F8A49 /* TexturedGeometryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F86F12FE0EC6001F8A49 /* TexturedGeometryView.m */; };
 		87D9F87512FE0F00001F8A49 /* ObjGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F87412FE0F00001F8A49 /* ObjGridView.m */; };
 		A60F3A7212F52052005927A6 /* hood150m.json in Resources */ = {isa = PBXBuildFile; fileRef = A60F3A7112F52052005927A6 /* hood150m.json */; };
+		A6DEEB1712FE7C990009DE15 /* WaveGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEEB1612FE7C990009DE15 /* WaveGrid.m */; };
 		A6FD73D412F55F84005C70C2 /* lib3DAR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6FD73D312F55F84005C70C2 /* lib3DAR.a */; };
 		A6FD73F012F560BB005C70C2 /* Joystick.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FD73EF12F560BB005C70C2 /* Joystick.m */; };
 		A6FD73F312F560CB005C70C2 /* CGPointUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FD73F212F560CB005C70C2 /* CGPointUtil.m */; };
@@ -374,6 +375,9 @@
 		87D9F87412FE0F00001F8A49 /* ObjGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjGridView.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Hood-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Hood-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		A60F3A7112F52052005927A6 /* hood150m.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hood150m.json; sourceTree = "<group>"; };
+		A6DEEB1512FE7C990009DE15 /* WaveGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveGrid.h; sourceTree = "<group>"; };
+		A6DEEB1612FE7C990009DE15 /* WaveGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveGrid.m; sourceTree = "<group>"; };
+		A6DEEB1A12FE7D770009DE15 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
 		A6FD72CA12F52DFA005C70C2 /* hood150m.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hood150m.json; sourceTree = "<group>"; };
 		A6FD73D312F55F84005C70C2 /* lib3DAR.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = lib3DAR.a; sourceTree = "<group>"; };
 		A6FD73EE12F560BB005C70C2 /* Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Joystick.h; sourceTree = "<group>"; };
@@ -420,6 +424,7 @@
 				A6FD73F212F560CB005C70C2 /* CGPointUtil.m */,
 				4DF1E39912617C1100DD1E46 /* ElevationGrid.h */,
 				4DF1E39A12617C1100DD1E46 /* ElevationGrid.m */,
+				A6DEEB1A12FE7D770009DE15 /* Globals.h */,
 				4DD92148126905760055BB3B /* GridView.h */,
 				4DD92149126905760055BB3B /* GridView.m */,
 				4D6230BC1282461C004ADBAF /* PDX911.h */,
@@ -438,6 +443,8 @@
 				87D9F86D12FE0EC6001F8A49 /* SphereView.m */,
 				87D9F86E12FE0EC6001F8A49 /* TexturedGeometryView.h */,
 				87D9F86F12FE0EC6001F8A49 /* TexturedGeometryView.m */,
+				A6DEEB1512FE7C990009DE15 /* WaveGrid.h */,
+				A6DEEB1612FE7C990009DE15 /* WaveGrid.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1033,6 +1040,7 @@
 				87D9F87112FE0EC6001F8A49 /* SphereView.m in Sources */,
 				87D9F87212FE0EC6001F8A49 /* TexturedGeometryView.m in Sources */,
 				87D9F87512FE0F00001F8A49 /* ObjGridView.m in Sources */,
+				A6DEEB1712FE7C990009DE15 /* WaveGrid.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1137,7 +1145,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;

@@ -28,6 +28,7 @@
     [hoodGrid release];
     [joystick release];
     [mtHood release];
+    [waveGrid release];
     
     [super dealloc];
 }
@@ -47,12 +48,18 @@
     sm3dar.delegate = self;
     sm3dar.view.backgroundColor = [UIColor viewFlipsideBackgroundColor];
     self.view = sm3dar.view;    
+    
+    
 }
 
 - (void) sm3darViewDidLoad
 {
 }
 
+//
+// The GridView uses the global worldCoordinateData
+// which is populated by the WaveGrid etc.
+//
 - (void) addGridAtX:(CGFloat)x Y:(CGFloat)y Z:(CGFloat)z
 {
     // Create point.
@@ -88,6 +95,8 @@
     
     [self addElevationOBJGridPoint];
 
+    [self addWaveGridPoint];
+
 //    [self addHoodGridPoint];
     
 //    [self addElevationGridPoint];
@@ -109,13 +118,13 @@
 
     joystick = [[Joystick alloc] initWithBackground:[UIImage imageNamed:@"128_white.png"]];
     joystick.center = CGPointMake(160, 406);
+
     [self.view addSubview:joystick];    
     [NSTimer scheduledTimerWithTimeInterval:0.10f target:self selector:@selector(updateJoystick) userInfo:nil repeats:YES];    
     [self.view becomeFirstResponder];
-
     
-    [NSTimer scheduledTimerWithTimeInterval:0.3f target:hoodGrid selector:@selector(refresh) userInfo:nil repeats:YES];    
-
+    
+    [NSTimer scheduledTimerWithTimeInterval:0.3f target:waveGrid selector:@selector(refresh) userInfo:nil repeats:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -190,8 +199,6 @@
 
 - (void) addHoodGridPoint
 {
-    
-    
     // Relocate camera.
     
     mtHood = [[CLLocation alloc] initWithLatitude:45.373831 longitude:-121.698032];
@@ -205,16 +212,16 @@
     
     hoodGrid = [[HoodGrid alloc] init];
 
-    
 
     // Add a view.
     
     [self addGridAtX:0 Y:0 Z:0];    
-    
-    
-    // maybe put it here
-    //    [sm3dar changeCurrentLocation:mtHood];
+}
 
+- (void) addWaveGridPoint
+{
+    waveGrid = [[WaveGrid alloc] init];    
+    [self addGridAtX:2000 Y:2000 Z:0];    
 }
 
 - (void) addElevationOBJGridPoint
@@ -226,7 +233,7 @@
     SM3DAR_Fixture *p = [[SM3DAR_Fixture alloc] init];
     
     Coord3D coord = {
-        0, 0, -200
+        0, 0, -100
     };
     
     p.worldPoint = coord;
@@ -371,6 +378,9 @@
     sm3dar.cameraAltitudeMeters = (elevationAtCameraLocation + metersAboveGround) * (2*GRID_SCALE_VERTICAL);
 */
 }
+
+
+#pragma mark -
 
 - (void) updateJoystick 
 {
