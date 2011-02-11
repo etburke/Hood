@@ -6,8 +6,8 @@ arc = File.open("new_arc.asc")
 
 #Extract values from header constants
 
-ncols = arc.readline.sub("ncols", "").sub("\n", "").gsub(/\s/, "").to_f
-nrows = arc.readline.sub("nrows", "").sub("\n", "").gsub(/\s/, "").to_f
+ncols = arc.readline.sub("ncols", "").sub("\n", "").gsub(/\s/, "").to_i
+nrows = arc.readline.sub("nrows", "").sub("\n", "").gsub(/\s/, "").to_i
 xllcorner = arc.readline.sub("xllcorner", "").sub("\n", "").gsub(/\s/, "").to_f
 yllcorner = arc.readline.sub("yllcorner", "").sub("\n", "").gsub(/\s/, "").to_f
 cellsize = arc.readline.sub("cellsize", "").sub("\n", "").gsub(/\s/, "").to_f
@@ -17,9 +17,23 @@ NODATA_value = arc.readline.sub("NODATA_value", "").sub("\n", "").gsub(/\s/, "")
 
 point_spacing = 9
 
-#We should also recalculate the longitudinal point spacing based on the latitude of the row
+#Put origin lat/lon in header
+
+header = Array.new
+
+header << "# #{xllcorner}, #{yllcorner}"
+
+arcobj = File.open("arc.obj","a") do |f1|
+
+  f1.puts header
+
+end
+
+#Create empty pass through array
 
 pass_through = Array.new
+
+#Populate array with elevation data from ArcASCII file
 
 until arc.eof?
 
@@ -29,11 +43,17 @@ until arc.eof?
 
 end
 
+#Flip it so we can populate the OBJ in the proper order
+
 pass_through.reverse!
 
 arc.close
 
+#Break the array into individual points
+
 pass_through.flatten!
+
+#Create the empty arrays for point processing
 
 one_point = Array.new
 
@@ -43,9 +63,13 @@ v_array = Array.new
 
 pass_through_line = Array.new
 
+#Initiate the y origin
+
 celly = 0
 
-until celly >= nrows
+#Create the verticies
+
+until celly == nrows
 
   cellx = 0
 
@@ -77,52 +101,66 @@ until celly >= nrows
 
 end
 
+puts "added #{v_values.count} v values"
+
+#Put those verticies into the new OBJ file
+
 arcobj = File.open("arc.obj","a") do |f1|
 
   f1.puts v_values
 
 end
 
+#Create empty f values array
 
 vertex_connect = Array.new
 
 vertex_connect_point = Array.new
 
+#Initiate the origins
+
+line = 0
+
 position = 1
 
-stop_point = (nrows * ncols) - ncols
+#Populate the f values
 
-until position == stop_point
+until line == nrows - 1
 
-  vertex_connect_point << "f"
+  #Starting at SW point, populate f value array
 
-  vertex_connect_point << position
+  until position == (ncols * (line + 1))
 
-  vertex_connect_point << position + 1
+    vertex_connect_point << "f"
 
-  vertex_connect_point << (position + ncols + 1).to_i
+    vertex_connect_point << position
 
-  vertex_connect_point << (position + ncols).to_i
+    vertex_connect_point << position + 1
 
-  puts vertex_connect_point
+    vertex_connect_point << position + ncols + 1
 
-  vertex_connect << vertex_connect_point.join(" ")
+    vertex_connect_point << position + ncols
 
-  vertex_connect_point.clear
+    vertex_connect << vertex_connect_point.join(" ")
+
+    vertex_connect_point.clear
+
+    position += 1
+
+  end
 
   position += 1
 
+  line += 1
+
 end
 
+puts "added #{vertex_connect.count} f values"
+
+#Populate OBJ with f values
 
 arcobj = File.open("arc.obj","a") do |f1|
 
-  f1.puts vertex_connect
+    f1.puts vertex_connect
 
 end
-
-
-
-#end
-
-#puts arcobj

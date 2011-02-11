@@ -12,7 +12,7 @@
 {
     self.hidden = NO;    
     self.zrot = 0.0;    
-    self.sizeScalar = 10.0;
+    self.sizeScalar = 100.0;
 
 	self.frame = CGRectZero;
     
@@ -43,9 +43,7 @@
         [textureImage release];
     }
 
-    glScalef(-sizeScalar, sizeScalar, 1.0 * sizeScalar);
-    
-//    glTranslatef(0, 0, -10);
+    glScalef(-sizeScalar, sizeScalar, 20.0);
     
     if (texture)
     {
@@ -53,8 +51,15 @@
     }
 	else
     {
+        // Shaded
+        
         //[self.geometry displayShaded:self.color];
+        
+        
+        // Wireframe
+        
         [self.geometry displayWireframe];
+        
     }
 }
 

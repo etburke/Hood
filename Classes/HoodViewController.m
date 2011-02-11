@@ -221,29 +221,66 @@
 {
     // Load obj, actually it's an SM3DAR_Fixture 
     // with a TexturedGeometryView
-    
+
+    /*
     // Create point.
     SM3DAR_Fixture *p = [[SM3DAR_Fixture alloc] init];
     
     Coord3D coord = {
         0, 0, -200
     };
+
+     p.worldPoint = coord;
+    */
     
-    p.worldPoint = coord;
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"arc" ofType:@"obj"];
+    
+    NSString *fileContents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+
+    NSArray *lines = [fileContents componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    
+    NSString *firstLine = [lines objectAtIndex:0];
+        
+    NSLog(@"first line: %@", firstLine);
+    
+    NSArray *parts = [firstLine componentsSeparatedByString:@"#"];
+    
+    NSString *csv = [parts objectAtIndex:1];
+    
+    parts = [csv componentsSeparatedByString:@","];    
+
+    NSString *lngStr = [parts objectAtIndex:0];
+    NSString *latStr = [parts objectAtIndex:1];
+    
+    
+    
+    
+    CLLocationDegrees latitude = [latStr doubleValue];
+    CLLocationDegrees longitude = [lngStr doubleValue];
+
+    SM3DAR_Point *poi = [sm3dar initPointOfInterestWithLatitude:latitude 
+                                                        longitude:longitude 
+                                                         altitude:0 
+                                                            title:@""
+                                                         subtitle:@""
+                                                  markerViewClass:nil
+                                                       properties:nil];
     
     ObjGridView *gridView = [[ObjGridView alloc] init];
     
+
     // Give the point a view.
-    gridView.point = p;
-    p.view = gridView;
+    
+    gridView.point = poi;
+    poi.view = gridView;
     [gridView release];
     
     
     // Add point to 3DAR scene.
-    [sm3dar addPointOfInterest:p];
-    [p release];
     
-    
+    [sm3dar addPointOfInterest:poi];
+    [poi release];
 }
 
 - (void) addElevationGridPoint
