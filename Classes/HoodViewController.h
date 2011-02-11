@@ -11,13 +11,14 @@
 #import "SM3DAR.h"
 //#import "ElevationGrid.h"
 #import "HoodGrid.h"
+#import "WaveGrid.h"
 #import "Joystick.h"
 
 @interface HoodViewController : UIViewController <SM3DAR_Delegate, CLLocationManagerDelegate>
 {
 	SM3DAR_Controller *sm3dar;
-//    ElevationGrid *elevationGrid;
     HoodGrid *hoodGrid;
+    WaveGrid *waveGrid;
     CLLocation *mtHood;
     Coord3D cameraOffset;
     Joystick *joystick;
@@ -33,6 +34,7 @@
 - (void) addElevationGridPoint;
 - (void) setCameraAltitude:(CGFloat)metersAboveGround;
 - (void) addElevationOBJGridPoint;
+- (void) addWaveGridPoint;
 
 @end
 
