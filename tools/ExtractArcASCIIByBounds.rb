@@ -1,6 +1,6 @@
-Dir.chdir("/Users/ethomasburkeiv/Projects/BezierGarden/tools/cgiar")
+Dir.chdir("/Users/ethomasburke/Projects/Hood/tools/cgiar")
 
-arc = File.open("srtm.pdx_hood.asc")
+arc = File.open("utmhoodsp.asc")
 ncols = arc.readline.sub("ncols", "").sub("\n", "").gsub(/\s/, "").to_i
 nrows = arc.readline.sub("nrows", "").sub("\n", "").gsub(/\s/, "").to_i
 xllcorner = arc.readline.sub("xllcorner", "").sub("\n", "").gsub(/\s/, "").to_f
@@ -11,22 +11,35 @@ NODATA_value = arc.readline.sub("NODATA_value", "").sub("\n", "").gsub(/\s/, "")
 #Origins are always at the bottom FUCKING left
 #What's your bounding box?
 
-lat_bound = 45.514953
-long_bound = -122.686422
-bound_length = 20
+lat_bound = 45.278439
+long_bound = -121.816742
+bound_length = 600
+
+puts yllcorner
+puts xllcorner
+puts cellsize
 
 #Set are the row/column coordinates
 
 col_bound = xllcorner.abs - long_bound.abs
 row_bound = lat_bound.abs - yllcorner.abs
 
+puts col_bound
+puts row_bound
+
 col_bound = (col_bound / cellsize).to_i
 row_bound = (row_bound / cellsize).to_i
 
+puts col_bound
+puts row_bound
+
 #Calculate the snapped lat,long - Make new file represent values at the center of the cells
 
-snapped_bound_long = (xllcorner + (col_bound - 1 * cellsize))
-snapped_bound_lat = (yllcorner + (row_bound - 1 * cellsize))
+snapped_bound_long = (xllcorner + ((col_bound - 1) * cellsize))
+snapped_bound_lat = (yllcorner + ((row_bound - 1) * cellsize))
+
+puts snapped_bound_long
+puts snapped_bound_lat
 
 #Jump row and column bounds to ArcASCii locations
 
@@ -59,8 +72,6 @@ end
 arc.close
 
 puts "#{new_arc.count} values added to passthrough array"
-
-puts new_arc
 
 #Write new header info to new_arc_file
 

@@ -15,6 +15,8 @@
 		2899E5220DE3E06400AC0155 /* BezierGardenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* BezierGardenViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* HoodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* HoodViewController.m */; };
+		2D1C69F41314E5D90074615F /* arc.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2D1C69F31314E5D90074615F /* arc.obj */; };
+		2D1C6A0F1314E9600074615F /* lib3DAR_v4_0_8.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D1C6A0E1314E9600074615F /* lib3DAR_v4_0_8.a */; };
 		4D0AF202126011D400B6ACE4 /* DotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0AF201126011D400B6ACE4 /* DotView.m */; };
 		4D0E0315127B5BFA00D6F568 /* pdx_cities.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D0E02BC127B491900D6F568 /* pdx_cities.json */; };
 		4D219C4012738FEB006AE795 /* TVOutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D219C3F12738FEB006AE795 /* TVOutManager.m */; };
@@ -123,14 +125,12 @@
 		4DF1E3FA126194C600DD1E46 /* SM3DAR_keys.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */; };
 		873B8BCE12F279E000ACF089 /* HoodGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 873B8BCD12F279E000ACF089 /* HoodGrid.m */; };
 		873B8BD112F2833B00ACF089 /* Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 873B8BD012F2833B00ACF089 /* Coordinate.m */; };
-		87D9F83D12FE0D55001F8A49 /* arc.obj in Resources */ = {isa = PBXBuildFile; fileRef = 87D9F83C12FE0D55001F8A49 /* arc.obj */; };
 		87D9F87012FE0EC6001F8A49 /* SphereBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F86B12FE0EC6001F8A49 /* SphereBackgroundView.m */; };
 		87D9F87112FE0EC6001F8A49 /* SphereView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F86D12FE0EC6001F8A49 /* SphereView.m */; };
 		87D9F87212FE0EC6001F8A49 /* TexturedGeometryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F86F12FE0EC6001F8A49 /* TexturedGeometryView.m */; };
 		87D9F87512FE0F00001F8A49 /* ObjGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F87412FE0F00001F8A49 /* ObjGridView.m */; };
 		A60F3A7212F52052005927A6 /* hood150m.json in Resources */ = {isa = PBXBuildFile; fileRef = A60F3A7112F52052005927A6 /* hood150m.json */; };
 		A6DEEB1712FE7C990009DE15 /* WaveGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEEB1612FE7C990009DE15 /* WaveGrid.m */; };
-		A6FD73D412F55F84005C70C2 /* lib3DAR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6FD73D312F55F84005C70C2 /* lib3DAR.a */; };
 		A6FD73F012F560BB005C70C2 /* Joystick.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FD73EF12F560BB005C70C2 /* Joystick.m */; };
 		A6FD73F312F560CB005C70C2 /* CGPointUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FD73F212F560CB005C70C2 /* CGPointUtil.m */; };
 		A6FD740112F561F1005C70C2 /* 128_white.png in Resources */ = {isa = PBXBuildFile; fileRef = A6FD740012F561F1005C70C2 /* 128_white.png */; };
@@ -149,6 +149,9 @@
 		28D7ACF60DDB3853001CB0EB /* HoodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HoodViewController.h; sourceTree = "<group>"; };
 		28D7ACF70DDB3853001CB0EB /* HoodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HoodViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2D1C69F31314E5D90074615F /* arc.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = arc.obj; path = tools/cgiar/arc.obj; sourceTree = "<group>"; };
+		2D1C6A0E1314E9600074615F /* lib3DAR_v4_0_8.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib3DAR_v4_0_8.a; path = ../../Downloads/3DAR/lib3DAR_v4_0_8.a; sourceTree = SOURCE_ROOT; };
+		2D1C6A101314E97D0074615F /* SM3DAR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SM3DAR.h; path = ../../Downloads/3DAR/SM3DAR.h; sourceTree = SOURCE_ROOT; };
 		32CA4F630368D1EE00C91783 /* Hood_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hood_Prefix.pch; sourceTree = "<group>"; };
 		4D0AF200126011D400B6ACE4 /* DotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotView.h; sourceTree = "<group>"; };
 		4D0AF201126011D400B6ACE4 /* DotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotView.m; sourceTree = "<group>"; };
@@ -358,13 +361,11 @@
 		4DF1E39A12617C1100DD1E46 /* ElevationGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElevationGrid.m; sourceTree = "<group>"; };
 		4DF1E3F2126194C600DD1E46 /* 3dar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = 3dar.plist; sourceTree = "<group>"; };
 		4DF1E3F3126194C600DD1E46 /* 3dar_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_logo.png; sourceTree = "<group>"; };
-		4DF1E3F5126194C600DD1E46 /* SM3DAR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SM3DAR.h; sourceTree = "<group>"; };
 		4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SM3DAR_keys.txt; sourceTree = "<group>"; };
 		873B8BCC12F279E000ACF089 /* HoodGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HoodGrid.h; sourceTree = "<group>"; };
 		873B8BCD12F279E000ACF089 /* HoodGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HoodGrid.m; sourceTree = "<group>"; };
 		873B8BCF12F2833B00ACF089 /* Coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coordinate.h; sourceTree = "<group>"; };
 		873B8BD012F2833B00ACF089 /* Coordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coordinate.m; sourceTree = "<group>"; };
-		87D9F83C12FE0D55001F8A49 /* arc.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = arc.obj; sourceTree = "<group>"; };
 		87D9F86A12FE0EC6001F8A49 /* SphereBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SphereBackgroundView.h; sourceTree = "<group>"; };
 		87D9F86B12FE0EC6001F8A49 /* SphereBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SphereBackgroundView.m; sourceTree = "<group>"; };
 		87D9F86C12FE0EC6001F8A49 /* SphereView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SphereView.h; sourceTree = "<group>"; };
@@ -379,7 +380,6 @@
 		A6DEEB1612FE7C990009DE15 /* WaveGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveGrid.m; sourceTree = "<group>"; };
 		A6DEEB1A12FE7D770009DE15 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
 		A6FD72CA12F52DFA005C70C2 /* hood150m.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hood150m.json; sourceTree = "<group>"; };
-		A6FD73D312F55F84005C70C2 /* lib3DAR.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = lib3DAR.a; sourceTree = "<group>"; };
 		A6FD73EE12F560BB005C70C2 /* Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Joystick.h; sourceTree = "<group>"; };
 		A6FD73EF12F560BB005C70C2 /* Joystick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Joystick.m; sourceTree = "<group>"; };
 		A6FD73F112F560CB005C70C2 /* CGPointUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointUtil.h; sourceTree = "<group>"; };
@@ -402,7 +402,7 @@
 				4DE6785D125CBBBE0080EEB0 /* OpenGLES.framework in Frameworks */,
 				4DE6785F125CBBBE0080EEB0 /* QuartzCore.framework in Frameworks */,
 				4DE67948125CBFE70080EEB0 /* SystemConfiguration.framework in Frameworks */,
-				A6FD73D412F55F84005C70C2 /* lib3DAR.a in Frameworks */,
+				2D1C6A0F1314E9600074615F /* lib3DAR_v4_0_8.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,7 +482,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				87D9F83C12FE0D55001F8A49 /* arc.obj */,
+				2D1C69F31314E5D90074615F /* arc.obj */,
 				A6FD740D12F5630B005C70C2 /* 84_white.png */,
 				A6FD740012F561F1005C70C2 /* 128_white.png */,
 				A6FD72CA12F52DFA005C70C2 /* hood150m.json */,
@@ -855,11 +855,11 @@
 		4DF1E3F1126194C600DD1E46 /* 3DAR */ = {
 			isa = PBXGroup;
 			children = (
-				A6FD73D312F55F84005C70C2 /* lib3DAR.a */,
 				4DF1E3F2126194C600DD1E46 /* 3dar.plist */,
 				4DF1E3F3126194C600DD1E46 /* 3dar_logo.png */,
-				4DF1E3F5126194C600DD1E46 /* SM3DAR.h */,
 				4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */,
+				2D1C6A101314E97D0074615F /* SM3DAR.h */,
+				2D1C6A0E1314E9600074615F /* lib3DAR_v4_0_8.a */,
 			);
 			path = 3DAR;
 			sourceTree = "<group>";
@@ -929,7 +929,7 @@
 				A60F3A7212F52052005927A6 /* hood150m.json in Resources */,
 				A6FD740112F561F1005C70C2 /* 128_white.png in Resources */,
 				A6FD740E12F5630B005C70C2 /* 84_white.png in Resources */,
-				87D9F83D12FE0D55001F8A49 /* arc.obj in Resources */,
+				2D1C69F41314E5D90074615F /* arc.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1061,6 +1061,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Lib/3DAR\"",
+					"\"$(SRCROOT)/../../Downloads/3DAR\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",
@@ -1083,6 +1084,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Lib/3DAR\"",
 					"\"$(SRCROOT)/../../Library/iOS/build/Debug-iphoneos\"",
+					"\"$(SRCROOT)/../../Downloads/3DAR\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",
@@ -1124,6 +1126,7 @@
 					"\"$(SRCROOT)/Lib/3DAR\"",
 					"\"$(SRCROOT)/../../SM3DARLibrary/SM3DARLibrary/build\"",
 					"\"$(SRCROOT)/../../Library/iOS/build/Debug-iphoneos\"",
+					"\"$(SRCROOT)/../../Downloads/3DAR\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",

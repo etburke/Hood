@@ -1,4 +1,4 @@
-Dir.chdir("/Users/ethomasburkeiv/Projects/BezierGarden/tools/cgiar")
+Dir.chdir("/Users/ethomasburke/Projects/Hood/tools/cgiar")
 
 #Open ArcASCII file
 
@@ -99,6 +99,8 @@ until celly == nrows
 
   celly += 1
 
+  puts celly
+
 end
 
 puts "added #{v_values.count} v values"
@@ -152,6 +154,8 @@ until line == nrows - 1
   position += 1
 
   line += 1
+
+  puts line
 
 end
 

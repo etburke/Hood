@@ -90,12 +90,45 @@
 {
     NSLog(@"loadPointsOfInterest");
     
+    CLLocationDegrees llLat = 45.278339;
+    CLLocationDegrees llLon = -121.816842;
+    
+    mtHood = [[CLLocation alloc] initWithLatitude:llLat longitude:llLon];
+    [sm3dar changeCurrentLocation:mtHood];
+
+
+    // Add our location to map.
+    
+    SM3DAR.markerViewClass = [SM3DAR_IconMarkerView class];
+    SM3DAR_PointOfInterest *referencePoint = [[SM3DAR_PointOfInterest alloc] initWithLatitude:llLat longitude:llLon];        
+    [SM3DAR addPointOfInterest:referencePoint];
+    [SM3DAR.map addAnnotation:referencePoint];
+    
+    
+    NSLog(@"loc: %@", sm3dar.currentLocation);
+
+
+    // Add Hood SW corner to map.
+    
+    SM3DAR_PointOfInterest *hoodPoint = [[SM3DAR_PointOfInterest alloc] initWithLatitude:45.514583599682 longitude:-122.687082727987];        
+    [SM3DAR addPointOfInterest:hoodPoint];
+    [SM3DAR.map addAnnotation:hoodPoint];
+    
+
+    // Add a test point.
+    
+    SM3DAR_PointOfInterest *p = [[SM3DAR_PointOfInterest alloc] initWithLatitude:(llLat - 0.001) longitude:(llLon - .001)];        
+    p.title = @"fuck you";
+    [SM3DAR addPointOfInterest:p];
+    [SM3DAR.map addAnnotation:p];
+    
+    
 //    [self setCameraAltitude:1.8];
     sm3dar.cameraAltitudeMeters = MIN_CAMERA_ALTITUDE_METERS;
     
-    [self addElevationOBJGridPoint];
+//    [self addElevationOBJGridPoint];
 
-    [self addWaveGridPoint];
+//    [self addWaveGridPoint];
 
 //    [self addHoodGridPoint];
     
@@ -201,7 +234,7 @@
 {
     // Relocate camera.
     
-    mtHood = [[CLLocation alloc] initWithLatitude:45.373831 longitude:-121.698032];
+    mtHood = [[CLLocation alloc] initWithLatitude:45.278439 longitude:-121.816742];
     [sm3dar changeCurrentLocation:mtHood];
     
     
