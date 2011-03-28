@@ -20,11 +20,11 @@
 
 @implementation HoodViewController
 
-//@synthesize elevationGrid;
+@synthesize elevationGrid;
 
 - (void)dealloc 
 {
-//    self.elevationGrid = nil;
+    self.elevationGrid = nil;
     [hoodGrid release];
     [joystick release];
     [mtHood release];
@@ -86,7 +86,7 @@
     [p release];
 }
 
-- (void) loadPointsOfInterest
+- (void) loadHoodPoints
 {
     NSLog(@"loadPointsOfInterest");
     
@@ -118,7 +118,7 @@
     // Add a test point.
     
     SM3DAR_PointOfInterest *p = [[SM3DAR_PointOfInterest alloc] initWithLatitude:(llLat - 0.001) longitude:(llLon - .001)];        
-    p.title = @"fuck you";
+    p.title = @"The Title";
     [SM3DAR addPointOfInterest:p];
     [SM3DAR.map addAnnotation:p];
     
@@ -139,6 +139,12 @@
 //    [self add911IncidentPoints];
     
 }
+
+- (void) loadPointsOfInterest
+{
+    [self addElevationGridPoint];
+}
+
 
 - (void)viewDidLoad 
 {
@@ -323,7 +329,7 @@
     [poi release];
 }
 
-- (void) addElevationGridPoint
+- (void) addElevationGridPointOld
 {
 /*
 //    self.elevationGrid = [[[ElevationGrid alloc] initFromFile:@"elevation_grid_25km_100s.txt"] autorelease];
@@ -351,13 +357,28 @@
 
 //    Coord3D gridCoord = [SM3DAR_Controller worldCoordinateFor:mtHood];
     
-//    NSInteger gridIndex = ELEVATION_PATH_SAMPLES / 2;
+//    NSInteger gridIndex = PEG_PATH_SAMPLES / 2;
 //    Coord3D gridOriginElevationPoint = worldCoordinateData[gridIndex][gridIndex];
 //    CGFloat gridOriginZ = gridOriginElevationPoint.z;    
 //    [self addGridAtX:gridCoord.x Y:gridCoord.y Z:gridOriginZ];    
     
     [self addGridAtX:0 Y:0 Z:0];    
 */
+}
+
+- (void) addElevationGridPoint
+{
+    self.elevationGrid = [[[ProjectedElevationGrid alloc] initAroundLocation:SM3DAR.currentLocation] autorelease];
+
+    /*
+    NSInteger gridIndex = PEG_PATH_SAMPLES / 2;
+    Coord3D gridOriginElevationPoint = worldCoordinateData[gridIndex][gridIndex];
+    CGFloat gridOriginZ = gridOriginElevationPoint.z;    
+    [self addGridAtX:gridCoord.x Y:gridCoord.y Z:gridOriginZ];    
+     */
+
+    //[self addGridAtX:0 Y:0 Z:0];    
+
 }
 
 - (void) add911IncidentPoints

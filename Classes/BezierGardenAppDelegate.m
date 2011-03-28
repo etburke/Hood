@@ -25,7 +25,7 @@
     [window addSubview:viewController.view];
     [window makeKeyAndVisible];
 
-    [[TVOutManager sharedInstance] startTVOut];
+//    [[TVOutManager sharedInstance] startTVOut];
     
     return YES;
 }

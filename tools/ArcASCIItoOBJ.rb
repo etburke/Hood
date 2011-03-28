@@ -2,7 +2,7 @@ Dir.chdir("/Users/ethomasburke/Projects/Hood/tools/cgiar")
 
 #Open ArcASCII file
 
-arc = File.open("new_arc.asc")
+arc = File.open("obds.asc")
 
 #Extract values from header constants
 
@@ -13,9 +13,16 @@ yllcorner = arc.readline.sub("yllcorner", "").sub("\n", "").gsub(/\s/, "").to_f
 cellsize = arc.readline.sub("cellsize", "").sub("\n", "").gsub(/\s/, "").to_f
 NODATA_value = arc.readline.sub("NODATA_value", "").sub("\n", "").gsub(/\s/, "").to_f
 
-#Set point spacing in dekameters
+puts cellsize
 
-point_spacing = 9
+earthradius = 6371000
+latitude = yllcorner * (Math::PI / 180)
+
+xpoint_spacing = (2 * Math::PI * (earthradius * Math.cos(latitude))) * (cellsize / 360)
+ypoint_spacing = cellsize / 360 * (2 * Math::PI * earthradius)
+
+puts xpoint_spacing
+puts ypoint_spacing
 
 #Put origin lat/lon in header
 
@@ -23,7 +30,7 @@ header = Array.new
 
 header << "# #{xllcorner}, #{yllcorner}"
 
-arcobj = File.open("arc.obj","a") do |f1|
+arcobj = File.open("obds.obj","a") do |f1|
 
   f1.puts header
 
@@ -79,9 +86,9 @@ until celly == nrows
 
     one_point << "v"
 
-    one_point << cellx * point_spacing
+    one_point << cellx * xpoint_spacing
 
-    one_point << celly * point_spacing
+    one_point << celly * ypoint_spacing
 
     one_point << pass_through_line.at(cellx)
 
@@ -95,6 +102,10 @@ until celly == nrows
 
     cellx += 1
 
+    latitude = (yllcorner + cellsize) * (Math::PI / 180)
+
+    xpoint_spacing = (2 * Math::PI * (earthradius * Math.cos(latitude))) * (cellsize / 360)
+
   end
 
   celly += 1
@@ -107,7 +118,7 @@ puts "added #{v_values.count} v values"
 
 #Put those verticies into the new OBJ file
 
-arcobj = File.open("arc.obj","a") do |f1|
+arcobj = File.open("obds.obj","a") do |f1|
 
   f1.puts v_values
 
@@ -163,7 +174,7 @@ puts "added #{vertex_connect.count} f values"
 
 #Populate OBJ with f values
 
-arcobj = File.open("arc.obj","a") do |f1|
+arcobj = File.open("obds.obj","a") do |f1|
 
     f1.puts vertex_connect
 

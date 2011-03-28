@@ -9,21 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 #import "SM3DAR.h"
+#import "Globals.h"
 
 #define GOOGLE_ELEVATION_API_URL_FORMAT @"http://maps.googleapis.com/maps/api/elevation/json?path=%@&samples=%i&sensor=false"
 #define SM3DAR_ELEVATION_API_URL_FORMAT @"http://localhost:5984/hood1/_design/point_elevation/_spatial/points?bbox=%@"
-
-#define ELEVATION_PATH_SAMPLES 100.0
-//#define ELEVATION_LINE_LENGTH 20000.0
-#define ELEVATION_LINE_LENGTH 1000.0
-
-#define GRID_CELL_SIZE ELEVATION_LINE_LENGTH/ELEVATION_PATH_SAMPLES
-
-//#define ELEVATION_PATH_SAMPLES 150
-//#define ELEVATION_LINE_LENGTH 660000
-
-CLLocationDistance elevationData[(int)ELEVATION_PATH_SAMPLES][(int)ELEVATION_PATH_SAMPLES];
-//Coord3D worldCoordinateData[(int)ELEVATION_PATH_SAMPLES][(int)ELEVATION_PATH_SAMPLES];
 
 typedef struct
 {

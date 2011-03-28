@@ -5,7 +5,7 @@
  *  Copyright 2010 Spot Metrix, Inc. All rights reserved.
  *  Please see http://spotmetrix.com
  *
- *  Version 4.0.7 Beta 1
+ *  Version 4.0.8
  *
  */
 
@@ -131,6 +131,7 @@ typedef NSObject<SM3DAR_PointProtocol> SM3DAR_Point;
 - (void)removePointOfInterest:(SM3DAR_Point*)point;
 - (void)removePointsOfInterest:(NSArray*)points;
 - (void)removeAllPointsOfInterest;
+- (void)removeAllPointsOfInterest:(BOOL)removeFixtures;
 - (void)replaceAllPointsOfInterestWith:(NSArray*)points;
 - (NSString*)loadJSONFromFile:(NSString*)fileName;
 - (void)loadMarkersFromJSONFile:(NSString*)fileName;

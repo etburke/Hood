@@ -15,8 +15,10 @@
 		2899E5220DE3E06400AC0155 /* BezierGardenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* BezierGardenViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* HoodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* HoodViewController.m */; };
-		2D1C69F41314E5D90074615F /* arc.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2D1C69F31314E5D90074615F /* arc.obj */; };
-		2D1C6A0F1314E9600074615F /* lib3DAR_v4_0_8.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D1C6A0E1314E9600074615F /* lib3DAR_v4_0_8.a */; };
+		2D1A1EBB133FD42200143F54 /* ProjectedElevationGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1A1EBA133FD42200143F54 /* ProjectedElevationGrid.m */; };
+		2D1A1ECE133FD4DD00143F54 /* lib3DAR_v4_0_8.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D1A1ECC133FD4DD00143F54 /* lib3DAR_v4_0_8.a */; };
+		2D1C69F41314E5D90074615F /* arc1.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2D1C69F31314E5D90074615F /* arc1.obj */; };
+		2DFCAB6713189E1F00434EA0 /* arc.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2DFCAB6613189E1F00434EA0 /* arc.obj */; };
 		4D0AF202126011D400B6ACE4 /* DotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0AF201126011D400B6ACE4 /* DotView.m */; };
 		4D0E0315127B5BFA00D6F568 /* pdx_cities.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D0E02BC127B491900D6F568 /* pdx_cities.json */; };
 		4D219C4012738FEB006AE795 /* TVOutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D219C3F12738FEB006AE795 /* TVOutManager.m */; };
@@ -149,9 +151,12 @@
 		28D7ACF60DDB3853001CB0EB /* HoodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HoodViewController.h; sourceTree = "<group>"; };
 		28D7ACF70DDB3853001CB0EB /* HoodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HoodViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2D1C69F31314E5D90074615F /* arc.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = arc.obj; path = tools/cgiar/arc.obj; sourceTree = "<group>"; };
-		2D1C6A0E1314E9600074615F /* lib3DAR_v4_0_8.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib3DAR_v4_0_8.a; path = ../../Downloads/3DAR/lib3DAR_v4_0_8.a; sourceTree = SOURCE_ROOT; };
-		2D1C6A101314E97D0074615F /* SM3DAR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SM3DAR.h; path = ../../Downloads/3DAR/SM3DAR.h; sourceTree = SOURCE_ROOT; };
+		2D1A1EB9133FD42200143F54 /* ProjectedElevationGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectedElevationGrid.h; sourceTree = "<group>"; };
+		2D1A1EBA133FD42200143F54 /* ProjectedElevationGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectedElevationGrid.m; sourceTree = "<group>"; };
+		2D1A1ECC133FD4DD00143F54 /* lib3DAR_v4_0_8.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = lib3DAR_v4_0_8.a; sourceTree = "<group>"; };
+		2D1A1ECD133FD4DD00143F54 /* SM3DAR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SM3DAR.h; sourceTree = "<group>"; };
+		2D1C69F31314E5D90074615F /* arc1.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = arc1.obj; path = tools/cgiar/arc1.obj; sourceTree = "<group>"; };
+		2DFCAB6613189E1F00434EA0 /* arc.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = arc.obj; path = tools/cgiar/arc.obj; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Hood_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hood_Prefix.pch; sourceTree = "<group>"; };
 		4D0AF200126011D400B6ACE4 /* DotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotView.h; sourceTree = "<group>"; };
 		4D0AF201126011D400B6ACE4 /* DotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotView.m; sourceTree = "<group>"; };
@@ -357,8 +362,6 @@
 		4DE67943125CBFD40080EEB0 /* APIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
 		4DE67947125CBFE70080EEB0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4DEA74C3126EDFB90027580D /* elevation_grid_mt_hood_25km_25s.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = elevation_grid_mt_hood_25km_25s.txt; sourceTree = "<group>"; };
-		4DF1E39912617C1100DD1E46 /* ElevationGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElevationGrid.h; sourceTree = "<group>"; };
-		4DF1E39A12617C1100DD1E46 /* ElevationGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElevationGrid.m; sourceTree = "<group>"; };
 		4DF1E3F2126194C600DD1E46 /* 3dar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = 3dar.plist; sourceTree = "<group>"; };
 		4DF1E3F3126194C600DD1E46 /* 3dar_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_logo.png; sourceTree = "<group>"; };
 		4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SM3DAR_keys.txt; sourceTree = "<group>"; };
@@ -402,7 +405,7 @@
 				4DE6785D125CBBBE0080EEB0 /* OpenGLES.framework in Frameworks */,
 				4DE6785F125CBBBE0080EEB0 /* QuartzCore.framework in Frameworks */,
 				4DE67948125CBFE70080EEB0 /* SystemConfiguration.framework in Frameworks */,
-				2D1C6A0F1314E9600074615F /* lib3DAR_v4_0_8.a in Frameworks */,
+				2D1A1ECE133FD4DD00143F54 /* lib3DAR_v4_0_8.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,8 +425,6 @@
 				A6FD73EF12F560BB005C70C2 /* Joystick.m */,
 				A6FD73F112F560CB005C70C2 /* CGPointUtil.h */,
 				A6FD73F212F560CB005C70C2 /* CGPointUtil.m */,
-				4DF1E39912617C1100DD1E46 /* ElevationGrid.h */,
-				4DF1E39A12617C1100DD1E46 /* ElevationGrid.m */,
 				A6DEEB1A12FE7D770009DE15 /* Globals.h */,
 				4DD92148126905760055BB3B /* GridView.h */,
 				4DD92149126905760055BB3B /* GridView.m */,
@@ -437,6 +438,8 @@
 				873B8BD012F2833B00ACF089 /* Coordinate.m */,
 				87D9F87312FE0F00001F8A49 /* ObjGridView.h */,
 				87D9F87412FE0F00001F8A49 /* ObjGridView.m */,
+				2D1A1EB9133FD42200143F54 /* ProjectedElevationGrid.h */,
+				2D1A1EBA133FD42200143F54 /* ProjectedElevationGrid.m */,
 				87D9F86A12FE0EC6001F8A49 /* SphereBackgroundView.h */,
 				87D9F86B12FE0EC6001F8A49 /* SphereBackgroundView.m */,
 				87D9F86C12FE0EC6001F8A49 /* SphereView.h */,
@@ -482,7 +485,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				2D1C69F31314E5D90074615F /* arc.obj */,
+				2DFCAB6613189E1F00434EA0 /* arc.obj */,
+				2D1C69F31314E5D90074615F /* arc1.obj */,
 				A6FD740D12F5630B005C70C2 /* 84_white.png */,
 				A6FD740012F561F1005C70C2 /* 128_white.png */,
 				A6FD72CA12F52DFA005C70C2 /* hood150m.json */,
@@ -858,8 +862,8 @@
 				4DF1E3F2126194C600DD1E46 /* 3dar.plist */,
 				4DF1E3F3126194C600DD1E46 /* 3dar_logo.png */,
 				4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */,
-				2D1C6A101314E97D0074615F /* SM3DAR.h */,
-				2D1C6A0E1314E9600074615F /* lib3DAR_v4_0_8.a */,
+				2D1A1ECC133FD4DD00143F54 /* lib3DAR_v4_0_8.a */,
+				2D1A1ECD133FD4DD00143F54 /* SM3DAR.h */,
 			);
 			path = 3DAR;
 			sourceTree = "<group>";
@@ -929,7 +933,8 @@
 				A60F3A7212F52052005927A6 /* hood150m.json in Resources */,
 				A6FD740112F561F1005C70C2 /* 128_white.png in Resources */,
 				A6FD740E12F5630B005C70C2 /* 84_white.png in Resources */,
-				2D1C69F41314E5D90074615F /* arc.obj in Resources */,
+				2D1C69F41314E5D90074615F /* arc1.obj in Resources */,
+				2DFCAB6713189E1F00434EA0 /* arc.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1041,6 +1046,7 @@
 				87D9F87212FE0EC6001F8A49 /* TexturedGeometryView.m in Sources */,
 				87D9F87512FE0F00001F8A49 /* ObjGridView.m in Sources */,
 				A6DEEB1712FE7C990009DE15 /* WaveGrid.m in Sources */,
+				2D1A1EBB133FD42200143F54 /* ProjectedElevationGrid.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
