@@ -39,7 +39,7 @@
 
     glFogf(GL_FOG_START, 0.0);
     
-    CGFloat fogEnd = GRID_SCALE_HORIZONTAL * ELEVATION_LINE_LENGTH;
+    CGFloat fogEnd = GRID_SCALE_HORIZONTAL * ELEVATION_LINE_LENGTH_LOW;
     glFogf(GL_FOG_END, fogEnd);
 
     glHint(GL_FOG_HINT, GL_NICEST);
@@ -52,7 +52,7 @@
 {
     ushort lineIndex [1024];
     
-    Coord3D *verts = &worldCoordinateData[0][0];
+    Coord3D *verts = &worldCoordinateDataLow[0][0];
     int gridSize = ELEVATION_PATH_SAMPLES;
     
     glDisable(GL_LIGHTING);
@@ -73,7 +73,9 @@
     // fill horizontal strip of triangles.
 	
 	glEnable(GL_DEPTH_TEST);
+
 	
+#if 0
 	BOOL fill = YES;
 	BOOL alt = YES;
 	
@@ -81,8 +83,6 @@
 	
     for (int y=0; y < gridSize-1; y++)
     {
-        fill = !fill;
-                
         if (fill)
         {
             alt = !alt;
@@ -116,7 +116,7 @@
 		glDrawElements(GL_TRIANGLE_STRIP, ct, GL_UNSIGNED_SHORT, lineIndex);
     }
 	
-#if 0
+#else
     glColorMask(1,1,1,1);
     glColor4f(1,1,0, 0.3);
     

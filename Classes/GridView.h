@@ -12,7 +12,7 @@
 
 // Works well for grid size 25km
 #define GRID_SCALE_HORIZONTAL 1.0   // 0.1
-#define GRID_SCALE_VERTICAL 1.0  // 0.45
+#define GRID_SCALE_VERTICAL 5.0  // 0.45
 
 
 @interface GridView : SM3DAR_MarkerView

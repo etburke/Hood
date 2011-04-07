@@ -14,24 +14,23 @@
 #define GOOGLE_ELEVATION_API_URL_FORMAT @"http://maps.googleapis.com/maps/api/elevation/json?path=%@&samples=%i&sensor=false"
 #define SM3DAR_ELEVATION_API_URL_FORMAT @"http://localhost:5984/hood1/_design/point_elevation/_spatial/points?bbox=%@"
 
-typedef struct
-{
-    Coord3D a, b, c, d, u;
-} BoundingBox;
-
 
 @interface ElevationGrid : NSObject 
 {
 	CLLocation *gridCenter;
 	CLLocation *gridOrigin;
     CLLocation *gridPointSW;
+    CLLocation *gridPointNW;
     CLLocation *gridPointNE;
+    CLLocation *gridPointSE;
 }
 
 @property (nonatomic, retain) CLLocation *gridCenter;
 @property (nonatomic, retain) CLLocation *gridOrigin;
 @property (nonatomic, retain) CLLocation *gridPointSW;
+@property (nonatomic, retain) CLLocation *gridPointNW;
 @property (nonatomic, retain) CLLocation *gridPointNE;
+@property (nonatomic, retain) CLLocation *gridPointSE;
 
 - (id) initFromCache;
 - (id) initFromFile:(NSString*)bundleFileName;
@@ -44,7 +43,9 @@ typedef struct
 - (CLLocation *) locationAtDistanceInMeters:(CLLocationDistance)meters bearingDegrees:(CLLocationDistance)bearing fromLocation:(CLLocation *)origin;
 - (Coord3D *) worldCoordinates;
 - (NSString *) dataFilePath;
-- (void) loadDataFile:(NSString*)filePath;
+- (void) loadElevationPointDataFile:(NSString*)filePath;
+- (void) loadWorldCoordinateDataFile:(NSString*)filePath;
 - (CGFloat) elevationAtLocation:(CLLocation*)referenceLocation;
+- (BOOL) buildArrayFromCache;
 
 @end

@@ -351,15 +351,19 @@
             double xIntersection = (tan(referenceLatitude) * xElevationPoint + yAxisTangentSlopeIntercept - yAxisIntercept) /
                                    (-1 / tan(referenceLatitude));
 
-            double yIntersection = tan(referenceLatitude) * xIntersection + yAxisIntercept;
+//            double yIntersection = tan(referenceLatitude) * xIntersection + yAxisIntercept;
             
-            double heightAbovePlane = sqrt( 
-                                           (pow(fabs(xElevationPoint - xIntersection), 2)) +
-                                           (pow(fabs(yTangentIntercept - yIntersection), 2)));
+            //double heightAbovePlane = sqrt( 
+            //                               (pow(fabs(xElevationPoint - xIntersection), 2)) +
+            //                               (pow(fabs(yTangentIntercept - yIntersection), 2)));
+            
+            double heightAbovePlane = (pow(sin(referenceLatitude - DEG2RAD(ep.coordinate.latitude)), 2)) /
+            (2 * AVG_EARTH_RADIUS_METERS);
+            
             
             worldCoordinate.z = (CGFloat)heightAbovePlane;
 
-            worldCoordinate.x = (CGFloat)(sin(fabs(referenceLongitude - DEG2RAD(ep.coordinate.longitude))) * xTangentIntercept); 
+            worldCoordinate.x = (CGFloat)(sin(referenceLongitude - DEG2RAD(ep.coordinate.longitude)) * xTangentIntercept); 
             worldCoordinate.y = (CGFloat)(
                                           ((AVG_EARTH_RADIUS_METERS * cos(DEG2RAD(ep.coordinate.latitude))) - xElevationPoint) /
                                     (cos(M_PI/2 - referenceLatitude))

@@ -57,7 +57,7 @@
 }
 
 //
-// The GridView uses the global worldCoordinateData
+// The GridView uses the global worldCoordinateDataLow
 // which is populated by the WaveGrid etc.
 //
 - (void) addGridAtX:(CGFloat)x Y:(CGFloat)y Z:(CGFloat)z
@@ -140,9 +140,15 @@
     
 }
 
+- (void) loadSingleHoodPoint
+{
+    
+}
+
 - (void) loadPointsOfInterest
 {
     [self addElevationGridPoint];
+//    [self loadSingleHoodPoint];
 }
 
 
@@ -204,9 +210,9 @@
 #pragma mark Touches
 
 - (void) screenTouched:(CGPoint)p {
-//    CGFloat zmax = MAX_CAMERA_ALTITUDE_METERS;
-//    CGFloat altitude = (p.y / 480.0) * zmax + MIN_CAMERA_ALTITUDE_METERS;
-//    sm3dar.cameraAltitudeMeters = altitude;    
+    CGFloat zmax = MAX_CAMERA_ALTITUDE_METERS;
+    CGFloat altitude = (p.y / 480.0) * zmax + MIN_CAMERA_ALTITUDE_METERS;
+    sm3dar.cameraAltitudeMeters = altitude;    
 }
 
 #pragma mark CLLocationManagerDelegate
@@ -329,6 +335,12 @@
     [poi release];
 }
 
+- (void) addElevationGridPoint
+{
+    self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:SM3DAR.currentLocation] autorelease];    
+    [self addGridAtX:0 Y:0 Z:-30];    
+}
+
 - (void) addElevationGridPointOld
 {
 /*
@@ -358,7 +370,7 @@
 //    Coord3D gridCoord = [SM3DAR_Controller worldCoordinateFor:mtHood];
     
 //    NSInteger gridIndex = PEG_PATH_SAMPLES / 2;
-//    Coord3D gridOriginElevationPoint = worldCoordinateData[gridIndex][gridIndex];
+//    Coord3D gridOriginElevationPoint = worldCoordinateDataLow[gridIndex][gridIndex];
 //    CGFloat gridOriginZ = gridOriginElevationPoint.z;    
 //    [self addGridAtX:gridCoord.x Y:gridCoord.y Z:gridOriginZ];    
     
@@ -366,13 +378,13 @@
 */
 }
 
-- (void) addElevationGridPoint
+- (void) addProjectedElevationGridPoint
 {
-    self.elevationGrid = [[[ProjectedElevationGrid alloc] initAroundLocation:SM3DAR.currentLocation] autorelease];
+    //self.elevationGrid = [[[ProjectedElevationGrid alloc] initAroundLocation:SM3DAR.currentLocation] autorelease];
 
     /*
     NSInteger gridIndex = PEG_PATH_SAMPLES / 2;
-    Coord3D gridOriginElevationPoint = worldCoordinateData[gridIndex][gridIndex];
+    Coord3D gridOriginElevationPoint = worldCoordinateDataLow[gridIndex][gridIndex];
     CGFloat gridOriginZ = gridOriginElevationPoint.z;    
     [self addGridAtX:gridCoord.x Y:gridCoord.y Z:gridOriginZ];    
      */

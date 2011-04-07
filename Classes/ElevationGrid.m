@@ -24,14 +24,18 @@
 @synthesize gridCenter;
 @synthesize gridOrigin;
 @synthesize gridPointSW;
+@synthesize gridPointNW;
 @synthesize gridPointNE;
+@synthesize gridPointSE;
 
 - (void) dealloc
 {
 	self.gridOrigin = nil;
     self.gridCenter = nil;
     self.gridPointSW = nil;
+    self.gridPointNW = nil;
     self.gridPointNE = nil;
+    self.gridPointSE = nil;
     
     [super dealloc];
 }
@@ -43,7 +47,7 @@
         self.gridOrigin = nil;
         
         NSString *filePath = [[NSBundle mainBundle] pathForResource:bundleFileName ofType:nil];
-        [self loadDataFile:filePath];        
+        [self loadWorldCoordinateDataFile:filePath];        
     }
     
     return self;
@@ -55,7 +59,7 @@
     {
         self.gridOrigin = nil;
 
-        [self loadDataFile:[self dataFilePath]];        
+        [self loadWorldCoordinateDataFile:[self dataFilePath]];        
     }
     
     return self;
@@ -67,7 +71,10 @@
     {
         self.gridCenter = center;
         
-        [self buildArray];
+        if (![self buildArrayFromCache])
+        {
+            [self buildArray];
+        }
     }
     
     return self;
@@ -76,7 +83,7 @@
 #pragma mark -
 - (Coord3D*) worldCoordinates
 {
-    return *worldCoordinateData;
+    return *worldCoordinateDataLow;
 }
 
 #pragma mark -
@@ -103,11 +110,51 @@
     return nil;
 }
 
+- (NSString *) dataDir
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
+    return [paths objectAtIndex:0];
+}
+
 - (NSString *) dataFilePath
 {
+    NSString *cacheFileName = [NSString stringWithFormat:@"elevation_google_lat%.2f_lon%.2f_samples%.0f_size%.0f",
+                               gridCenter.coordinate.latitude,
+                               gridCenter.coordinate.longitude,
+                               ELEVATION_PATH_SAMPLES,
+                               ELEVATION_LINE_LENGTH_LOW];
+    
+    
+    return [[self dataDir] stringByAppendingPathComponent:cacheFileName];
+
+    
+    /* // old way
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
     NSString *documentsDirectoryPath = [paths objectAtIndex:0];
     return [documentsDirectoryPath stringByAppendingPathComponent:@"elevation_grid.txt"];
+    */
+    
+}
+
+// Returns YES if cache file was used.
+- (BOOL) buildArrayFromCache
+{
+    BOOL loadedCacheFile = NO;
+    
+    NSString *path = [self dataFilePath];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSLog(@"[EG] Checking for cache file at %@", path);
+    
+    if ([fileManager fileExistsAtPath:path])
+    {
+        [self loadElevationPointDataFile:path];
+        
+        loadedCacheFile = YES;
+    }
+        
+    return loadedCacheFile;
 }
 
 - (NSArray*) googlePathElevationBetween:(CLLocation*)point1 and:(CLLocation*)point2 samples:(NSInteger)samples
@@ -241,7 +288,7 @@
     else
     {
         CGFloat deltaLng = eastMeters / 10000.0;
-//        CGFloat deltaLng = atanf((ELEVATION_LINE_LENGTH/2) / [self longitudinalRadius:origin.coordinate.latitude]);
+//        CGFloat deltaLng = atanf((ELEVATION_LINE_LENGTH_LOW/2) / [self longitudinalRadius:origin.coordinate.latitude]);
      	longitude = origin.coordinate.longitude + deltaLng;
     }
     
@@ -251,14 +298,14 @@
 - (CLLocation*) pathEndpointFrom:(CLLocation*)startPoint
 {
     CLLocationCoordinate2D endPoint;
-    CGFloat delta = (ELEVATION_LINE_LENGTH / 10000.0);
+    CGFloat delta = (ELEVATION_LINE_LENGTH_LOW / 10000.0);
     endPoint.latitude = startPoint.coordinate.latitude - delta;
     endPoint.longitude = startPoint.coordinate.longitude;
 
     return [[[CLLocation alloc] initWithCoordinate:endPoint altitude:0 horizontalAccuracy:-1 verticalAccuracy:-1 timestamp:nil] autorelease];
     
     
-//    return [self locationAtDistanceInMetersNorth:-ELEVATION_LINE_LENGTH
+//    return [self locationAtDistanceInMetersNorth:-ELEVATION_LINE_LENGTH_LOW
 //                                            East:0
 //                                    fromLocation:startPoint];
 }
@@ -333,25 +380,24 @@
     return unsortedRows;
 }
 
-- (void) buildArray
+- (void) buildArrayWithGeocouch
 {
-    // Compute NW corner point
-    CGFloat halfLineLength = ELEVATION_LINE_LENGTH / 2;    
+    // Compute SW corner point
+    CGFloat halfLineLength = ELEVATION_LINE_LENGTH_LOW / 2;    
     CGFloat cornerPointDistanceMeters = sqrtf( 2 * (halfLineLength * halfLineLength) );
     CGFloat bearingDegrees = -135.0;
     
-    // Get the north-west point location.
+    // Get the south-west point location.
     self.gridPointSW = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
                                             bearingDegrees:bearingDegrees
                                               fromLocation:gridCenter];
     self.gridOrigin = gridPointSW;
     
-    // Get the south-east point location.
+    // Get the north-east point location.
     self.gridPointNE = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
                                             bearingDegrees:bearingDegrees+180.0
                                               fromLocation:gridCenter];
     
-    // Now that we have the bbox lets go grab some data from our fancy SM3DAR_ELEVATION_SERVER.
     NSArray *unsortedPoints = [self fetchElevationPoints:gridPointSW pointNE:gridPointNE];
     
     // Sort points into ordered rows.
@@ -429,50 +475,66 @@
 //    NSComparator *comparator;
 //    NSArray *sorted = 
     
-    // Populate worldCoordinateData.
+    // Populate worldCoordinateDataLow.
 
 
 }
 
-- (void) buildArrayOld
+- (void) buildArray
 {    
-    CGFloat halfLineLength = ELEVATION_LINE_LENGTH / 2;    
+    // Compute SW corner point.
+    
+    CGFloat halfLineLength = ELEVATION_LINE_LENGTH_LOW / 2;    
     CGFloat cornerPointDistanceMeters = sqrtf( 2 * (halfLineLength * halfLineLength) );
-    CGFloat bearingDegrees = -45.0;
+    CGFloat bearingDegrees = -135.0;
+    
+    
+    // Get the south-west point location.
+    
+    self.gridPointSW = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
+                                         bearingDegrees:bearingDegrees
+                                           fromLocation:gridCenter];
+    self.gridOrigin = gridPointSW;
+    
+    
+    // Get the north-east point location.
+    
+    self.gridPointNE = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
+                                         bearingDegrees:bearingDegrees+180.0
+                                           fromLocation:gridCenter];
 
-    // Get the north-west point location.
-    CLLocation *pointNW = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
-                                           bearingDegrees:bearingDegrees
-                                             fromLocation:gridOrigin];
     
-    // Get the south-east point location.
-    CLLocation *pointSE = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
-                                             bearingDegrees:bearingDegrees+180.0
-                                               fromLocation:gridOrigin];
+    // Get the longitude grid segment length in degrees.
     
-    
-    // Get the lon seg len deg
-    CLLocationDegrees pointNWLongitude = pointNW.coordinate.longitude;
-    CLLocationDegrees pointSELongitude = pointSE.coordinate.longitude;
     CLLocationDegrees lineLengthDegrees = fabsf(
-                        (180 + pointNWLongitude) -
-                        (180 + pointSELongitude));
+                        (180 + gridPointSW.coordinate.longitude) -
+                        (180 + gridPointNE.coordinate.longitude));
     
     CLLocationDegrees lonSegLenDegrees = lineLengthDegrees / ELEVATION_PATH_SAMPLES;
 
-    // Make the SW point.
-    CLLocationDegrees pointSWLatitude = pointSE.coordinate.latitude;
-    CLLocation *pointSW = [[[CLLocation alloc] initWithLatitude:pointSWLatitude longitude:pointNWLongitude] autorelease];
+
+    // Make the NW point.
     
-    CLLocation *northPoint = pointNW;
-    CLLocation *southPoint = pointSW;
+    self.gridPointNW = [[[CLLocation alloc] initWithLatitude:gridPointNE.coordinate.latitude 
+                                                      longitude:gridPointSW.coordinate.longitude] autorelease];
+
+    // Make the SE point.
+
+    self.gridPointSE = [[[CLLocation alloc] initWithLatitude:gridPointSW.coordinate.latitude 
+                                                          longitude:gridPointNE.coordinate.longitude] autorelease];
+    
+    
+    // The elevation grid's origin is in the SW.
+    
+    CLLocation *southPoint = gridPointSW;
+    CLLocation *northPoint = gridPointNW;
     
     for (int i=0; i < ELEVATION_PATH_SAMPLES; i++)
     {        
-        NSLog(@"Getting elevations between %@ and %@", northPoint, southPoint);
+        NSLog(@"Getting elevations between %@ and %@", southPoint, northPoint);
         
-        NSArray *pathLocations = [self googlePathElevationBetween:northPoint 
-                                                              and:southPoint 
+        NSArray *pathLocations = [self googlePathElevationBetween:southPoint 
+                                                              and:northPoint 
                                                           samples:ELEVATION_PATH_SAMPLES];    
         
         // Validate path elevation data returned from google's elevation API.
@@ -485,26 +547,24 @@
         // Move meridian points east.
         NSLog(@"Moving east: %.3f deg", lonSegLenDegrees);
         
-		northPoint = [self locationEastOf:northPoint byDegrees:lonSegLenDegrees];        
 		southPoint = [self locationEastOf:southPoint byDegrees:lonSegLenDegrees];        
+		northPoint = [self locationEastOf:northPoint byDegrees:lonSegLenDegrees];        
         
         // Parse results.
         for (int j=0; j < ELEVATION_PATH_SAMPLES; j++)
         {
             CLLocation *tmpLocation = [pathLocations objectAtIndex:j];
+            
+            ElevationPoint ep;
+            ep.coordinate = tmpLocation.coordinate;
+            ep.elevation = tmpLocation.altitude;
 
-            elevationData[j][i] = tmpLocation.altitude;
+            //elevationPointsLow[j][i] = ep;
             
-//            worldCoordinateData[j][i] = [SM3DAR_Controller worldCoordinateFor:tmpLocation];
+
+            // Project the point.
             
-            Coord3D c = {
-                i * GRID_CELL_SIZE,
-                j * GRID_CELL_SIZE,
-                tmpLocation.altitude
-            };
-            
-            worldCoordinateData[j][i] = c;
-            
+            worldCoordinateDataLow[j][i] = [SM3DAR_Controller worldCoordinateFor:tmpLocation];            
         }
     }
 
@@ -513,7 +573,7 @@
 
 - (void) printElevationData:(BOOL)saveToCache
 {
-    CGFloat len = ELEVATION_LINE_LENGTH / 1000.0;
+    CGFloat len = ELEVATION_LINE_LENGTH_LOW / 1000.0;
     NSMutableString *str = [NSMutableString stringWithFormat:@"\n\n%i elevation samples in a %.1f sq km grid\n", ELEVATION_PATH_SAMPLES, len, len];
     NSMutableString *wpStr = [NSMutableString string];
     
@@ -524,10 +584,10 @@
 
         for (int j=0; j < ELEVATION_PATH_SAMPLES; j++)
         {
-            Coord3D c = worldCoordinateData[i][j];
+            Coord3D c = worldCoordinateDataLow[i][j];
             [wpStr appendFormat:@"%.0f,%.0f,%.0f ", c.x, c.y, c.z];            
             
-            CGFloat elevation = elevationData[i][j];            
+            CGFloat elevation = c.z;
 
             if (abs(elevation) < 10) [str appendString:@" "];
             if (abs(elevation) < 100) [str appendString:@" "];
@@ -548,8 +608,8 @@
 
     //NSLog(str, 0);
 
-    //NSLog(@"\n\nWorld coordinates:\n");
-    //NSLog(wpStr, 0);
+    NSLog(@"\n\nWorld coordinates:\n");
+    NSLog(wpStr, 0);
 
     if (saveToCache)
     {
@@ -641,8 +701,7 @@
 }
 
 #pragma mark -
-
-- (void) loadDataFile:(NSString*)filePath
+- (void) loadElevationPointDataFile:(NSString*)filePath
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -658,20 +717,17 @@
         
         if (error)
         {
-            NSLog(@"[EG] ERROR: ", [error localizedDescription]);
-            [self release];
+            NSLog(@"[EG] ERROR loading data file: ", [error localizedDescription]);
         }
         else
         {
-            //NSLog(@"\n\n%@\n\n", coordData);
-            
             // Parse data.  Extract lines first.
+            
             NSArray *lines = [coordData componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
             
             if (!lines || [lines count] == 0)
             {
                 NSLog(@"[EG] Cache file is empty.");
-                [self release];
             }
             else
             {
@@ -713,13 +769,13 @@
                         
                         @try 
                         {
-                            coord.x = i * GRID_CELL_SIZE;
-                            coord.y = j * GRID_CELL_SIZE;
+                            coord.x = i * GRID_CELL_SIZE_LOW;
+                            coord.y = j * GRID_CELL_SIZE_LOW;
                             coord.z = [[xyz objectAtIndex:2] floatValue];
-
-//                            coord.x = [[xyz objectAtIndex:0] floatValue];
-//                            coord.y = [[xyz objectAtIndex:1] floatValue];
-//                            coord.z = [[xyz objectAtIndex:2] floatValue];
+                            
+                            //                            coord.x = [[xyz objectAtIndex:0] floatValue];
+                            //                            coord.y = [[xyz objectAtIndex:1] floatValue];
+                            //                            coord.z = [[xyz objectAtIndex:2] floatValue];
                         }
                         @catch (NSException *e) 
                         {
@@ -730,7 +786,7 @@
                         
                         //NSLog(@"[%i][%i] Z: %.0f", i, j, coord.z);
                         
-                        worldCoordinateData[i][j] = coord;
+                        worldCoordinateDataLow[i][j] = coord;
                         
                         j++;
                         // End of triplet.
@@ -752,16 +808,175 @@
     else
     {
         NSLog(@"[EG] No cache file.");
-        [self release];
     }
 }
 
+- (void) loadWorldCoordinateDataFile:(NSString*)filePath
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSLog(@"[EG] loadDataFile: %@", filePath);
+    
+    if ([fileManager fileExistsAtPath:filePath])
+    {
+        // Load cached data.
+        NSLog(@"[EG] Loading elevation grid from file.");
+        
+        NSError *error = nil;
+        NSString *coordData = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
+        
+        if (error)
+        {
+            NSLog(@"[EG] ERROR: ", [error localizedDescription]);
+        }
+        else
+        {
+            //NSLog(@"\n\n%@\n\n", coordData);
+            
+            // Parse data.  Extract lines first.
+            NSArray *lines = [coordData componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+            
+            if (!lines || [lines count] == 0)
+            {
+                NSLog(@"[EG] Cache file is empty.");
+            }
+            else
+            {
+                NSInteger i = 0;
+                
+                // Parse each line.                    
+                for (NSString *oneLine in lines)
+                {
+                    if ([oneLine length] == 0)
+                    {
+                        // Skip blank line.
+                        continue;
+                    }
+                    
+                    // Each coordinate triplet is separated by a space.
+                    NSArray *coords = [oneLine componentsSeparatedByString:@" "];
+                    
+                    NSInteger j = 0;
+                    
+                    for (NSString *csv in coords)
+                    {
+                        if ([csv length] == 0)
+                        {
+                            // Skip empty triplet.
+                            continue;
+                        }
+                        
+                        // Each coordinate is represented as X,Y,Z.
+                        NSArray *xyz = [csv componentsSeparatedByString:@","];
+                        
+                        if (!xyz || [xyz count] < 3)
+                        {
+                            NSLog(@"[EG] Invalid triplet format: %@", csv);
+                            
+                            continue;
+                        }
+                        
+                        Coord3D coord;
+                        
+                        @try 
+                        {
+                            coord.x = i * GRID_CELL_SIZE_LOW;
+                            coord.y = j * GRID_CELL_SIZE_LOW;
+                            coord.z = [[xyz objectAtIndex:2] floatValue];
+
+//                            coord.x = [[xyz objectAtIndex:0] floatValue];
+//                            coord.y = [[xyz objectAtIndex:1] floatValue];
+//                            coord.z = [[xyz objectAtIndex:2] floatValue];
+                        }
+                        @catch (NSException *e) 
+                        {
+                            NSLog(@"[EG] Unable to convert triplet to coordinate: %@", [e reason]);
+                            j++;
+                            continue;                                
+                        }
+                        
+                        //NSLog(@"[%i][%i] Z: %.0f", i, j, coord.z);
+                        
+                        worldCoordinateDataLow[i][j] = coord;
+                        
+                        j++;
+                        // End of triplet.
+                    }
+                    
+                    if (j >= ELEVATION_PATH_SAMPLES)
+                    {
+                        // Only increment i if we parsed the right number triplets.
+                        i++;
+                    }
+                    
+                    // End of line.
+                }
+            }
+        }
+        
+        [self printElevationData:NO];
+    }
+    else
+    {
+        NSLog(@"[EG] No cache file.");
+    }
+}
+
+- (BoundingBox) boundingBox:(CLLocation *)sampleLocation
+{
+    int rowCount = ELEVATION_PATH_SAMPLES;
+    int columnCount = ELEVATION_PATH_SAMPLES;
+    
+    CLLocationDegrees lonWest = gridPointSW.coordinate.longitude;
+    CLLocationDegrees lonEast = gridPointSE.coordinate.longitude;
+    CLLocationDegrees latSouth = gridPointSW.coordinate.latitude;
+    CLLocationDegrees latNorth = gridPointNW.coordinate.latitude;
+    
+    CLLocationDegrees lonSpanCell = (lonEast + 180.0) - (lonWest + 180.0);
+    CLLocationDegrees latSpanCell = (latNorth + 180.0) - (latSouth + 180.0);
+    
+    CLLocationDegrees lonSpanPoint = (sampleLocation.coordinate.longitude + 180.0) - (lonWest + 180.0);
+    CLLocationDegrees latSpanPoint = (sampleLocation.coordinate.latitude + 180.0) - (latSouth + 180.0);
+
+    CGFloat u = lonSpanPoint / lonSpanCell;
+    CGFloat v = latSpanPoint / latSpanCell;
+
+    int columnIndex = (u * (columnCount-1));  
+    int rowIndex = (v * (rowCount-1));  
+
+    BoundingBox bbox;
+    
+    if (rowIndex >= rowCount || columnIndex >= columnCount)
+    {
+        // bad
+        NSLog(@"\n\nERROR: Sample location's bounding box is out of bounds.\n\n");        
+    }
+    else
+    {
+        // TODO: Confirm that the row/col indices aren't reversed. 
+        // The resulting bbox should look like this:
+        //   C  D
+        //   A  B
+        //
+        
+        bbox.a = elevationPointsLow[rowIndex][columnIndex];
+        bbox.b = elevationPointsLow[rowIndex][columnIndex+1];
+        bbox.c = elevationPointsLow[rowIndex+1][columnIndex];
+        bbox.d = elevationPointsLow[rowIndex+1][columnIndex+1];
+    }
+    
+    return bbox;
+}
+
+
+/*
 - (BoundingBox) boundingBox:(CLLocation *)referenceLocation
 {
     // Elevation at location equals elevation of nearest elevation grid array value
     // Define distance from origin variables in meters
     
     CLLocationDistance xWorldCoordDistanceFromOrigin, yWorldCoordDistanceFromOrigin;    
+
     
     // Compute variables based on referenceLocation and ElevationGrid origin
     
@@ -775,25 +990,23 @@
     yWorldCoordDistanceFromOrigin = [yDummy distanceFromLocation:gridPointSW];
     
     int gridOriginIndex = 0; // ELEVATION_PATH_SAMPLES/2;
-    int yIndexOffset = yWorldCoordDistanceFromOrigin/GRID_CELL_SIZE;// + gridOriginIndex;  // rows up
-    int xIndexOffset = xWorldCoordDistanceFromOrigin/GRID_CELL_SIZE;// + gridOriginIndex;  // columns over    
+    int yIndexOffset = yWorldCoordDistanceFromOrigin/GRID_CELL_SIZE_LOW;// + gridOriginIndex;  // rows up
+    int xIndexOffset = xWorldCoordDistanceFromOrigin/GRID_CELL_SIZE_LOW;// + gridOriginIndex;  // columns over    
 
-    /*
-    BOOL originIsSouthOfReference = (gridOrigin.coordinate.latitude < referenceLocation.coordinate.latitude);
-    
-    if (originIsSouthOfReference) 
-    {
-        yIndexOffset *= -1;
-    }
-    
-    // TO DO:Resolve -180,180 problem
-    BOOL originIsWestOfReference = (gridOrigin.coordinate.longitude < referenceLocation.coordinate.longitude);
-    
-    if (originIsWestOfReference) 
-    {
-        xIndexOffset *= -1;
-    }
-    */
+//    BOOL originIsSouthOfReference = (gridOrigin.coordinate.latitude < referenceLocation.coordinate.latitude);
+//    
+//    if (originIsSouthOfReference) 
+//    {
+//        yIndexOffset *= -1;
+//    }
+//    
+//    // TO DO:Resolve -180,180 problem
+//    BOOL originIsWestOfReference = (gridOrigin.coordinate.longitude < referenceLocation.coordinate.longitude);
+//    
+//    if (originIsWestOfReference) 
+//    {
+//        xIndexOffset *= -1;
+//    }
     
     Coord3D a, b, c, d, u;
     
@@ -801,38 +1014,38 @@
     
     row = (gridOriginIndex + xIndexOffset + 0);
     col = (gridOriginIndex + yIndexOffset + 0);
-    a.x = row * GRID_CELL_SIZE;
-    a.y = col * GRID_CELL_SIZE;    
-    a.z = worldCoordinateData[row][col].z;
+    a.x = row * GRID_CELL_SIZE_LOW;
+    a.y = col * GRID_CELL_SIZE_LOW;    
+    a.z = worldCoordinateDataLow[row][col].z;
     
     row = (gridOriginIndex + xIndexOffset + 1);
     col = (gridOriginIndex + yIndexOffset + 0);
-    b.x = row * GRID_CELL_SIZE;
-    b.y = col * GRID_CELL_SIZE;    
-    b.z = worldCoordinateData[row][col].z;
+    b.x = row * GRID_CELL_SIZE_LOW;
+    b.y = col * GRID_CELL_SIZE_LOW;    
+    b.z = worldCoordinateDataLow[row][col].z;
 
     row = (gridOriginIndex + xIndexOffset + 1);
     col = (gridOriginIndex + yIndexOffset + 1);
-    c.x = row * GRID_CELL_SIZE;
-    c.y = col * GRID_CELL_SIZE;    
-    c.z = worldCoordinateData[row][col].z;
+    c.x = row * GRID_CELL_SIZE_LOW;
+    c.y = col * GRID_CELL_SIZE_LOW;    
+    c.z = worldCoordinateDataLow[row][col].z;
     
     row = (gridOriginIndex + xIndexOffset + 0);
     col = (gridOriginIndex + yIndexOffset + 1);
-    d.x = row * GRID_CELL_SIZE;
-    d.y = col * GRID_CELL_SIZE;    
-    d.z = worldCoordinateData[row][col].z;
+    d.x = row * GRID_CELL_SIZE_LOW;
+    d.y = col * GRID_CELL_SIZE_LOW;    
+    d.z = worldCoordinateDataLow[row][col].z;
     
     int axMeters = a.x;
     int ayMeters = a.y;
-    int originMeters = gridOriginIndex * GRID_CELL_SIZE;
+    int originMeters = gridOriginIndex * GRID_CELL_SIZE_LOW;
     
     int somethingX = axMeters - originMeters;
     int somethingY = ayMeters - originMeters;
 
     u.x = xWorldCoordDistanceFromOrigin - somethingX;
     u.y = yWorldCoordDistanceFromOrigin - somethingY;
-//    u.z = worldCoordinateData[(int)a.x][(int)a.y].z;  // Snap to point a's elevation
+//    u.z = worldCoordinateDataLow[(int)a.x][(int)a.y].z;  // Snap to point a's elevation
     
     BoundingBox bbox = {
         a, b, c, d, u
@@ -840,6 +1053,7 @@
 
     return bbox;    
 }
+*/
 
 - (CGFloat) interpolatedElevationForPoint:(Coord3D)u 
                                   topLeft:(Coord3D)a 
@@ -875,52 +1089,16 @@
 
 - (CGFloat) elevationAtLocation:(CLLocation*)referenceLocation
 {
-    ////////////////////////////////////////////////////////////////////////////
-    // TODO: move this elsewhere...
-    CGFloat halfLineLength = ELEVATION_LINE_LENGTH / 2;    
-    CGFloat cornerPointDistanceMeters = sqrtf( 2 * (halfLineLength * halfLineLength) );
-    CGFloat bearingDegrees = -45.0;
-    
-    // Get the north-west point location.
-    gridPointSW = [[self locationAtDistanceInMeters:cornerPointDistanceMeters 
-                                     bearingDegrees:bearingDegrees
-                                       fromLocation:gridOrigin] retain];
-    
-    ////////////////////////////////////////////////////////////////////////////
-    
-    
-/*
-    Coord3D a, b, c, d;  // Corner points
-    Coord3D u;  // Target point
+    //BoundingBox bbox = [self boundingBox:referenceLocation];
 
-    // TODO: set Z values for each point.
-    u.x = 7;
-    u.y = 8;
-    
-    a.x = 0;
-    a.y = 0;
-    a.z = 150;
-    
-    b.x = 10;
-    b.y = 0;
-    b.z = 120;
-    
-    c.x = 10;
-    c.y = 10;
-    c.z = 110;
-    
-    d.x = 0;
-    d.y = 10;
-    d.z = 100;    
-*/
-    
-    BoundingBox bbox = [self boundingBox:referenceLocation];
-    
+    return 0;
+    /*
     return [self interpolatedElevationForPoint:bbox.u
                                        topLeft:bbox.a 
                                       topRight:bbox.b 
                                    bottomRight:bbox.c 
                                     bottomLeft:bbox.d];    
+    */
 }
 
 
@@ -938,8 +1116,8 @@
     xWorldCoordDistanceFromOrigin = [xDummy distanceFromLocation:gridOrigin];
     yWorldCoordDistanceFromOrigin = [yDummy distanceFromLocation:gridOrigin];
     
-    int yIndexOffset = yWorldCoordDistanceFromOrigin/GRID_CELL_SIZE;
-    int xIndexOffset = xWorldCoordDistanceFromOrigin/GRID_CELL_SIZE;
+    int yIndexOffset = yWorldCoordDistanceFromOrigin/GRID_CELL_SIZE_LOW;
+    int xIndexOffset = xWorldCoordDistanceFromOrigin/GRID_CELL_SIZE_LOW;
     
     int gridOriginIndex = ELEVATION_PATH_SAMPLES/2;
     
@@ -962,7 +1140,7 @@
     int y = gridOriginIndex + yIndexOffset;
     
     
-    Coord3D c = worldCoordinateData[x][y]; 
+    Coord3D c = worldCoordinateDataLow[x][y]; 
      
     
  //Round user world coordinates to whole number

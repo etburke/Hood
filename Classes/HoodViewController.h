@@ -9,11 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "SM3DAR.h"
-//#import "ElevationGrid.h"
 #import "HoodGrid.h"
 #import "WaveGrid.h"
 #import "Joystick.h"
-#import "ProjectedElevationGrid.h"
+#import "ElevationGrid.h"
 
 @interface HoodViewController : UIViewController <SM3DAR_Delegate, CLLocationManagerDelegate>
 {
@@ -25,7 +24,7 @@
     Joystick *joystick;
 }
 
-@property (nonatomic, retain) ProjectedElevationGrid *elevationGrid;
+@property (nonatomic, retain) ElevationGrid *elevationGrid;
 
 - (void) addHoodGridPoint;
 - (void) screenTouched:(CGPoint)p;
