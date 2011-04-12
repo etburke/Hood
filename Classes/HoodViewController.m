@@ -220,22 +220,15 @@
 - (void)locationManager:(CLLocationManager *)manager
 	didUpdateToLocation:(CLLocation *)newLocation
            fromLocation:(CLLocation *)oldLocation
-{
-//    [manager stopUpdatingLocation];
+{    
+    NSLog(@"[BGVC] New location (acc %.0f): %@", newLocation.horizontalAccuracy, newLocation);
 
-    NSLog(@"[BGVC] New location: %@", newLocation);
-    
-    // Fetch elevation grid points around current location
-    //self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:newLocation] autorelease];    
-
-    // Load elevation grid from cache.
-    //self.elevationGrid = [[[ElevationGrid alloc] initFromCache] autorelease];
-    
-    // Load elevation grid from bundled data file.
-//    self.elevationGrid = [[[ElevationGrid alloc] initFromFile:@"elevation_grid.txt"] autorelease];
-//
-//    [self addGridAtX:0 Y:0 Z:-100];
-
+    if (newLocation.horizontalAccuracy < 300.0) {
+        
+        [manager stopUpdatingLocation];
+        
+        [self addElevationGridPoint];
+    }
     
 }
 

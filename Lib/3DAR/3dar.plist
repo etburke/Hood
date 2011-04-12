@@ -15,7 +15,7 @@
 	<key>3darDisableLocationServices</key>
 	<false/>
 	<key>3darDisableGyro</key>
-	<true/>
+	<false/>
 	<key>3darMapMode</key>
 	<string>automatic</string>
 </dict>
