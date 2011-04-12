@@ -32,7 +32,7 @@
 @property (nonatomic, retain) CLLocation *gridPointNE;
 @property (nonatomic, retain) CLLocation *gridPointSE;
 
-- (id) initFromCache;
+//- (id) initFromCache;
 - (id) initFromFile:(NSString*)bundleFileName;
 - (id) initAroundLocation:(CLLocation*)origin;
 - (NSArray*) googlePathElevationBetween:(CLLocation*)point1 and:(CLLocation*)point2 samples:(NSInteger)samples;
@@ -45,7 +45,8 @@
 - (NSString *) dataFilePath;
 - (void) loadElevationPointDataFile:(NSString*)filePath;
 - (void) loadWorldCoordinateDataFile:(NSString*)filePath;
-- (CGFloat) elevationAtLocation:(CLLocation*)referenceLocation;
+- (CLLocationDistance) elevationAtLocation:(CLLocation*)referenceLocation;
 - (BOOL) buildArrayFromCache;
+- (CLLocationDistance) interpolateBetweenA:(ElevationPoint)epa B:(ElevationPoint)epb C:(ElevationPoint)epc D:(ElevationPoint)epd u:(double)u v:(double)v;
 
 @end

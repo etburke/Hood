@@ -39,7 +39,7 @@
 
     glFogf(GL_FOG_START, 0.0);
     
-    CGFloat fogEnd = GRID_SCALE_HORIZONTAL * ELEVATION_LINE_LENGTH_LOW;
+    CGFloat fogEnd = GRID_SCALE_HORIZONTAL * ELEVATION_LINE_LENGTH_HIGH;
     glFogf(GL_FOG_END, fogEnd);
 
     glHint(GL_FOG_HINT, GL_NICEST);
@@ -52,7 +52,7 @@
 {
     ushort lineIndex [1024];
     
-    Coord3D *verts = &worldCoordinateDataLow[0][0];
+    Coord3D *verts = &worldCoordinateDataHigh[0][0];
     int gridSize = ELEVATION_PATH_SAMPLES;
     
     glDisable(GL_LIGHTING);

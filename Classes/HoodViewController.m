@@ -14,8 +14,8 @@
 #import "CGPointUtil.h"
 #import "ObjGridView.h"
 
-#define MIN_CAMERA_ALTITUDE_METERS 500.0
-#define MAX_CAMERA_ALTITUDE_METERS 4000.0
+#define MIN_CAMERA_ALTITUDE_METERS 1.0
+#define MAX_CAMERA_ALTITUDE_METERS 10000.0
 #define MAX_SPEED 350.0f
 
 @implementation HoodViewController

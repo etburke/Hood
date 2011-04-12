@@ -9,9 +9,13 @@
 
 #define AVG_EARTH_RADIUS_METERS 6367444.65
 
-#define ELEVATION_LINE_LENGTH_LOW   10000.0f
-#define ELEVATION_LINE_LENGTH_HIGH  200000.0f
+#define ELEVATION_LINE_LENGTH_HIGH  10000.0
+#define ELEVATION_LINE_LENGTH_LOW   200000.0
+
+//////////
+//#define ELEVATION_PATH_SAMPLES      3.0
 #define ELEVATION_PATH_SAMPLES      111.0f
+//////////
 
 #define GOOGLE_ELEVATION_API_URL_FORMAT @"http://maps.googleapis.com/maps/api/elevation/json?path=%@&samples=%i&sensor=false"
 //#define SM3DAR_ELEVATION_API_URL_FORMAT @"http://localhost:5984/hood1/_design/point_elevation/_spatial/points?bbox=%@"
