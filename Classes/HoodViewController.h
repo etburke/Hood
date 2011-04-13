@@ -22,6 +22,7 @@
     CLLocation *mtHood;
     Coord3D cameraOffset;
     Joystick *joystick;
+    BOOL loaded;
 }
 
 @property (nonatomic, retain) ElevationGrid *elevationGrid;

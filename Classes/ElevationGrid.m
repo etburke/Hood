@@ -122,7 +122,7 @@
 
 - (NSString *) dataFilePath
 {
-    NSString *cacheFileName = [NSString stringWithFormat:@"elevation_google_lat%.2f_lon%.2f_samples%.0f_size%.0f",
+    NSString *cacheFileName = [NSString stringWithFormat:@"elevation_google_lat%.1f_lon%.1f_samples%.0f_size%.0f.txt",
                                gridCenter.coordinate.latitude,
                                gridCenter.coordinate.longitude,
                                ELEVATION_PATH_SAMPLES,
@@ -138,27 +138,6 @@
     return [documentsDirectoryPath stringByAppendingPathComponent:@"elevation_grid.txt"];
     */
     
-}
-
-// Returns YES if cache file was used.
-- (BOOL) buildArrayFromCache
-{
-    BOOL loadedCacheFile = NO;
-    
-    NSString *path = [self dataFilePath];
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    NSLog(@"[EG] Checking for cache file at %@", path);
-    
-    if ([fileManager fileExistsAtPath:path])
-    {
-        [self loadElevationPointDataFile:path];
-        
-        loadedCacheFile = YES;
-    }
-        
-    return loadedCacheFile;
 }
 
 - (NSArray*) googlePathElevationBetween:(CLLocation*)point1 and:(CLLocation*)point2 samples:(NSInteger)samples
@@ -306,8 +285,8 @@
     
 }
 
-- (void) buildArray
-{    
+- (void) findGridCornerPoints
+{
     // Compute SW corner point.
     
     CGFloat halfLineLength = ELEVATION_LINE_LENGTH_HIGH / 2;    
@@ -328,26 +307,30 @@
     self.gridPointNE = [self locationAtDistanceInMeters:cornerPointDistanceMeters 
                                          bearingDegrees:bearingDegrees+180.0
                                            fromLocation:gridCenter];
-
-    
-    // Get the longitude grid segment length in degrees.
-    
-    CLLocationDegrees lineLengthDegrees = fabsf(
-                        (180 + gridPointSW.coordinate.longitude) -
-                        (180 + gridPointNE.coordinate.longitude));
-    
-    CLLocationDegrees lonSegLenDegrees = lineLengthDegrees / (ELEVATION_PATH_SAMPLES + 1);
-
-
+        
     // Make the NW point.
     
     self.gridPointNW = [[[CLLocation alloc] initWithLatitude:gridPointNE.coordinate.latitude 
-                                                      longitude:gridPointSW.coordinate.longitude] autorelease];
-
+                                                   longitude:gridPointSW.coordinate.longitude] autorelease];
+    
     // Make the SE point.
-
+    
     self.gridPointSE = [[[CLLocation alloc] initWithLatitude:gridPointSW.coordinate.latitude 
-                                                          longitude:gridPointNE.coordinate.longitude] autorelease];
+                                                   longitude:gridPointNE.coordinate.longitude] autorelease];
+    
+}
+
+- (void) buildArray
+{    
+    [self findGridCornerPoints];
+     
+    // Get the longitude grid segment length in degrees.
+    
+    CLLocationDegrees lineLengthDegrees = fabsf(
+                                                (180 + gridPointSW.coordinate.longitude) -
+                                                (180 + gridPointNE.coordinate.longitude));
+    
+    CLLocationDegrees lonSegLenDegrees = lineLengthDegrees / (ELEVATION_PATH_SAMPLES + 1);
     
     
     // The elevation grid's origin is in the SW.
@@ -400,6 +383,29 @@
     }
 
 	[self printElevationData:YES];
+}
+
+// Returns YES if cache file was used.
+- (BOOL) buildArrayFromCache
+{
+    [self findGridCornerPoints];
+    
+    BOOL loadedCacheFile = NO;
+    
+    NSString *path = [self dataFilePath];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSLog(@"[EG] Checking for cache file at %@", path);
+    
+    if ([fileManager fileExistsAtPath:path])
+    {
+        [self loadElevationPointDataFile:path];
+        
+        loadedCacheFile = YES;
+    }
+    
+    return loadedCacheFile;
 }
 
 - (void) printElevationData:(BOOL)saveToCache
@@ -804,7 +810,8 @@
     if (rowIndex >= rowCount || columnIndex >= columnCount)
     {
         // bad
-        NSLog(@"\n\nERROR: Sample location's bounding box is out of bounds.\n\n");        
+        NSLog(@"\n\nERROR: Sample location's bounding box is out of bounds.\n\nsample: %@ \nSW: %@ \nNE: %@ \n",
+              sampleLocation, gridPointSW, gridPointNE);        
     }
     else
     {

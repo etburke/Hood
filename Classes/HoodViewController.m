@@ -14,8 +14,8 @@
 #import "CGPointUtil.h"
 #import "ObjGridView.h"
 
-#define MIN_CAMERA_ALTITUDE_METERS 1.0
-#define MAX_CAMERA_ALTITUDE_METERS 10000.0
+#define MIN_CAMERA_ALTITUDE_METERS 275.0    // Lower than 275 meters may look bad.
+#define MAX_CAMERA_ALTITUDE_METERS 3000.0
 #define MAX_SPEED 350.0f
 
 @implementation HoodViewController
@@ -88,8 +88,6 @@
 
 - (void) loadHoodPoints
 {
-    NSLog(@"loadPointsOfInterest");
-    
     CLLocationDegrees llLat = 45.278339;
     CLLocationDegrees llLon = -121.816842;
     
@@ -147,7 +145,9 @@
 
 - (void) loadPointsOfInterest
 {
-    [self addElevationGridPoint];
+    // Load after location update.
+    
+//    [self addElevationGridPoint];
 //    [self loadSingleHoodPoint];
 }
 
@@ -170,13 +170,17 @@
     
     
     [NSTimer scheduledTimerWithTimeInterval:0.3f target:waveGrid selector:@selector(refresh) userInfo:nil repeats:YES];
+    
+    loaded = NO;
+    NSLog(@"Waiting for location update...");
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    //[sm3dar startCamera];    
+    //[sm3dar startCamera];  
+    
 }
 
 - (void)didReceiveMemoryWarning 
@@ -223,11 +227,12 @@
 {    
     NSLog(@"[BGVC] New location (acc %.0f): %@", newLocation.horizontalAccuracy, newLocation);
 
-    if (newLocation.horizontalAccuracy < 300.0) {
+    if (!loaded && newLocation.horizontalAccuracy < 200.0) {
         
         [manager stopUpdatingLocation];
         
         [self addElevationGridPoint];
+        loaded = YES;
     }
     
 }
@@ -330,45 +335,19 @@
 
 - (void) addElevationGridPoint
 {
-    self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:SM3DAR.currentLocation] autorelease];    
-    [self addGridAtX:0 Y:0 Z:-30];    
-}
+    sm3dar.cameraAltitudeMeters = MIN_CAMERA_ALTITUDE_METERS;
 
-- (void) addElevationGridPointOld
-{
-/*
-//    self.elevationGrid = [[[ElevationGrid alloc] initFromFile:@"elevation_grid_25km_100s.txt"] autorelease];
+    self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:SM3DAR.currentLocation] autorelease];        
     
-//    CLLocation *theOffice = [[[CLLocation alloc] initWithLatitude:45.523563 longitude:-122.675099] autorelease];
-//    elevationGrid.gridOrigin = theOffice;
-//    self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:theOffice] autorelease];
+    // TODO: add originLocation property to 3DAR.
     
-    //    [sm3dar setCurrentLocation:theOffice];
+    CLLocationDistance actualOriginElevation = [elevationGrid elevationAtLocation:SM3DAR.currentLocation];
+    CLLocationDistance originElevationOffset = SM3DAR.currentLocation.altitude - actualOriginElevation;
     
+    NSLog(@"Origin elevation is %.1f and the GPS reports %.1f so the grid point is at %.1f", 
+          actualOriginElevation, SM3DAR.currentLocation.altitude, originElevationOffset);
     
-    //    self.elevationGrid = [[[ElevationGrid alloc] initFromFile:@"elevation_grid_oregon.txt"] autorelease];
-    //    CLLocation *centerOfOregon = [[[CLLocation alloc] initWithLatitude:46.065608 longitude:-125.496826] autorelease];
-    //    self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:centerOfOregon] autorelease];
-    //    [sm3dar setCurrentLocation:centerOfOregon];
-    
-    CLLocation *mtHood = [[[CLLocation alloc] initWithLatitude:45.373831 longitude:-121.698032] autorelease];
-//    [sm3dar setCurrentLocation:mtHood];
-    [sm3dar changeCurrentLocation:mtHood];
-
-    Coord3D wc = [SM3DAR_Controller worldCoordinateFor:mtHood];
-    NSLog(@"\n\nPROBLEM? %.0f, %.0f\n\n", wc.x, wc.y);
-
-    self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:mtHood] autorelease];
-
-//    Coord3D gridCoord = [SM3DAR_Controller worldCoordinateFor:mtHood];
-    
-//    NSInteger gridIndex = PEG_PATH_SAMPLES / 2;
-//    Coord3D gridOriginElevationPoint = worldCoordinateDataLow[gridIndex][gridIndex];
-//    CGFloat gridOriginZ = gridOriginElevationPoint.z;    
-//    [self addGridAtX:gridCoord.x Y:gridCoord.y Z:gridOriginZ];    
-    
-    [self addGridAtX:0 Y:0 Z:0];    
-*/
+    [self addGridAtX:0 Y:0 Z:originElevationOffset];    
 }
 
 - (void) addProjectedElevationGridPoint
