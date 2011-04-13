@@ -210,7 +210,7 @@
             Coordinate *coordinate = [row objectAtIndex:colNumber];            
             if (!coordinate) continue;
                         
-            worldCoordinateDataLow[rowNumber][colNumber] = [coordinate toCoord3D];
+            worldCoordinateDataHigh[rowNumber][colNumber] = [coordinate toCoord3D];
         }
         
     }
@@ -269,7 +269,7 @@
             
             // Dome tarp is sin + sin
             
-            worldCoordinateDataLow[rowNumber][colNumber] = c;
+            worldCoordinateDataHigh[rowNumber][colNumber] = c;
         }
     }    
     

@@ -57,7 +57,7 @@
 }
 
 //
-// The GridView uses the global worldCoordinateDataLow
+// The GridView uses the global worldCoordinateDataHigh
 // which is populated by the WaveGrid etc.
 //
 - (void) addGridAtX:(CGFloat)x Y:(CGFloat)y Z:(CGFloat)z
@@ -348,21 +348,6 @@
           actualOriginElevation, SM3DAR.currentLocation.altitude, originElevationOffset);
     
     [self addGridAtX:0 Y:0 Z:originElevationOffset];    
-}
-
-- (void) addProjectedElevationGridPoint
-{
-    //self.elevationGrid = [[[ProjectedElevationGrid alloc] initAroundLocation:SM3DAR.currentLocation] autorelease];
-
-    /*
-    NSInteger gridIndex = PEG_PATH_SAMPLES / 2;
-    Coord3D gridOriginElevationPoint = worldCoordinateDataLow[gridIndex][gridIndex];
-    CGFloat gridOriginZ = gridOriginElevationPoint.z;    
-    [self addGridAtX:gridCoord.x Y:gridCoord.y Z:gridOriginZ];    
-     */
-
-    //[self addGridAtX:0 Y:0 Z:0];    
-
 }
 
 - (void) add911IncidentPoints

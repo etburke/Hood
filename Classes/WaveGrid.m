@@ -56,7 +56,7 @@
             
             // Dome tarp is sin + sin
             
-            worldCoordinateDataLow[rowNumber][colNumber] = c;
+            worldCoordinateDataHigh[rowNumber][colNumber] = c;
         }
     }    
     

@@ -6,7 +6,7 @@
 #import "SM3DAR.h"
 #import "Globals.h"
 
-//Coord3D worldCoordinateDataLow[(int)ELEVATION_PATH_SAMPLES][(int)ELEVATION_PATH_SAMPLES];
+//Coord3D worldCoordinateDataHigh[(int)ELEVATION_PATH_SAMPLES][(int)ELEVATION_PATH_SAMPLES];
 
 
 @interface WaveGrid : NSObject 
