@@ -21,6 +21,7 @@
 @implementation HoodViewController
 
 @synthesize elevationGrid;
+@synthesize mapView;
 
 - (void)dealloc 
 {
@@ -29,6 +30,7 @@
     [joystick release];
     [mtHood release];
     [waveGrid release];
+    self.mapView = nil;
     
     [super dealloc];
 }
@@ -44,11 +46,17 @@
 
 - (void) loadView 
 {    
-    sm3dar = [SM3DAR_Controller sharedController];
-    sm3dar.delegate = self;
-    sm3dar.view.backgroundColor = [UIColor viewFlipsideBackgroundColor];
-    self.view = sm3dar.view;    
+    self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     
+
+    // Add the map view.
+    
+    self.mapView = [[[SM3DARMapView alloc] initWithFrame:self.view.frame] autorelease];
+    mapView.delegate = self;
+    mapView.showsUserLocation = YES;
+    [self.view addSubview:mapView];
+    
+    [mapView add3darContainer];
     
 }
 
@@ -82,60 +90,8 @@
     NSLog(@"Adding grid at %.1f, %.1f, %.1f", x, y, z);
     
     // Add point to 3DAR scene.
-    [sm3dar addPointOfInterest:p];
-    [p release];
-}
-
-- (void) loadHoodPoints
-{
-    CLLocationDegrees llLat = 45.278339;
-    CLLocationDegrees llLon = -121.816842;
-    
-    mtHood = [[CLLocation alloc] initWithLatitude:llLat longitude:llLon];
-    [sm3dar changeCurrentLocation:mtHood];
-
-
-    // Add our location to map.
-    
-    SM3DAR.markerViewClass = [SM3DAR_IconMarkerView class];
-    SM3DAR_PointOfInterest *referencePoint = [[SM3DAR_PointOfInterest alloc] initWithLatitude:llLat longitude:llLon];        
-    [SM3DAR addPointOfInterest:referencePoint];
-    [SM3DAR.map addAnnotation:referencePoint];
-    
-    
-    NSLog(@"loc: %@", sm3dar.currentLocation);
-
-
-    // Add Hood SW corner to map.
-    
-    SM3DAR_PointOfInterest *hoodPoint = [[SM3DAR_PointOfInterest alloc] initWithLatitude:45.514583599682 longitude:-122.687082727987];        
-    [SM3DAR addPointOfInterest:hoodPoint];
-    [SM3DAR.map addAnnotation:hoodPoint];
-    
-
-    // Add a test point.
-    
-    SM3DAR_PointOfInterest *p = [[SM3DAR_PointOfInterest alloc] initWithLatitude:(llLat - 0.001) longitude:(llLon - .001)];        
-    p.title = @"The Title";
     [SM3DAR addPointOfInterest:p];
-    [SM3DAR.map addAnnotation:p];
-    
-    
-//    [self setCameraAltitude:1.8];
-    sm3dar.cameraAltitudeMeters = MIN_CAMERA_ALTITUDE_METERS;
-    
-//    [self addElevationOBJGridPoint];
-
-//    [self addWaveGridPoint];
-
-//    [self addHoodGridPoint];
-    
-//    [self addElevationGridPoint];
-    
-//    [self addCityNamePoints];
-    
-//    [self add911IncidentPoints];
-    
+    [p release];
 }
 
 - (void) loadSingleHoodPoint
@@ -146,7 +102,8 @@
 - (void) loadPointsOfInterest
 {
     // Load after location update.
-    
+    [self addGridScene];
+
 //    [self addElevationGridPoint];
 //    [self loadSingleHoodPoint];
 }
@@ -216,7 +173,7 @@
 - (void) screenTouched:(CGPoint)p {
     CGFloat zmax = MAX_CAMERA_ALTITUDE_METERS;
     CGFloat altitude = (p.y / 480.0) * zmax + MIN_CAMERA_ALTITUDE_METERS;
-    sm3dar.cameraAltitudeMeters = altitude;    
+    SM3DAR.cameraAltitudeMeters = altitude;    
 }
 
 #pragma mark CLLocationManagerDelegate
@@ -229,9 +186,11 @@
 
     if (!loaded && newLocation.horizontalAccuracy < 200.0) {
         
+        
+        // TODO: Don't...
         [manager stopUpdatingLocation];
         
-        [self addElevationGridPoint];
+//        [self addGridScene];
         loaded = YES;
     }
     
@@ -245,10 +204,10 @@
     // Relocate camera.
     
     mtHood = [[CLLocation alloc] initWithLatitude:45.278439 longitude:-121.816742];
-    [sm3dar changeCurrentLocation:mtHood];
+    [SM3DAR changeCurrentLocation:mtHood];
     
     
-    NSLog(@"loc: %@", sm3dar.currentLocation);
+    NSLog(@"loc: %@", SM3DAR.currentLocation);
 
     
     // Populate grid.
@@ -309,7 +268,7 @@
     CLLocationDegrees latitude = [latStr doubleValue];
     CLLocationDegrees longitude = [lngStr doubleValue];
 
-    SM3DAR_Point *poi = [sm3dar initPointOfInterestWithLatitude:latitude 
+    SM3DAR_Point *poi = [SM3DAR initPointOfInterestWithLatitude:latitude 
                                                         longitude:longitude 
                                                          altitude:0 
                                                             title:@""
@@ -329,14 +288,12 @@
     
     // Add point to 3DAR scene.
     
-    [sm3dar addPointOfInterest:poi];
+    [SM3DAR addPointOfInterest:poi];
     [poi release];
 }
 
 - (void) addElevationGridPoint
 {
-    sm3dar.cameraAltitudeMeters = MIN_CAMERA_ALTITUDE_METERS;
-
     self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:SM3DAR.currentLocation] autorelease];        
     
     // TODO: add originLocation property to 3DAR.
@@ -347,7 +304,7 @@
     NSLog(@"Origin elevation is %.1f and the GPS reports %.1f so the grid point is at %.1f", 
           actualOriginElevation, SM3DAR.currentLocation.altitude, originElevationOffset);
     
-    [self addGridAtX:0 Y:0 Z:originElevationOffset];    
+    [self addGridAtX:0 Y:0 Z:-actualOriginElevation];
 }
 
 - (void) add911IncidentPoints
@@ -357,7 +314,6 @@
     [incidents release];    
 }
 
-#if 0
 - (void) addCityNamePoints
 {
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"pdx_cities" ofType:@"json"];            
@@ -385,7 +341,7 @@
         
         NSMutableArray *allPoints = [NSMutableArray arrayWithCapacity:[cities count]];
         
-        sm3dar.markerViewClass = [DotView class];
+        SM3DAR.markerViewClass = [SM3DAR_IconMarkerView class];
         
         CLLocation *locx = nil;
         
@@ -399,7 +355,7 @@
             CLLocationDegrees latitude = [latString doubleValue];
             CLLocationDegrees longitude = [lngString doubleValue];
             
-            SM3DAR_Point *point = [sm3dar initPointOfInterestWithLatitude:latitude 
+            SM3DAR_Point *point = [SM3DAR initPointOfInterestWithLatitude:latitude 
                                           longitude:longitude 
                                            altitude:0 
                                               title:poiTitle 
@@ -422,20 +378,72 @@
         [elevationGrid elevationAtLocation:locx];
 
         
-        [sm3dar addPointsOfInterest:allPoints];
+        [SM3DAR addPointsOfInterest:allPoints];
         
     }
 	    
 }
-#endif
 
+- (void) logoWasTapped
+{
+    if (mapView.hidden || mapView.alpha < 0.1)
+    {
+        NSLog(@"showing map");
+        mapView.hidden = NO;
+        //        [SM3DAR showMap];
+    }
+    else
+    {
+        NSLog(@"hiding map");
+        mapView.hidden = YES;
+        //        [SM3DAR hideMap];
+    }
+}
+
+- (void) addPointAtLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude title:(NSString *)title
+{
+    CLLocationCoordinate2D coord;
+    coord.latitude = latitude;
+    coord.longitude = longitude;
+        
+    CLLocationDistance altitude = [elevationGrid elevationAtCoordinate:coord] * GRID_SCALE_VERTICAL;
+    
+    CLLocation *location = [[[CLLocation alloc] initWithCoordinate:coord 
+                                                          altitude:altitude 
+                                                horizontalAccuracy:-1 
+                                                  verticalAccuracy:-1 
+                                                         timestamp:nil] autorelease];
+                             
+    SM3DAR_PointOfInterest *point = [[[SM3DAR_PointOfInterest alloc] initWithLocation:location 
+                                                                                title:title
+                                                                             subtitle:nil 
+                                                                                  url:nil] autorelease];    
+
+    [mapView addAnnotation:point];
+}
+
+- (void) addGridScene
+{
+    [self addElevationGridPoint];
+    
+    [self addPointAtLatitude:45.523048 longitude:-122.66768 title:@"Burnside Bridge"];
+    [self addPointAtLatitude:45.523681 longitude:-122.675174 title:@"Spot Metrix, Inc."];
+    [self addPointAtLatitude:45.627559 longitude:-122.656914 title:@"Columbia Land Trust"];
+    [self addPointAtLatitude:45.512332 longitude:-122.592874 title:@"Mt. Tabor"];
+    [self addPointAtLatitude:45.525165 longitude:-122.716212 title:@"Pittock Mansion"];
+//    [self addPointAtLatitude:45.522759 longitude:-122.676001 title:@"Big Pink"];
+    
+    [SM3DAR zoomMapToFit];
+    
+    SM3DAR.cameraAltitudeMeters = MIN_CAMERA_ALTITUDE_METERS;
+}
 
 - (void) setCameraAltitude:(CGFloat)metersAboveGround
 {
 /*
-    CGFloat elevationAtCameraLocation = [elevationGrid elevationAtLocation:sm3dar.currentLocation];
+    CGFloat elevationAtCameraLocation = [elevationGrid elevationAtLocation:SM3DAR.currentLocation];
 
-    sm3dar.cameraAltitudeMeters = (elevationAtCameraLocation + metersAboveGround) * (2*GRID_SCALE_VERTICAL);
+    SM3DAR.cameraAltitudeMeters = (elevationAtCameraLocation + metersAboveGround) * (2*GRID_SCALE_VERTICAL);
 */
 }
 
@@ -454,7 +462,7 @@
     
     if (abs(xspeed) > 0.0 || abs(yspeed) > 0.0) 
     {        
-        Coord3D ray = [sm3dar ray:CGPointMake(160, 240)];
+        Coord3D ray = [SM3DAR ray:CGPointMake(160, 240)];
                 
         cameraOffset.x += (ray.x * yspeed);
         cameraOffset.y += (ray.y * yspeed);
@@ -464,7 +472,7 @@
         cameraOffset.x += (perp.x * xspeed);
         cameraOffset.y += (perp.y * xspeed);
 
-        [sm3dar setCameraOffset:cameraOffset];
+        [SM3DAR setCameraOffset:cameraOffset];
     }
 }
 

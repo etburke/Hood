@@ -46,6 +46,7 @@
 - (void) loadElevationPointDataFile:(NSString*)filePath;
 - (void) loadWorldCoordinateDataFile:(NSString*)filePath;
 - (CLLocationDistance) elevationAtLocation:(CLLocation*)referenceLocation;
+- (CLLocationDistance) elevationAtCoordinate:(CLLocationCoordinate2D)coord;
 - (BOOL) buildArrayFromCache;
 - (CLLocationDistance) interpolateBetweenA:(ElevationPoint)epa B:(ElevationPoint)epb C:(ElevationPoint)epc D:(ElevationPoint)epd u:(double)u v:(double)v;
 

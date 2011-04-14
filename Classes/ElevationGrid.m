@@ -842,6 +842,12 @@
                                    v:referenceLocation.coordinate.latitude];    
 }
 
+- (CLLocationDistance) elevationAtCoordinate:(CLLocationCoordinate2D)coord
+{
+    CLLocation *location = [[[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude] autorelease];
+    return [self elevationAtLocation:location];
+}
+
 - (CLLocationDistance) interpolateBetweenA:(ElevationPoint)epa B:(ElevationPoint)epb C:(ElevationPoint)epc D:(ElevationPoint)epd u:(double)u v:(double)v
 {
     double cellWidth = epb.coordinate.longitude - epa.coordinate.longitude;
