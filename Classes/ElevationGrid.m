@@ -830,6 +830,52 @@
     return bbox;
 }
 
+- (WorldCoordinateBoundingBox) worldCoordinateBoundingBox:(Coord3D)sampleCoord
+{
+    int rowCount = ELEVATION_PATH_SAMPLES;
+    int columnCount = ELEVATION_PATH_SAMPLES;
+    
+    CGFloat xWest = worldCoordinateDataHigh[0][0].x;  // SW
+    CGFloat xEast = worldCoordinateDataHigh[0][columnCount-1].x;  // SE
+    CGFloat ySouth = worldCoordinateDataHigh[0][0].y;  // SW
+    CGFloat yNorth = worldCoordinateDataHigh[rowCount-1][0].y;  // NW
+    
+    CGFloat xSpanCell = (xEast + 180.0) - (xWest + 180.0);
+    CGFloat ySpanCell = (yNorth + 180.0) - (ySouth + 180.0);
+    
+    CGFloat xSpanPoint = (sampleCoord.x + 180.0) - (xWest + 180.0);
+    CGFloat ySpanPoint = (sampleCoord.y + 180.0) - (ySouth + 180.0);
+    
+    CGFloat u = xSpanPoint / xSpanCell;
+    CGFloat v = ySpanPoint / ySpanCell;
+    
+    int columnIndex = (u * (columnCount-1));  
+    int rowIndex = (v * (rowCount-1));  
+    
+    WorldCoordinateBoundingBox bbox;
+    
+    if (rowIndex >= rowCount || columnIndex >= columnCount)
+    {
+        // bad
+        NSLog(@"\n\nERROR: Sample location's bounding box is out of bounds.\n\n");        
+    }
+    else
+    {
+        // TODO: Confirm that the row/col indices aren't reversed. 
+        // The resulting bbox should look like this:
+        //   C  D
+        //   A  B
+        //
+        
+        bbox.a = worldCoordinateDataHigh[rowIndex][columnIndex];
+        bbox.b = worldCoordinateDataHigh[rowIndex][columnIndex+1];
+        bbox.c = worldCoordinateDataHigh[rowIndex+1][columnIndex];
+        bbox.d = worldCoordinateDataHigh[rowIndex+1][columnIndex+1];
+    }
+    
+    return bbox;
+}
+
 - (CLLocationDistance) elevationAtLocation:(CLLocation*)referenceLocation
 {
     BoundingBox bbox = [self boundingBox:referenceLocation];
@@ -848,16 +894,28 @@
     return [self elevationAtLocation:location];
 }
 
-- (CLLocationDistance) interpolateBetweenA:(ElevationPoint)epa B:(ElevationPoint)epb C:(ElevationPoint)epc D:(ElevationPoint)epd u:(double)u v:(double)v
+- (CLLocationDistance) elevationAtWorldCoordinate:(Coord3D)referenceCoord
 {
-    double cellWidth = epb.coordinate.longitude - epa.coordinate.longitude;
-    double cellHeight = epc.coordinate.latitude - epa.coordinate.latitude;
+    WorldCoordinateBoundingBox bbox = [self worldCoordinateBoundingBox:referenceCoord];
+    
+    return [self interpolateWorldCoordinateBetweenA:bbox.a 
+                                   B:bbox.b 
+                                   C:bbox.c 
+                                   D:bbox.d 
+                                   u:referenceCoord.x 
+                                   v:referenceCoord.y];    
+}
+
+- (CLLocationDistance) interpolateValueBetweenA:(Coord3D)coordA B:(Coord3D)coordB C:(Coord3D)coordC D:(Coord3D)coordD u:(double)u v:(double)v
+{
+    double cellWidth = coordB.x - coordA.x;
+    double cellHeight = coordC.y - coordA.y;
     
 //    NSLog(@"cellWidth %f", cellWidth);
 //    NSLog(@"cellHeight %f", cellHeight);
     
-    double fractionalU = (epb.coordinate.longitude - u) / cellWidth;
-    double fractionalV = (v - epa.coordinate.latitude) / cellHeight;
+    double fractionalU = (coordB.x - u) / cellWidth;
+    double fractionalV = (v - coordA.y) / cellHeight;
     
 //    NSLog(@"fractionalU %f", fractionalU);
 //    NSLog(@"fractionalV %f", fractionalV);
@@ -867,10 +925,10 @@
     double c = (1 - fractionalU) * fractionalV;
     double d = fractionalU * fractionalV;
     
-    double aElevationComponent = epa.elevation * a;
-    double bElevationComponent = epb.elevation * b;
-    double cElevationComponent = epc.elevation * c;
-    double dElevationComponent = epd.elevation * d;
+    double aElevationComponent = coordA.z * a;
+    double bElevationComponent = coordB.z * b;
+    double cElevationComponent = coordC.z * c;
+    double dElevationComponent = coordD.z * d;
     
 //    NSLog(@"a %f", a);
 //    NSLog(@"b %f", b);
@@ -888,5 +946,34 @@
     
     return pointElevation;
 }
+
+- (CLLocationDistance) interpolateWorldCoordinateBetweenA:(Coord3D)coordA B:(Coord3D)coordB C:(Coord3D)coordC D:(Coord3D)coordD u:(double)u v:(double)v
+{
+    return [self interpolateValueBetweenA:coordA B:coordB C:coordC D:coordD u:u v:v];    
+}
+
+- (CLLocationDistance) interpolateBetweenA:(ElevationPoint)epa B:(ElevationPoint)epb C:(ElevationPoint)epc D:(ElevationPoint)epd u:(double)u v:(double)v
+{
+    Coord3D coordA, coordB, coordC, coordD;
+    
+    coordA.x = epa.coordinate.longitude;
+    coordA.y = epa.coordinate.latitude;
+    coordA.z = epa.elevation;
+    
+    coordB.x = epb.coordinate.longitude;
+    coordB.y = epb.coordinate.latitude;
+    coordB.z = epb.elevation;
+    
+    coordC.x = epc.coordinate.longitude;
+    coordC.y = epc.coordinate.latitude;
+    coordC.z = epc.elevation;
+    
+    coordD.x = epd.coordinate.longitude;
+    coordD.y = epd.coordinate.latitude;
+    coordD.z = epd.elevation;
+
+    return [self interpolateValueBetweenA:coordA B:coordB C:coordC D:coordD u:u v:v];
+}
+
 
 @end

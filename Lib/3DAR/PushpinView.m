@@ -34,7 +34,7 @@ static Texture *pushpinTexture;
     self.hidden = NO;    
     self.zrot = 0.0;    
 
-    self.sizeScalar = 90.0;  // for pushpin_1.0
+    self.sizeScalar = 30.0;  // for pushpin_1.0
     
 //    self.sizeScalar = 5.0;  // for pushpin_textured
     

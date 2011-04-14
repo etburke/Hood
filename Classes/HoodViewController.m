@@ -466,7 +466,9 @@
                 
         cameraOffset.x += (ray.x * yspeed);
         cameraOffset.y += (ray.y * yspeed);
-        cameraOffset.z += (ray.z * yspeed);
+//        cameraOffset.z += (ray.z * yspeed);
+          
+        cameraOffset.z = [elevationGrid elevationAtWorldCoordinate:cameraOffset];
         
         CGPoint perp = [CGPointUtil perpendicularCounterClockwise:CGPointMake(ray.x, ray.y)];        
         cameraOffset.x += (perp.x * xspeed);
