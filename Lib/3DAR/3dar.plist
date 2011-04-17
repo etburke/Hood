@@ -18,5 +18,7 @@
 	<false/>
 	<key>3darMapMode</key>
 	<string>auto</string>
+	<key>3darDisableMotionFiltering</key>
+	<true/>
 </dict>
 </plist>

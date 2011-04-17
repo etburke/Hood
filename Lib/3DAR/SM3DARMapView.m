@@ -125,6 +125,8 @@
 
 - (void) sm3darLoadPoints:(SM3DAR_Controller *)sm3dar
 {        
+    sm3dar.view.frame = self.frame;
+
     if (self.showsUserLocation)
     {
 //        [self addUserLocationDot];

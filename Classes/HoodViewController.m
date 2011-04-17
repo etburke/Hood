@@ -431,7 +431,7 @@
     [self addPointAtLatitude:45.627559 longitude:-122.656914 title:@"Columbia Land Trust"];
     [self addPointAtLatitude:45.512332 longitude:-122.592874 title:@"Mt. Tabor"];
     [self addPointAtLatitude:45.525165 longitude:-122.716212 title:@"Pittock Mansion"];
-//    [self addPointAtLatitude:45.522759 longitude:-122.676001 title:@"Big Pink"];
+    [self addPointAtLatitude:45.522759 longitude:-122.676001 title:@"Big Pink"];
     
     [SM3DAR zoomMapToFit];
     
