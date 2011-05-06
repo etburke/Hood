@@ -49,6 +49,7 @@
     // Add 3DAR view to the container.
     
     SM3DAR_Controller *sm3dar = SM3DAR;
+    sm3dar.farClipMeters = 250000.0;
 
 
     // Self will be the delegate until 3DAR is done initializing.

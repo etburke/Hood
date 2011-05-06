@@ -17,21 +17,26 @@
 @interface HoodViewController : UIViewController <SM3DAR_Delegate, CLLocationManagerDelegate, MKMapViewDelegate>
 {
 	SM3DAR_Controller *sm3dar;
+    SM3DARMapView *mapView;
+    BOOL loaded;
+    
     HoodGrid *hoodGrid;
     WaveGrid *waveGrid;
     CLLocation *mtHood;
-    Coord3D cameraOffset;
-    Joystick *joystick;
-    BOOL loaded;
     
-    SM3DARMapView *mapView;
+    Joystick *joystick;
+    Joystick *joystickZ;
+    Coord3D cameraOffset;
+    UIView *joystickView;
+    NSInteger touchCount;
+
 }
 
 @property (nonatomic, retain) ElevationGrid *elevationGrid;
 @property (nonatomic, retain) SM3DARMapView *mapView;
 
 - (void) addHoodGridPoint;
-- (void) screenTouched:(CGPoint)p;
+//- (void) screenTouched:(CGPoint)p;
 - (void) addGridAtX:(CGFloat)x Y:(CGFloat)y Z:(CGFloat)z;
 - (void) addCityNamePoints;
 - (void) add911IncidentPoints;

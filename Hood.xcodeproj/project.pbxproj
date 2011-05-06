@@ -128,7 +128,6 @@
 		87D9F87112FE0EC6001F8A49 /* SphereView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F86D12FE0EC6001F8A49 /* SphereView.m */; };
 		87D9F87212FE0EC6001F8A49 /* TexturedGeometryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F86F12FE0EC6001F8A49 /* TexturedGeometryView.m */; };
 		87D9F87512FE0F00001F8A49 /* ObjGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F87412FE0F00001F8A49 /* ObjGridView.m */; };
-		A60E0C77135A6E6A00EE9A1C /* lib3DAR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A60E0C76135A6E6A00EE9A1C /* lib3DAR.a */; };
 		A60F3A7212F52052005927A6 /* hood150m.json in Resources */ = {isa = PBXBuildFile; fileRef = A60F3A7112F52052005927A6 /* hood150m.json */; };
 		A63B5D541356A878004EC3D6 /* 3dar_marker_icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = A63B5D491356A878004EC3D6 /* 3dar_marker_icon1.png */; };
 		A63B5D551356A878004EC3D6 /* 3dar_marker_icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = A63B5D4A1356A878004EC3D6 /* 3dar_marker_icon2.png */; };
@@ -142,6 +141,8 @@
 		A63B5D5D1356A878004EC3D6 /* SM3DARMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B5D531356A878004EC3D6 /* SM3DARMapView.m */; };
 		A63B5D661356A889004EC3D6 /* PushpinView.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B5D651356A889004EC3D6 /* PushpinView.m */; };
 		A63B5DCE1356B0A1004EC3D6 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = A63B5DCD1356B0A1004EC3D6 /* red.png */; };
+		A648DDDF1362CE5C00BC529E /* 84_white_topnotch.png in Resources */ = {isa = PBXBuildFile; fileRef = A648DDDE1362CE5C00BC529E /* 84_white_topnotch.png */; };
+		A65AD87D136C8AAE00BCBA54 /* lib3DAR_Mapping_v0_9_1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A65AD87C136C8AAE00BCBA54 /* lib3DAR_Mapping_v0_9_1.a */; };
 		A6DEEB1712FE7C990009DE15 /* WaveGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEEB1612FE7C990009DE15 /* WaveGrid.m */; };
 		A6FB95C1134B645C00F46CC5 /* ElevationGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FB95BF134B645C00F46CC5 /* ElevationGrid.m */; };
 		A6FB962B134B71C800F46CC5 /* SphericalEarthProjectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FB962A134B71C800F46CC5 /* SphericalEarthProjectionModel.m */; };
@@ -386,7 +387,6 @@
 		87D9F87312FE0F00001F8A49 /* ObjGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjGridView.h; sourceTree = "<group>"; };
 		87D9F87412FE0F00001F8A49 /* ObjGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjGridView.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Hood-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Hood-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		A60E0C76135A6E6A00EE9A1C /* lib3DAR.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib3DAR.a; path = "../../Library/iOS/build/Debug-iphoneos/lib3DAR.a"; sourceTree = SOURCE_ROOT; };
 		A60F3A7112F52052005927A6 /* hood150m.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hood150m.json; sourceTree = "<group>"; };
 		A63B5D491356A878004EC3D6 /* 3dar_marker_icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_marker_icon1.png; sourceTree = "<group>"; };
 		A63B5D4A1356A878004EC3D6 /* 3dar_marker_icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_marker_icon2.png; sourceTree = "<group>"; };
@@ -403,6 +403,8 @@
 		A63B5D641356A889004EC3D6 /* PushpinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushpinView.h; sourceTree = "<group>"; };
 		A63B5D651356A889004EC3D6 /* PushpinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushpinView.m; sourceTree = "<group>"; };
 		A63B5DCD1356B0A1004EC3D6 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
+		A648DDDE1362CE5C00BC529E /* 84_white_topnotch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 84_white_topnotch.png; sourceTree = "<group>"; };
+		A65AD87C136C8AAE00BCBA54 /* lib3DAR_Mapping_v0_9_1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = lib3DAR_Mapping_v0_9_1.a; sourceTree = "<group>"; };
 		A6DEEB1512FE7C990009DE15 /* WaveGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveGrid.h; sourceTree = "<group>"; };
 		A6DEEB1612FE7C990009DE15 /* WaveGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveGrid.m; sourceTree = "<group>"; };
 		A6DEEB1A12FE7D770009DE15 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
@@ -433,7 +435,7 @@
 				4DE6785D125CBBBE0080EEB0 /* OpenGLES.framework in Frameworks */,
 				4DE6785F125CBBBE0080EEB0 /* QuartzCore.framework in Frameworks */,
 				4DE67948125CBFE70080EEB0 /* SystemConfiguration.framework in Frameworks */,
-				A60E0C77135A6E6A00EE9A1C /* lib3DAR.a in Frameworks */,
+				A65AD87D136C8AAE00BCBA54 /* lib3DAR_Mapping_v0_9_1.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +519,7 @@
 			children = (
 				2DFCAB6613189E1F00434EA0 /* arc.obj */,
 				A6FD740D12F5630B005C70C2 /* 84_white.png */,
+				A648DDDE1362CE5C00BC529E /* 84_white_topnotch.png */,
 				A6FD740012F561F1005C70C2 /* 128_white.png */,
 				A6FD72CA12F52DFA005C70C2 /* hood150m.json */,
 				A60F3A7112F52052005927A6 /* hood150m.json */,
@@ -888,7 +891,7 @@
 		4DF1E3F1126194C600DD1E46 /* 3DAR */ = {
 			isa = PBXGroup;
 			children = (
-				A60E0C76135A6E6A00EE9A1C /* lib3DAR.a */,
+				A65AD87C136C8AAE00BCBA54 /* lib3DAR_Mapping_v0_9_1.a */,
 				4DF1E3F2126194C600DD1E46 /* 3dar.plist */,
 				4DF1E3F3126194C600DD1E46 /* 3dar_logo.png */,
 				4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */,
@@ -988,6 +991,7 @@
 				A63B5D5B1356A878004EC3D6 /* compass_rose.png in Resources */,
 				A63B5D5C1356A878004EC3D6 /* pushpin_1.0.obj in Resources */,
 				A63B5DCE1356B0A1004EC3D6 /* red.png in Resources */,
+				A648DDDF1362CE5C00BC529E /* 84_white_topnotch.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1123,6 +1127,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Library/iOS/build/Debug-iphoneos\"",
+					"\"$(SRCROOT)/Lib/3DAR\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",
@@ -1162,6 +1167,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bordertown Labs, LLC";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
@@ -1204,6 +1210,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
@@ -1220,6 +1227,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;

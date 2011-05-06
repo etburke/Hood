@@ -14,8 +14,8 @@
 #import "CGPointUtil.h"
 #import "ObjGridView.h"
 
-#define MIN_CAMERA_ALTITUDE_METERS 275.0    // Lower than 275 meters may look bad.
-#define MAX_CAMERA_ALTITUDE_METERS 3000.0
+#define MIN_CAMERA_ALTITUDE_METERS 100.0    // Lower than 275 meters may look bad.
+#define MAX_CAMERA_ALTITUDE_METERS 10000.0
 #define MAX_SPEED 350.0f
 
 @implementation HoodViewController
@@ -28,6 +28,7 @@
     self.elevationGrid = nil;
     [hoodGrid release];
     [joystick release];
+    [joystickZ release];
     [mtHood release];
     [waveGrid release];
     self.mapView = nil;
@@ -57,6 +58,8 @@
     [self.view addSubview:mapView];
     
     [mapView add3darContainer];
+    
+    sm3dar = SM3DAR;
     
 }
 
@@ -108,6 +111,144 @@
 //    [self loadSingleHoodPoint];
 }
 
+#pragma mark -
+
+- (void) addJoystick
+{
+//    joystickView = [[UIView alloc] initWithFrame:self.view.frame];
+//    joystickView.multipleTouchEnabled = YES;
+//    [sm3dar.view addSubview:joystickView];
+    
+    Coord3D c = { 0, 0, 300 };
+    cameraOffset = c;
+    [sm3dar setCameraOffset:cameraOffset];
+
+    
+    joystick = [Joystick new];
+//    joystick = [[Joystick alloc] initWithBackground:nil];
+    //    joystick.center = CGPointMake(74, 120);
+    //    joystick.transform = CGAffineTransformMakeRotation(M_PI/2);
+    joystick.center = CGPointMake(80, 406);
+    
+////////    [joystickView addSubview:joystick];
+    [self.view addSubview:joystick];
+    [NSTimer scheduledTimerWithTimeInterval:0.05f target:self selector:@selector(updateJoystick) userInfo:nil repeats:YES];    
+    
+    
+    // Z
+    
+    joystickZ = [Joystick new];
+//    joystickZ = [[Joystick alloc] initWithBackground:nil];
+    //    joystickZ.center = CGPointMake(74, 360);
+    //    joystickZ.transform = CGAffineTransformMakeRotation(M_PI/2);
+    joystickZ.center = CGPointMake(240, 406);
+    
+//    [joystickView addSubview:joystickZ];
+    [self.view addSubview:joystickZ];
+    [NSTimer scheduledTimerWithTimeInterval:0.05f target:self selector:@selector(updateJoystickZ) userInfo:nil repeats:YES];    
+    
+}
+
+
+- (void) updateJoystick 
+{
+    [joystick updateThumbPosition];
+    
+    CGFloat s = 6.2; // 4.6052;
+    
+    CGFloat xspeed =  joystick.velocity.x * exp(fabs(joystick.velocity.x) * s);
+    CGFloat yspeed = -joystick.velocity.y * exp(fabs(joystick.velocity.y) * s);
+    
+    if (abs(xspeed) > 0.0 || abs(yspeed) > 0.0) 
+    {        
+        Coord3D ray = [sm3dar ray:CGPointMake(160, 240)];
+        
+        cameraOffset.x += (ray.x * yspeed);
+        cameraOffset.y += (ray.y * yspeed);
+        //        cameraOffset.z += (ray.z * yspeed);
+        
+        CGPoint perp = [CGPointUtil perpendicularCounterClockwise:CGPointMake(ray.x, ray.y)];        
+        cameraOffset.x += (perp.x * xspeed);
+        cameraOffset.y += (perp.y * xspeed);
+        
+        //NSLog(@"Camera (%.1f, %.1f, %.1f)", offset.x, offset.y, offset.z);
+        
+        [sm3dar setCameraOffset:cameraOffset];
+    }
+}
+
+- (void) updateJoystickZ
+{
+    [joystickZ updateThumbPosition];
+    
+    CGFloat s = 6.2; // 4.6052;
+    
+    //CGFloat xspeed =  joystickZ.velocity.x * exp(fabs(joystickZ.velocity.x));
+    CGFloat yspeed = -joystickZ.velocity.y * exp(fabs(joystickZ.velocity.y) * s);    
+    
+    /*
+     if (abs(xspeed) > 0.0) 
+     {   
+     APP_DELEGATE.gearSpeed += xspeed;
+     
+     if (APP_DELEGATE.gearSpeed < 0.0)
+     APP_DELEGATE.gearSpeed = 0.0;
+     
+     if (APP_DELEGATE.gearSpeed > 5.0)
+     APP_DELEGATE.gearSpeed = 5.0;
+     
+     NSLog(@"speed: %.1f", APP_DELEGATE.gearSpeed);
+     }
+     */
+    
+    if (abs(yspeed) > 0.0) 
+    {        
+        cameraOffset.z += yspeed;
+        
+        [sm3dar setCameraOffset:cameraOffset];
+    }
+    
+}
+
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    touchCount++;
+    
+    UITouch *touch = [[touches allObjects] objectAtIndex:0];    
+    CGPoint point = [touch locationInView:sm3dar.view];    
+    
+    NSLog(@"touches: %i", touchCount);
+    
+    if (touchCount == 1)
+    {
+        joystick.center = point;
+        joystick.transform = CGAffineTransformMakeRotation([sm3dar screenOrientationRadians]);
+        joystickZ.hidden = YES;
+    }
+    else if (touchCount == 2)
+    {
+        joystickZ.center = point;
+        joystickZ.transform = CGAffineTransformMakeRotation([sm3dar screenOrientationRadians]);
+        joystickZ.hidden = NO;
+    }
+    else
+    {
+        touchCount = 0;
+    }
+    
+    NSLog(@"joystick: %@\n parent: %@\n parent2: %@", joystick, joystick.superview, joystick.superview.superview);
+    
+}
+
+- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    touchCount--;
+    if (touchCount < 0)
+        touchCount = 0;
+}
+
+
+#pragma mark -
 
 - (void)viewDidLoad 
 {
@@ -117,13 +258,13 @@
     {
         [self loadPointsOfInterest];
     }
+    
+//    joystick = [[Joystick alloc] initWithBackground:[UIImage imageNamed:@"128_white.png"]];
+//    joystick.center = CGPointMake(160, 406);
 
-    joystick = [[Joystick alloc] initWithBackground:[UIImage imageNamed:@"128_white.png"]];
-    joystick.center = CGPointMake(160, 406);
-
-    [self.view addSubview:joystick];    
-    [NSTimer scheduledTimerWithTimeInterval:0.10f target:self selector:@selector(updateJoystick) userInfo:nil repeats:YES];    
-    [self.view becomeFirstResponder];
+//    [self.view addSubview:joystick];    
+//    [NSTimer scheduledTimerWithTimeInterval:0.10f target:self selector:@selector(updateJoystick) userInfo:nil repeats:YES];    
+//    [self.view becomeFirstResponder];
     
     
     [NSTimer scheduledTimerWithTimeInterval:0.3f target:waveGrid selector:@selector(refresh) userInfo:nil repeats:YES];
@@ -137,6 +278,8 @@
     [super viewDidAppear:animated];
     
     //[sm3dar startCamera];  
+    [self addJoystick];
+    
     
 }
 
@@ -156,6 +299,7 @@
 }
 
 
+/*
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];    
     CGPoint touchPoint = [touch locationInView:self.view];
@@ -175,6 +319,7 @@
     CGFloat altitude = (p.y / 480.0) * zmax + MIN_CAMERA_ALTITUDE_METERS;
     SM3DAR.cameraAltitudeMeters = altitude;    
 }
+*/
 
 #pragma mark CLLocationManagerDelegate
 
@@ -426,14 +571,14 @@
 {
     [self addElevationGridPoint];
     
-    [self addPointAtLatitude:45.523048 longitude:-122.66768 title:@"Burnside Bridge"];
-    [self addPointAtLatitude:45.523681 longitude:-122.675174 title:@"Spot Metrix, Inc."];
-    [self addPointAtLatitude:45.627559 longitude:-122.656914 title:@"Columbia Land Trust"];
-    [self addPointAtLatitude:45.512332 longitude:-122.592874 title:@"Mt. Tabor"];
-    [self addPointAtLatitude:45.525165 longitude:-122.716212 title:@"Pittock Mansion"];
-    [self addPointAtLatitude:45.522759 longitude:-122.676001 title:@"Big Pink"];
+//    [self addPointAtLatitude:45.523048 longitude:-122.66768 title:@"Burnside Bridge"];
+//    [self addPointAtLatitude:45.523681 longitude:-122.675174 title:@"Spot Metrix, Inc."];
+//    [self addPointAtLatitude:45.627559 longitude:-122.656914 title:@"Columbia Land Trust"];
+//    [self addPointAtLatitude:45.512332 longitude:-122.592874 title:@"Mt. Tabor"];
+//    [self addPointAtLatitude:45.525165 longitude:-122.716212 title:@"Pittock Mansion"];
+//    [self addPointAtLatitude:45.522759 longitude:-122.676001 title:@"Big Pink"];
     
-    [SM3DAR zoomMapToFit];
+//    [SM3DAR zoomMapToFit];
     
     SM3DAR.cameraAltitudeMeters = MIN_CAMERA_ALTITUDE_METERS;
 }
@@ -449,7 +594,7 @@
 
 
 #pragma mark -
-
+/*
 - (void) updateJoystick 
 {
     [joystick updateThumbPosition];
@@ -477,6 +622,6 @@
         [SM3DAR setCameraOffset:cameraOffset];
     }
 }
-
+*/
 
 @end

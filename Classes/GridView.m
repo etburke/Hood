@@ -10,9 +10,17 @@
 
 @implementation GridView
 
+- (void) dealloc
+{
+//    [texture release];
+    [super dealloc];
+}
+
 - (void) buildView 
 {
     NSLog(@"[GV] buildView");    
+    
+//    texture = [Texture newTextureFromImage:@"hurryupthomas.png"];
 }
 
 - (void) drawFog
@@ -118,10 +126,58 @@
     }
 }
 
+/*
+- (void) drawTexturedGrid
+{
+	glBindTexture(GL_TEXTURE_2D, texture.handle);
+    
+    // Render to opengl.
+    
+    glColor4f(1,1,1,1);
+	glDisable(GL_LIGHTING);
+    
+	glDisable(GL_BLEND);
+    
+    //	glEnable(GL_CULL_FACE);  // what about when viewed from the inside?
+	glEnable(GL_DEPTH_TEST);
+    
+    if (self.cullFace)
+        glEnable(GL_CULL_FACE);
+    else
+        glDisable(GL_CULL_FACE);
+    
+	glEnableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+    
+    if (ndl->textureChannelCount)
+    {
+        glEnable(GL_TEXTURE_2D);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    }
+    else
+    {  
+        glDisable(GL_TEXTURE_2D);
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    }
+    
+	glVertexPointer(3, GL_FLOAT, 24, &ndl->vertex[0].x);
+    
+    if (ndl->textureChannelCount)
+        glTexCoordPointer(ndl->textureChannelCount, GL_FLOAT, 0, ndl->textureChannel);
+    
+    for (int i=0; i < ndl->polygonCount; i++)
+    {
+        GLsizei elemCount = ndl->polygon[i].vertexCount;
+        glDrawElements(GL_TRIANGLE_FAN, elemCount, GL_UNSIGNED_SHORT, ndl->polygon[i].vertexIndex);
+    }
+}
+*/
+
 - (void) drawInGLContext 
 {
     [self drawGrid];
     [self drawFog];
+//    [self drawTexturedGrid];
 }
 
 @end

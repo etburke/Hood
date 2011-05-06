@@ -11,8 +11,8 @@
 
 
 // 159m res (limit at 25km size)
-#define ELEVATION_LINE_LENGTH_HIGH  25000.0
-#define ELEVATION_PATH_SAMPLES        157.0
+#define ELEVATION_LINE_LENGTH_HIGH   20000.0
+#define ELEVATION_PATH_SAMPLES         157.0
 
 // 63m res (limit at 10km size)
 //#define ELEVATION_LINE_LENGTH_HIGH  10000.0   
@@ -23,7 +23,7 @@
 //#define ELEVATION_PATH_SAMPLES        111.0
 
 #define GRID_SCALE_HORIZONTAL 1.0   // 0.1
-#define GRID_SCALE_VERTICAL 2.5  // 0.45
+#define GRID_SCALE_VERTICAL 3.0  // 0.45
 
 //#define ELEVATION_LINE_LENGTH_LOW   200000.0  // Use low res later.
 #define GOOGLE_ELEVATION_API_URL_FORMAT @"http://maps.googleapis.com/maps/api/elevation/json?path=%@&samples=%i&sensor=false"
