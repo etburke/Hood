@@ -129,6 +129,8 @@
 		87D9F87212FE0EC6001F8A49 /* TexturedGeometryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F86F12FE0EC6001F8A49 /* TexturedGeometryView.m */; };
 		87D9F87512FE0F00001F8A49 /* ObjGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D9F87412FE0F00001F8A49 /* ObjGridView.m */; };
 		A60F3A7212F52052005927A6 /* hood150m.json in Resources */ = {isa = PBXBuildFile; fileRef = A60F3A7112F52052005927A6 /* hood150m.json */; };
+		A61CFA5E1373A12B0046D1FE /* lib3DAR_v4_0_8.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A61CFA5D1373A12B0046D1FE /* lib3DAR_v4_0_8.a */; };
+		A61CFAD71373B6500046D1FE /* PortlandMap.png in Resources */ = {isa = PBXBuildFile; fileRef = A61CFAD61373B6500046D1FE /* PortlandMap.png */; };
 		A63B5D541356A878004EC3D6 /* 3dar_marker_icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = A63B5D491356A878004EC3D6 /* 3dar_marker_icon1.png */; };
 		A63B5D551356A878004EC3D6 /* 3dar_marker_icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = A63B5D4A1356A878004EC3D6 /* 3dar_marker_icon2.png */; };
 		A63B5D561356A878004EC3D6 /* 3dar_marker_icon3.png in Resources */ = {isa = PBXBuildFile; fileRef = A63B5D4B1356A878004EC3D6 /* 3dar_marker_icon3.png */; };
@@ -142,7 +144,6 @@
 		A63B5D661356A889004EC3D6 /* PushpinView.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B5D651356A889004EC3D6 /* PushpinView.m */; };
 		A63B5DCE1356B0A1004EC3D6 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = A63B5DCD1356B0A1004EC3D6 /* red.png */; };
 		A648DDDF1362CE5C00BC529E /* 84_white_topnotch.png in Resources */ = {isa = PBXBuildFile; fileRef = A648DDDE1362CE5C00BC529E /* 84_white_topnotch.png */; };
-		A65AD87D136C8AAE00BCBA54 /* lib3DAR_Mapping_v0_9_1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A65AD87C136C8AAE00BCBA54 /* lib3DAR_Mapping_v0_9_1.a */; };
 		A6DEEB1712FE7C990009DE15 /* WaveGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEEB1612FE7C990009DE15 /* WaveGrid.m */; };
 		A6FB95C1134B645C00F46CC5 /* ElevationGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FB95BF134B645C00F46CC5 /* ElevationGrid.m */; };
 		A6FB962B134B71C800F46CC5 /* SphericalEarthProjectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FB962A134B71C800F46CC5 /* SphericalEarthProjectionModel.m */; };
@@ -388,6 +389,8 @@
 		87D9F87412FE0F00001F8A49 /* ObjGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjGridView.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Hood-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Hood-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		A60F3A7112F52052005927A6 /* hood150m.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hood150m.json; sourceTree = "<group>"; };
+		A61CFA5D1373A12B0046D1FE /* lib3DAR_v4_0_8.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = lib3DAR_v4_0_8.a; sourceTree = "<group>"; };
+		A61CFAD61373B6500046D1FE /* PortlandMap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PortlandMap.png; sourceTree = "<group>"; };
 		A63B5D491356A878004EC3D6 /* 3dar_marker_icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_marker_icon1.png; sourceTree = "<group>"; };
 		A63B5D4A1356A878004EC3D6 /* 3dar_marker_icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_marker_icon2.png; sourceTree = "<group>"; };
 		A63B5D4B1356A878004EC3D6 /* 3dar_marker_icon3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_marker_icon3.png; sourceTree = "<group>"; };
@@ -404,7 +407,6 @@
 		A63B5D651356A889004EC3D6 /* PushpinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushpinView.m; sourceTree = "<group>"; };
 		A63B5DCD1356B0A1004EC3D6 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
 		A648DDDE1362CE5C00BC529E /* 84_white_topnotch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 84_white_topnotch.png; sourceTree = "<group>"; };
-		A65AD87C136C8AAE00BCBA54 /* lib3DAR_Mapping_v0_9_1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = lib3DAR_Mapping_v0_9_1.a; sourceTree = "<group>"; };
 		A6DEEB1512FE7C990009DE15 /* WaveGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveGrid.h; sourceTree = "<group>"; };
 		A6DEEB1612FE7C990009DE15 /* WaveGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveGrid.m; sourceTree = "<group>"; };
 		A6DEEB1A12FE7D770009DE15 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
@@ -435,7 +437,7 @@
 				4DE6785D125CBBBE0080EEB0 /* OpenGLES.framework in Frameworks */,
 				4DE6785F125CBBBE0080EEB0 /* QuartzCore.framework in Frameworks */,
 				4DE67948125CBFE70080EEB0 /* SystemConfiguration.framework in Frameworks */,
-				A65AD87D136C8AAE00BCBA54 /* lib3DAR_Mapping_v0_9_1.a in Frameworks */,
+				A61CFA5E1373A12B0046D1FE /* lib3DAR_v4_0_8.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,6 +529,7 @@
 				4D4C6E1812697E8B00DCEF32 /* elevation_grid_oregon_660km_150s.txt */,
 				4DEA74C3126EDFB90027580D /* elevation_grid_mt_hood_25km_25s.txt */,
 				4DE678C4125CBDFC0080EEB0 /* Icon.png */,
+				A61CFAD61373B6500046D1FE /* PortlandMap.png */,
 				4DE678C5125CBDFC0080EEB0 /* Default.png */,
 				2899E5210DE3E06400AC0155 /* BezierGardenViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
@@ -891,8 +894,8 @@
 		4DF1E3F1126194C600DD1E46 /* 3DAR */ = {
 			isa = PBXGroup;
 			children = (
-				A65AD87C136C8AAE00BCBA54 /* lib3DAR_Mapping_v0_9_1.a */,
 				4DF1E3F2126194C600DD1E46 /* 3dar.plist */,
+				A61CFA5D1373A12B0046D1FE /* lib3DAR_v4_0_8.a */,
 				4DF1E3F3126194C600DD1E46 /* 3dar_logo.png */,
 				4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */,
 				2D1A1ECD133FD4DD00143F54 /* SM3DAR.h */,
@@ -992,6 +995,7 @@
 				A63B5D5C1356A878004EC3D6 /* pushpin_1.0.obj in Resources */,
 				A63B5DCE1356B0A1004EC3D6 /* red.png in Resources */,
 				A648DDDF1362CE5C00BC529E /* 84_white_topnotch.png in Resources */,
+				A61CFAD71373B6500046D1FE /* PortlandMap.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

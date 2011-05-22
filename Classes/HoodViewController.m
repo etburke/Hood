@@ -257,6 +257,7 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"3darDisableLocationServices"])
     {
         [self loadPointsOfInterest];
+        SM3DAR.delegate = self;
     }
     
 //    joystick = [[Joystick alloc] initWithBackground:[UIImage imageNamed:@"128_white.png"]];
@@ -439,15 +440,14 @@
 
 - (void) addElevationGridPoint
 {
-    self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:SM3DAR.currentLocation] autorelease];        
-    
-    // TODO: add originLocation property to 3DAR.
-    
-    CLLocationDistance actualOriginElevation = [elevationGrid elevationAtLocation:SM3DAR.currentLocation];
-    CLLocationDistance originElevationOffset = SM3DAR.currentLocation.altitude - actualOriginElevation;
+    CLLocation *theOffice = [[[CLLocation alloc] initWithLatitude:45.523563 longitude:-122.675099] autorelease];
+    self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:theOffice] autorelease];        
+
+    CLLocationDistance actualOriginElevation = [elevationGrid elevationAtLocation:theOffice];
+    CLLocationDistance originElevationOffset = theOffice.altitude - actualOriginElevation;
     
     NSLog(@"Origin elevation is %.1f and the GPS reports %.1f so the grid point is at %.1f", 
-          actualOriginElevation, SM3DAR.currentLocation.altitude, originElevationOffset);
+          actualOriginElevation, theOffice.altitude, originElevationOffset);
     
     [self addGridAtX:0 Y:0 Z:-actualOriginElevation];
 }

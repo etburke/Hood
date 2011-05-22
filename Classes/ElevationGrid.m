@@ -318,6 +318,8 @@
     self.gridPointSE = [[[CLLocation alloc] initWithLatitude:gridPointSW.coordinate.latitude 
                                                    longitude:gridPointNE.coordinate.longitude] autorelease];
     
+
+    NSLog(@"\n\nGrid corners\nNW: %@\nSE: %@", gridPointNW, gridPointSE);
 }
 
 - (void) buildArray
@@ -643,7 +645,10 @@
                         // Convert location to world coordinate.
                         
                         Coord3D c = [SM3DAR_Controller worldCoordinateFor:tmpLocation];
-                        c.z -= SM3DAR.currentLocation.altitude;
+                        
+                        //c.z -= SM3DAR.currentLocation.altitude;
+                        c.z -= gridCenter.altitude;
+                        
                         worldCoordinateDataHigh[i][j] = c;
                         [tmpLocation release];
 

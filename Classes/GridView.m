@@ -7,12 +7,14 @@
 #import "GridView.h"
 #import "ElevationGrid.h"
 
+static GLfloat texCoords[ELEVATION_PATH_SAMPLES_INT*ELEVATION_PATH_SAMPLES_INT*2];
+
 
 @implementation GridView
 
 - (void) dealloc
 {
-//    [texture release];
+    [gridTexture release];
     [super dealloc];
 }
 
@@ -20,7 +22,30 @@
 {
     NSLog(@"[GV] buildView");    
     
-//    texture = [Texture newTextureFromImage:@"hurryupthomas.png"];
+    gridTexture = [Texture newTextureFromImage:[UIImage imageNamed:@"PortlandMap.png"].CGImage];
+    
+
+    // Populate texture coordinates.
+    
+    GLfloat texCoordSpacing = 1.0 / ELEVATION_PATH_SAMPLES;
+    
+    int index = 0;
+    
+    for (int row=0; row < ELEVATION_PATH_SAMPLES; row++)
+    {
+        for (int column=0; column < ELEVATION_PATH_SAMPLES; column++)
+        {
+            GLfloat u = column * texCoordSpacing;
+            GLfloat v = row * texCoordSpacing;
+            
+            texCoords[index] = u;
+            index++;
+            texCoords[index] = v;
+            index++;
+        }
+    }
+    
+    
 }
 
 - (void) drawFog
@@ -67,14 +92,13 @@
 	
 	glEnable(GL_DEPTH_TEST);
 	
-	bool fill = false;
+	bool fill = true;
 	
 	if (fill)
 		glColor4f(0,0,1,1);
 	else	
 		glColorMask(0,0,0,0);			// Turn of visible filling.
     
-	
     for (int y=0; y < gridSize-1; y++)
     {
     	int start1 = y * gridSize;
@@ -92,7 +116,7 @@
 		
 		glDrawElements(GL_TRIANGLE_STRIP, ct, GL_UNSIGNED_SHORT, lineIndex);
     }
-	
+    
     // draw horizontal lines.
     
 	glColorMask(1,1,1,1);
@@ -126,10 +150,10 @@
     }
 }
 
-/*
 - (void) drawTexturedGrid
 {
-	glBindTexture(GL_TEXTURE_2D, texture.handle);
+    /*
+	glBindTexture(GL_TEXTURE_2D, gridTexture.handle);
     
     // Render to opengl.
     
@@ -138,27 +162,17 @@
     
 	glDisable(GL_BLEND);
     
-    //	glEnable(GL_CULL_FACE);  // what about when viewed from the inside?
 	glEnable(GL_DEPTH_TEST);
     
-    if (self.cullFace)
-        glEnable(GL_CULL_FACE);
-    else
-        glDisable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
     
 	glEnableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
-    
-    if (ndl->textureChannelCount)
-    {
-        glEnable(GL_TEXTURE_2D);
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    }
-    else
-    {  
-        glDisable(GL_TEXTURE_2D);
-        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    }
+
+    ///////
+    glEnable(GL_TEXTURE_2D);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    ///////
     
 	glVertexPointer(3, GL_FLOAT, 24, &ndl->vertex[0].x);
     
@@ -170,13 +184,41 @@
         GLsizei elemCount = ndl->polygon[i].vertexCount;
         glDrawElements(GL_TRIANGLE_FAN, elemCount, GL_UNSIGNED_SHORT, ndl->polygon[i].vertexIndex);
     }
+
+/////////////////    
+    for (int y=0; y < gridSize-1; y++)
+    {
+    	int start1 = y * gridSize;
+        int start2 = start1 + gridSize;
+		
+        // build index array.
+        
+		int ct = 0;
+		
+        for (int x=0; x < gridSize; x++)
+		{
+        	lineIndex[ct++] = start1 + x;
+			lineIndex[ct++] = start2 + x;
+		}
+		
+		glDrawElements(GL_TRIANGLE_STRIP, ct, GL_UNSIGNED_SHORT, lineIndex);
+    }
+/////////////////    
+    */
+    
+    ////
+    // From stackoverflow
+    ////
+//    glVertexPointer(3, GL_FLOAT, sizeof(TexturedVertexData3D), &vertices[0]);
+//    glTexCoordPointer(2, GL_FLOAT, sizeof(TexturedVertexData3D), &vertices[0].texCoords);
+//    glDrawArrays(GL_TRIANGLES, 0, nVertices);    
 }
-*/
 
 - (void) drawInGLContext 
 {
     [self drawGrid];
     [self drawFog];
+
 //    [self drawTexturedGrid];
 }
 

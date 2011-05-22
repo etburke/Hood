@@ -9,10 +9,15 @@
 
 #define AVG_EARTH_RADIUS_METERS 6367444.65
 
+#define ELEVATION_PATH_SAMPLES        157.0
+#define ELEVATION_PATH_SAMPLES_INT      157
+
+// Mt. Sanitas
+//#define ELEVATION_LINE_LENGTH_HIGH   5000.0
+
 
 // 159m res (limit at 25km size)
 #define ELEVATION_LINE_LENGTH_HIGH   20000.0
-#define ELEVATION_PATH_SAMPLES         157.0
 
 // 63m res (limit at 10km size)
 //#define ELEVATION_LINE_LENGTH_HIGH  10000.0   
