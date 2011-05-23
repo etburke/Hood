@@ -121,7 +121,7 @@
             // This is the head of the line.
             
             poiLocation = [[CLLocation alloc] initWithCoordinate:location.coordinate 
-                                                        altitude:(coord.z - elevationGrid.lowestElevation)
+                                                        altitude:(coord.z - (elevationGrid.lowestElevation*GRID_SCALE_VERTICAL))
                                               horizontalAccuracy:-1 
                                                 verticalAccuracy:-1 
                                                        timestamp:nil];
@@ -559,7 +559,7 @@
     NSLog(@"Origin elevation for Mt. Sanitas is %.1f", actualOriginElevation);
     
     CLLocation *gridLocation = [[CLLocation alloc] initWithCoordinate:originLocation.coordinate 
-                                                   altitude:-elevationGrid.lowestElevation
+                                                   altitude:-(elevationGrid.lowestElevation * GRID_SCALE_VERTICAL)
                                          horizontalAccuracy:-1 
                                            verticalAccuracy:-1 
                                                   timestamp:nil];
@@ -681,8 +681,8 @@
 {
     [self addElevationGridPoint];
     
-    [self addPointAtLatitude:originLocation.coordinate.latitude longitude:originLocation.coordinate.longitude title:@"Mt. Sanitas"];
-    [self addPointAtLatitude:40.014986 longitude:-105.270546 title:@"Boulder, Colorado"];
+//    [self addPointAtLatitude:originLocation.coordinate.latitude longitude:originLocation.coordinate.longitude title:@"Mt. Sanitas"];
+//    [self addPointAtLatitude:40.014986 longitude:-105.270546 title:@"Boulder, Colorado"];
 
 //    [self addPointAtLatitude:45.627559 longitude:-122.656914 title:@"Columbia Land Trust"];
 //    [self addPointAtLatitude:45.512332 longitude:-122.592874 title:@"Mt. Tabor"];
