@@ -9,12 +9,10 @@
 #import "HoodViewController.h"
 #import "GridView.h"
 #import "NSDictionary+BSJSONAdditions.h"
-#import "PDX911.h"
 #import "DotView.h"
 #import "CGPointUtil.h"
-#import "ObjGridView.h"
 
-#define MIN_CAMERA_ALTITUDE_METERS 100.0    // Lower than 275 meters may look bad.
+#define MIN_CAMERA_ALTITUDE_METERS 0.0    // Lower than 275 meters may look bad.
 #define MAX_CAMERA_ALTITUDE_METERS 10000.0
 #define MAX_SPEED 350.0f
 
@@ -45,26 +43,55 @@
     return self;
 }
 
-- (void) loadView 
-{    
-    self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    
-
-    // Add the map view.
-    
-    self.mapView = [[[SM3DARMapView alloc] initWithFrame:self.view.frame] autorelease];
-    mapView.delegate = self;
-    mapView.showsUserLocation = YES;
-    [self.view addSubview:mapView];
-    
-    [mapView add3darContainer];
-    
-    sm3dar = SM3DAR;
-    
-}
-
 - (void) sm3darViewDidLoad
 {
+}
+
+- (void) fetchMapAttackStatus
+{
+    // TODO: make a PolylinePoint class
+    
+    NSString *url = @"https://api.geoloqi.com/1/location/history?oauth_token=41a-de3165ae38a7a667074678df22af479af4c1b7c3&count=5";
+    
+    NSString *json = [NSString stringWithContentsOfURL:[NSURL URLWithString:url] 
+                                              encoding:NSUTF8StringEncoding 
+                                                 error:nil];
+    
+    NSDictionary *places = [NSDictionary dictionaryWithJSONString:json];
+    
+    for (NSDictionary *onePlace in [places objectForKey:@"places"]) 
+    {
+        // Make a point that's connected to another point?
+        
+        // Or make a point that's a collection of locations.
+        
+        //MapAttackPlace *place = [[MapAttackPlace alloc] initWithProperties:onePlace];
+//        MapAttackPlace3D *place = [[MapAttackPlace3D alloc] initWithProperties:onePlace];
+        
+        
+//        [mapView addAnnotation:place]; 
+//        [place release];        
+    }
+    
+    [mapView zoomMapToFit];
+}
+
+- (void) addGridAtLocation:(CLLocation *)location
+{
+    // Create point.
+    SM3DAR_PointOfInterest *p = [[SM3DAR_PointOfInterest alloc] initWithLocation:location
+                                                                      properties:nil];
+    
+    GridView *gridView = [[GridView alloc] init];
+    
+    // Give the point a view.
+    gridView.point = p;
+    p.view = gridView;
+    [gridView release];
+        
+    // Add point to 3DAR scene.
+    [mapView addAnnotation:p];
+    [p release];
 }
 
 //
@@ -76,12 +103,6 @@
     // Create point.
     SM3DAR_Fixture *p = [[SM3DAR_Fixture alloc] init];
     
-    Coord3D coord = {
-        x, y, z
-    };
-    
-    p.worldPoint = coord;
-
     GridView *gridView = [[GridView alloc] init];
 
     // Give the point a view.
@@ -93,7 +114,7 @@
     NSLog(@"Adding grid at %.1f, %.1f, %.1f", x, y, z);
     
     // Add point to 3DAR scene.
-    [SM3DAR addPointOfInterest:p];
+    [mapView.sm3dar addPointOfInterest:p];
     [p release];
 }
 
@@ -102,13 +123,17 @@
     
 }
 
-- (void) loadPointsOfInterest
+//- (void) loadPointsOfInterest
+- (void) sm3darLoadPoints:(SM3DAR_Controller *)sm3dar
 {
+//    [mapView addBackground];  
+
     // Load after location update.
-    [self addGridScene];
+   [self addGridScene];
 
 //    [self addElevationGridPoint];
 //    [self loadSingleHoodPoint];
+    
 }
 
 #pragma mark -
@@ -119,9 +144,9 @@
 //    joystickView.multipleTouchEnabled = YES;
 //    [sm3dar.view addSubview:joystickView];
     
-    Coord3D c = { 0, 0, 300 };
-    cameraOffset = c;
-    [sm3dar setCameraOffset:cameraOffset];
+//    Coord3D c = { 0, 0, 300 };
+//    cameraOffset = c;
+//    [mapView.sm3dar setCameraPosition:cameraOffset];
 
     
     joystick = [Joystick new];
@@ -159,9 +184,9 @@
     CGFloat xspeed =  joystick.velocity.x * exp(fabs(joystick.velocity.x) * s);
     CGFloat yspeed = -joystick.velocity.y * exp(fabs(joystick.velocity.y) * s);
     
-    if (abs(xspeed) > 0.0 || abs(yspeed) > 0.0) 
+    if (fabs(xspeed) > 0.0 || fabs(yspeed) > 0.0) 
     {        
-        Coord3D ray = [sm3dar ray:CGPointMake(160, 240)];
+        Coord3D ray = [mapView.sm3dar ray:CGPointMake(160, 240)];
         
         cameraOffset.x += (ray.x * yspeed);
         cameraOffset.y += (ray.y * yspeed);
@@ -173,7 +198,7 @@
         
         //NSLog(@"Camera (%.1f, %.1f, %.1f)", offset.x, offset.y, offset.z);
         
-        [sm3dar setCameraOffset:cameraOffset];
+        [mapView.sm3dar setCameraPosition:cameraOffset];
     }
 }
 
@@ -201,11 +226,11 @@
      }
      */
     
-    if (abs(yspeed) > 0.0) 
+    if (fabs(yspeed) > 0.0) 
     {        
         cameraOffset.z += yspeed;
         
-        [sm3dar setCameraOffset:cameraOffset];
+        [mapView.sm3dar setCameraPosition:cameraOffset];
     }
     
 }
@@ -215,20 +240,28 @@
     touchCount++;
     
     UITouch *touch = [[touches allObjects] objectAtIndex:0];    
-    CGPoint point = [touch locationInView:sm3dar.view];    
-    
-    NSLog(@"touches: %i", touchCount);
+    CGPoint point = [touch locationInView:mapView.sm3dar.view];    
     
     if (touchCount == 1)
     {
-        joystick.center = point;
-        joystick.transform = CGAffineTransformMakeRotation([sm3dar screenOrientationRadians]);
+        // if joysticks are visible then hide them
+        if (joystick.hidden)
+        {
+            joystick.center = point;
+            joystick.transform = CGAffineTransformMakeRotation([mapView.sm3dar screenOrientationRadians]);
+            joystick.hidden = NO;
+        }
+        else
+        {
+            joystick.hidden = YES;
+        }
+
         joystickZ.hidden = YES;
     }
     else if (touchCount == 2)
     {
         joystickZ.center = point;
-        joystickZ.transform = CGAffineTransformMakeRotation([sm3dar screenOrientationRadians]);
+        joystickZ.transform = CGAffineTransformMakeRotation([mapView.sm3dar screenOrientationRadians]);
         joystickZ.hidden = NO;
     }
     else
@@ -236,7 +269,7 @@
         touchCount = 0;
     }
     
-    NSLog(@"joystick: %@\n parent: %@\n parent2: %@", joystick, joystick.superview, joystick.superview.superview);
+    //NSLog(@"joystick: %@\n parent: %@\n parent2: %@", joystick, joystick.superview, joystick.superview.superview);
     
 }
 
@@ -256,7 +289,7 @@
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"3darDisableLocationServices"])
     {
-        [self loadPointsOfInterest];
+        [self sm3darLoadPoints:mapView.sm3dar];
     }
     
 //    joystick = [[Joystick alloc] initWithBackground:[UIImage imageNamed:@"128_white.png"]];
@@ -271,16 +304,14 @@
     
     loaded = NO;
     NSLog(@"Waiting for location update...");
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    //[sm3dar startCamera];  
     [self addJoystick];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning 
@@ -329,13 +360,9 @@
 {    
     NSLog(@"[BGVC] New location (acc %.0f): %@", newLocation.horizontalAccuracy, newLocation);
 
-    if (!loaded && newLocation.horizontalAccuracy < 200.0) {
-        
-        
-        // TODO: Don't...
+    if (!loaded && newLocation.horizontalAccuracy < 200.0) 
+    {
         [manager stopUpdatingLocation];
-        
-//        [self addGridScene];
         loaded = YES;
     }
     
@@ -343,16 +370,16 @@
 
 
 #pragma mark -
-
+/*
 - (void) addHoodGridPoint
 {
     // Relocate camera.
     
     mtHood = [[CLLocation alloc] initWithLatitude:45.278439 longitude:-121.816742];
-    [SM3DAR changeCurrentLocation:mtHood];
+    [mapView.sm3dar changeCurrentLocation:mtHood];
     
     
-    NSLog(@"loc: %@", SM3DAR.currentLocation);
+    NSLog(@"loc: %@", mapView.sm3dar.userLocation);
 
     
     // Populate grid.
@@ -362,8 +389,10 @@
 
     // Add a view.
     
-    [self addGridAtX:0 Y:0 Z:0];    
+    [self addGridAtX:0 Y:0 Z:-100];    
+    
 }
+*/
 
 - (void) addWaveGridPoint
 {
@@ -387,7 +416,7 @@
      p.worldPoint = coord;
     */
     
-    
+#if 0
     NSString *path = [[NSBundle mainBundle] pathForResource:@"arc" ofType:@"obj"];
     
     NSString *fileContents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
@@ -413,7 +442,7 @@
     CLLocationDegrees latitude = [latStr doubleValue];
     CLLocationDegrees longitude = [lngStr doubleValue];
 
-    SM3DAR_Point *poi = [SM3DAR initPointOfInterestWithLatitude:latitude 
+    SM3DAR_Point *poi = [mapView.sm3dar initPointOfInterestWithLatitude:latitude 
                                                         longitude:longitude 
                                                          altitude:0 
                                                             title:@""
@@ -433,30 +462,27 @@
     
     // Add point to 3DAR scene.
     
-    [SM3DAR addPointOfInterest:poi];
+    [mapView.sm3dar addPointOfInterest:poi];
     [poi release];
+#endif
 }
 
 - (void) addElevationGridPoint
 {
-    self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:SM3DAR.currentLocation] autorelease];        
+    CLLocation *location = [[[CLLocation alloc] initWithLatitude:40.036097 longitude:-105.306102] autorelease];
     
-    // TODO: add originLocation property to 3DAR.
+    NSLog(@"\n\nMoving to Mt. Sanitas\n\n");
     
-    CLLocationDistance actualOriginElevation = [elevationGrid elevationAtLocation:SM3DAR.currentLocation];
-    CLLocationDistance originElevationOffset = SM3DAR.currentLocation.altitude - actualOriginElevation;
-    
-    NSLog(@"Origin elevation is %.1f and the GPS reports %.1f so the grid point is at %.1f", 
-          actualOriginElevation, SM3DAR.currentLocation.altitude, originElevationOffset);
-    
-    [self addGridAtX:0 Y:0 Z:-actualOriginElevation];
-}
+    [mapView.sm3dar changeCurrentLocation:location];
+   
+    self.elevationGrid = [[[ElevationGrid alloc] initAroundLocation:location] autorelease];        
+    elevationGrid.sm3dar = mapView.sm3dar;
 
-- (void) add911IncidentPoints
-{
-    PDX911 *incidents = [[PDX911 alloc] init];
-    [incidents parseIncidents];
-    [incidents release];    
+    CLLocationDistance actualOriginElevation = [elevationGrid elevationAtLocation:location];
+    
+    NSLog(@"Origin elevation for Mt. Sanitas is %.1f", actualOriginElevation);
+    
+    [self addGridAtLocation:location];
 }
 
 - (void) addCityNamePoints
@@ -486,7 +512,7 @@
         
         NSMutableArray *allPoints = [NSMutableArray arrayWithCapacity:[cities count]];
         
-        SM3DAR.markerViewClass = [SM3DAR_IconMarkerView class];
+        mapView.sm3dar.markerViewClass = [SM3DAR_IconMarkerView class];
         
         CLLocation *locx = nil;
         
@@ -500,7 +526,7 @@
             CLLocationDegrees latitude = [latString doubleValue];
             CLLocationDegrees longitude = [lngString doubleValue];
             
-            SM3DAR_Point *point = [SM3DAR initPointOfInterestWithLatitude:latitude 
+            SM3DAR_Point *point = [mapView.sm3dar initPointOfInterestWithLatitude:latitude 
                                           longitude:longitude 
                                            altitude:0 
                                               title:poiTitle 
@@ -523,25 +549,25 @@
         [elevationGrid elevationAtLocation:locx];
 
         
-        [SM3DAR addPointsOfInterest:allPoints];
+        [mapView.sm3dar addPointsOfInterest:allPoints];
         
     }
 	    
 }
 
-- (void) logoWasTapped
+- (void) sm3darLogoWasTapped:(SM3DAR_Controller *)sm3dar
 {
     if (mapView.hidden || mapView.alpha < 0.1)
     {
         NSLog(@"showing map");
         mapView.hidden = NO;
-        //        [SM3DAR showMap];
+        //        [mapView.sm3dar showMap];
     }
     else
     {
         NSLog(@"hiding map");
         mapView.hidden = YES;
-        //        [SM3DAR hideMap];
+        //        [mapView.sm3dar hideMap];
     }
 }
 
@@ -578,17 +604,17 @@
 //    [self addPointAtLatitude:45.525165 longitude:-122.716212 title:@"Pittock Mansion"];
 //    [self addPointAtLatitude:45.522759 longitude:-122.676001 title:@"Big Pink"];
     
-//    [SM3DAR zoomMapToFit];
+//    [mapView.sm3dar zoomMapToFit];
     
-    SM3DAR.cameraAltitudeMeters = MIN_CAMERA_ALTITUDE_METERS;
+    mapView.sm3dar.cameraAltitudeMeters = MIN_CAMERA_ALTITUDE_METERS;
 }
 
 - (void) setCameraAltitude:(CGFloat)metersAboveGround
 {
 /*
-    CGFloat elevationAtCameraLocation = [elevationGrid elevationAtLocation:SM3DAR.currentLocation];
+    CGFloat elevationAtCameraLocation = [elevationGrid elevationAtLocation:mapView.sm3dar.currentLocation];
 
-    SM3DAR.cameraAltitudeMeters = (elevationAtCameraLocation + metersAboveGround) * (2*GRID_SCALE_VERTICAL);
+    mapView.sm3dar.cameraAltitudeMeters = (elevationAtCameraLocation + metersAboveGround) * (2*GRID_SCALE_VERTICAL);
 */
 }
 
@@ -607,7 +633,7 @@
     
     if (abs(xspeed) > 0.0 || abs(yspeed) > 0.0) 
     {        
-        Coord3D ray = [SM3DAR ray:CGPointMake(160, 240)];
+        Coord3D ray = [mapView.sm3dar ray:CGPointMake(160, 240)];
                 
         cameraOffset.x += (ray.x * yspeed);
         cameraOffset.y += (ray.y * yspeed);
@@ -619,9 +645,21 @@
         cameraOffset.x += (perp.x * xspeed);
         cameraOffset.y += (perp.y * xspeed);
 
-        [SM3DAR setCameraOffset:cameraOffset];
+        [mapView.sm3dar setCameraPosition:cameraOffset];
     }
 }
 */
+
+- (IBAction) moveToUserLocation
+{
+    NSLog(@"Centering on user");
+    loaded = NO;
+    [mapView.sm3dar.locationManager startUpdatingLocation];
+    
+    Coord3D c = { 0, 0, 0 };
+    cameraOffset = c;
+    [mapView.sm3dar setCameraPosition:cameraOffset];
+    
+}
 
 @end

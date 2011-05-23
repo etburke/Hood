@@ -27,6 +27,7 @@
 @synthesize gridPointNW;
 @synthesize gridPointNE;
 @synthesize gridPointSE;
+@synthesize sm3dar;
 
 - (void) dealloc
 {
@@ -36,6 +37,8 @@
     self.gridPointNW = nil;
     self.gridPointNE = nil;
     self.gridPointSE = nil;
+
+    [sm3dar release];
     
     [super dealloc];
 }
@@ -430,7 +433,7 @@
 #if 0            
             Coord3D c = worldCoordinateDataHigh[i][j];
             
-            c.z -= SM3DAR.currentLocation.altitude;
+            c.z -= sm3dar.currentLocation.altitude;
             
             CGFloat elevation = c.z;
 
@@ -643,7 +646,7 @@
                         // Convert location to world coordinate.
                         
                         Coord3D c = [SM3DAR_Controller worldCoordinateFor:tmpLocation];
-                        c.z -= SM3DAR.currentLocation.altitude;
+                        c.z -= sm3dar.userLocation.altitude;
                         worldCoordinateDataHigh[i][j] = c;
                         [tmpLocation release];
 

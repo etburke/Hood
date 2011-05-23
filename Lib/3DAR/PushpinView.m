@@ -105,20 +105,20 @@ static unsigned short rlLineIndex[2] =
     }
      */
     
-    if (!texture)
+    if (!self.texture)
     {
 //        textureName = @"pushpin_textured2.jpg";
-        textureName = @"red.png";
+        self.textureName = @"red.png";
     }
     
-    if (!texture && [textureName length] > 0) 
+    if (!self.texture && [self.textureName length] > 0) 
     {
         if (!pushpinTexture)
         {
-            NSLog(@"Loading texture named %@", textureName);
+            NSLog(@"Loading texture named %@", self.textureName);
 
-            NSString *textureExtension = [[textureName componentsSeparatedByString:@"."] objectAtIndex:1];
-            NSString *textureBaseName = [textureName stringByDeletingPathExtension];
+            NSString *textureExtension = [[self.textureName componentsSeparatedByString:@"."] objectAtIndex:1];
+            NSString *textureBaseName = [self.textureName stringByDeletingPathExtension];
             NSString *imagePath = [[NSBundle mainBundle] pathForResource:textureBaseName ofType:textureExtension];
             NSData *imageData = [[NSData alloc] initWithContentsOfFile:imagePath]; 
             UIImage *textureImage =  [[UIImage alloc] initWithData:imageData];
@@ -140,7 +140,7 @@ static unsigned short rlLineIndex[2] =
 
     // Scale last.
     
-    glScalef(sizeScalar, sizeScalar, sizeScalar); //*0.85);
+    glScalef(self.sizeScalar, self.sizeScalar, self.sizeScalar); //*0.85);
     
     
 
@@ -154,7 +154,7 @@ static unsigned short rlLineIndex[2] =
 
 //    [self.geometry displayWireframe];
 //    [self.geometry displayShaded:self.color];
-    [self.geometry displayFilledWithTexture:texture];
+    [self.geometry displayFilledWithTexture:self.texture];
     
     
     /////////

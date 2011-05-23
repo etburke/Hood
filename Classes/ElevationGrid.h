@@ -23,6 +23,8 @@
     CLLocation *gridPointNW;
     CLLocation *gridPointNE;
     CLLocation *gridPointSE;
+    
+    SM3DAR_Controller *sm3dar;
 }
 
 @property (nonatomic, retain) CLLocation *gridCenter;
@@ -31,6 +33,7 @@
 @property (nonatomic, retain) CLLocation *gridPointNW;
 @property (nonatomic, retain) CLLocation *gridPointNE;
 @property (nonatomic, retain) CLLocation *gridPointSE;
+@property (nonatomic, retain) SM3DAR_Controller *sm3dar;
 
 //- (id) initFromCache;
 - (id) initFromFile:(NSString*)bundleFileName;

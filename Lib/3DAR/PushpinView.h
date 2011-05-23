@@ -4,7 +4,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TexturedGeometryView.h"
+#import "SM3DAR.h"
 
 @interface PushpinView : TexturedGeometryView 
 {

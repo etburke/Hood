@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "SM3DARMapView.h"
 #import "HoodGrid.h"
 #import "WaveGrid.h"
 #import "Joystick.h"
@@ -17,7 +16,7 @@
 @interface HoodViewController : UIViewController <SM3DAR_Delegate, CLLocationManagerDelegate, MKMapViewDelegate>
 {
 	SM3DAR_Controller *sm3dar;
-    SM3DARMapView *mapView;
+    IBOutlet SM3DARMapView *mapView;
     BOOL loaded;
     
     HoodGrid *hoodGrid;
@@ -35,16 +34,16 @@
 @property (nonatomic, retain) ElevationGrid *elevationGrid;
 @property (nonatomic, retain) SM3DARMapView *mapView;
 
-- (void) addHoodGridPoint;
+//- (void) addHoodGridPoint;
 //- (void) screenTouched:(CGPoint)p;
 - (void) addGridAtX:(CGFloat)x Y:(CGFloat)y Z:(CGFloat)z;
 - (void) addCityNamePoints;
-- (void) add911IncidentPoints;
 - (void) addElevationGridPoint;
 - (void) setCameraAltitude:(CGFloat)metersAboveGround;
 - (void) addElevationOBJGridPoint;
 - (void) addWaveGridPoint;
 - (void) addGridScene;
+- (IBAction) moveToUserLocation;
 
 @end
 
