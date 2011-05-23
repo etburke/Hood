@@ -21,7 +21,7 @@
     
     HoodGrid *hoodGrid;
     WaveGrid *waveGrid;
-    CLLocation *mtHood;
+    CLLocation *originLocation;
     
     Joystick *joystick;
     Joystick *joystickZ;
@@ -39,7 +39,6 @@
 - (void) addGridAtX:(CGFloat)x Y:(CGFloat)y Z:(CGFloat)z;
 - (void) addCityNamePoints;
 - (void) addElevationGridPoint;
-- (void) setCameraAltitude:(CGFloat)metersAboveGround;
 - (void) addElevationOBJGridPoint;
 - (void) addWaveGridPoint;
 - (void) addGridScene;

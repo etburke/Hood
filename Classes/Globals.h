@@ -27,7 +27,7 @@
 //#define ELEVATION_PATH_SAMPLES        111.0
 
 #define GRID_SCALE_HORIZONTAL 1.0   // 0.1
-#define GRID_SCALE_VERTICAL 1.5  // 0.45
+#define GRID_SCALE_VERTICAL 1.0  // 0.45
 
 //#define ELEVATION_LINE_LENGTH_LOW   200000.0  // Use low res later.
 #define GOOGLE_ELEVATION_API_URL_FORMAT @"http://maps.googleapis.com/maps/api/elevation/json?path=%@&samples=%i&sensor=false"

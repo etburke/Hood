@@ -27,6 +27,8 @@
 @synthesize gridPointNW;
 @synthesize gridPointNE;
 @synthesize gridPointSE;
+@synthesize lowestElevation;
+@synthesize highestElevation;
 @synthesize sm3dar;
 
 - (void) dealloc
@@ -47,6 +49,8 @@
 {
     if (self = [super init])
     {
+        self.lowestElevation = INT_MAX;
+        self.highestElevation = INT_MIN;
         self.gridOrigin = nil;
         
         NSString *filePath = [[NSBundle mainBundle] pathForResource:bundleFileName ofType:nil];
@@ -56,24 +60,12 @@
     return self;
 }
 
-/*
-- (id) initFromCache
-{
-    if (self = [super init])
-    {
-        self.gridOrigin = nil;
-
-        [self loadWorldCoordinateDataFile:[self dataFilePath]];        
-    }
-    
-    return self;
-}
-*/
-
 - (id) initAroundLocation:(CLLocation*)center
 {
     if (self = [super init])
     {
+        self.lowestElevation = INT_MAX;
+        self.highestElevation = INT_MIN;
         self.gridCenter = center;
         
         BOOL forceReload = NO;
@@ -234,6 +226,11 @@
 
         elevation = [oneResult objectForKey:@"elevation"];        
 		alt = [elevation doubleValue];
+        
+        if (alt < lowestElevation)
+            self.lowestElevation = alt;
+        if (alt > highestElevation)
+            self.highestElevation = alt;
                 
         tmpLocation = [[CLLocation alloc] initWithCoordinate:coordinate 
                                                     altitude:alt
@@ -623,6 +620,11 @@
                             ep.coordinate.longitude = [[xyz objectAtIndex:0] doubleValue];
                             ep.coordinate.latitude = [[xyz objectAtIndex:1] doubleValue];
                             ep.elevation = [[xyz objectAtIndex:2] doubleValue];
+                            
+                            if (ep.elevation < lowestElevation)
+                                self.lowestElevation = ep.elevation;
+                            if (ep.elevation > highestElevation)
+                                self.highestElevation = ep.elevation;
                         }
                         @catch (NSException *e) 
                         {
@@ -747,10 +749,12 @@
                             coord.x = i * GRID_CELL_SIZE_HIGH;
                             coord.y = j * GRID_CELL_SIZE_HIGH;
                             coord.z = [[xyz objectAtIndex:2] floatValue];
-
-//                            coord.x = [[xyz objectAtIndex:0] floatValue];
-//                            coord.y = [[xyz objectAtIndex:1] floatValue];
-//                            coord.z = [[xyz objectAtIndex:2] floatValue];
+                            
+                            if (coord.z < lowestElevation)
+                                self.lowestElevation = coord.z;
+                            if (coord.z > highestElevation)
+                                self.highestElevation = coord.z;
+                            
                         }
                         @catch (NSException *e) 
                         {
@@ -815,6 +819,10 @@
         // bad
         NSLog(@"\n\nERROR: Sample location's bounding box is out of bounds.\n\nsample: %@ \nSW: %@ \nNE: %@ \n",
               sampleLocation, gridPointSW, gridPointNE);        
+        ElevationPoint ep0;
+        ep0.coordinate.latitude = ep0.coordinate.longitude = -1.0;
+        ep0.elevation = -1.0;
+        bbox.a = bbox.b = bbox.c = bbox.d = ep0;
     }
     else
     {
@@ -978,5 +986,9 @@
     return [self interpolateValueBetweenA:coordA B:coordB C:coordC D:coordD u:u v:v];
 }
 
+- (CGFloat) centerpointElevation
+{
+    return [self elevationAtLocation:self.gridCenter];
+}
 
 @end

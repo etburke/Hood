@@ -139,6 +139,10 @@
 		A642F0571389B2FE007E57C6 /* lib3DAR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A642F0561389B2FE007E57C6 /* lib3DAR.a */; };
 		A642F14C138A00B4007E57C6 /* blue_dot.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F14B138A00B4007E57C6 /* blue_dot.png */; };
 		A642F158138A0127007E57C6 /* 3dar_pano_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F157138A0127007E57C6 /* 3dar_pano_bg.png */; };
+		A642F1F3138A27F5007E57C6 /* PolylinePoint.m in Sources */ = {isa = PBXBuildFile; fileRef = A642F1F2138A27F5007E57C6 /* PolylinePoint.m */; };
+		A642F1F6138A288A007E57C6 /* WorldCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = A642F1F5138A288A007E57C6 /* WorldCoordinate.m */; };
+		A642F209138A2F5D007E57C6 /* PolylineView.m in Sources */ = {isa = PBXBuildFile; fileRef = A642F208138A2F5D007E57C6 /* PolylineView.m */; };
+		A642F40E138A7578007E57C6 /* 3dar_marker_icon1_focused.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F40D138A7578007E57C6 /* 3dar_marker_icon1_focused.png */; };
 		A648DDDF1362CE5C00BC529E /* 84_white_topnotch.png in Resources */ = {isa = PBXBuildFile; fileRef = A648DDDE1362CE5C00BC529E /* 84_white_topnotch.png */; };
 		A6DEEB1712FE7C990009DE15 /* WaveGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEEB1612FE7C990009DE15 /* WaveGrid.m */; };
 		A6FB95C1134B645C00F46CC5 /* ElevationGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FB95BF134B645C00F46CC5 /* ElevationGrid.m */; };
@@ -153,7 +157,7 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* BezierGardenAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BezierGardenAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* BezierGardenAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BezierGardenAppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* Hood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hood.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* Sanitas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sanitas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2899E5210DE3E06400AC0155 /* BezierGardenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BezierGardenViewController.xib; sourceTree = "<group>"; };
@@ -392,6 +396,13 @@
 		A642F0561389B2FE007E57C6 /* lib3DAR.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib3DAR.a; path = "../../Library/iOS/build/Debug-iphoneos/lib3DAR.a"; sourceTree = SOURCE_ROOT; };
 		A642F14B138A00B4007E57C6 /* blue_dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_dot.png; sourceTree = "<group>"; };
 		A642F157138A0127007E57C6 /* 3dar_pano_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_pano_bg.png; sourceTree = "<group>"; };
+		A642F1F1138A27F5007E57C6 /* PolylinePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolylinePoint.h; sourceTree = "<group>"; };
+		A642F1F2138A27F5007E57C6 /* PolylinePoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolylinePoint.m; sourceTree = "<group>"; };
+		A642F1F4138A288A007E57C6 /* WorldCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldCoordinate.h; sourceTree = "<group>"; };
+		A642F1F5138A288A007E57C6 /* WorldCoordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorldCoordinate.m; sourceTree = "<group>"; };
+		A642F207138A2F5D007E57C6 /* PolylineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolylineView.h; sourceTree = "<group>"; };
+		A642F208138A2F5D007E57C6 /* PolylineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolylineView.m; sourceTree = "<group>"; };
+		A642F40D138A7578007E57C6 /* 3dar_marker_icon1_focused.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_marker_icon1_focused.png; sourceTree = "<group>"; };
 		A648DDDE1362CE5C00BC529E /* 84_white_topnotch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 84_white_topnotch.png; sourceTree = "<group>"; };
 		A6DEEB1512FE7C990009DE15 /* WaveGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveGrid.h; sourceTree = "<group>"; };
 		A6DEEB1612FE7C990009DE15 /* WaveGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveGrid.m; sourceTree = "<group>"; };
@@ -465,7 +476,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* Hood.app */,
+				1D6058910D05DD3D006BFB54 /* Sanitas.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -875,6 +886,7 @@
 				4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */,
 				2D1A1ECD133FD4DD00143F54 /* SM3DAR.h */,
 				A63B5D491356A878004EC3D6 /* 3dar_marker_icon1.png */,
+				A642F40D138A7578007E57C6 /* 3dar_marker_icon1_focused.png */,
 				A63B5D4A1356A878004EC3D6 /* 3dar_marker_icon2.png */,
 				A63B5D4B1356A878004EC3D6 /* 3dar_marker_icon3.png */,
 				A63B5D4C1356A878004EC3D6 /* 3dar_marker_icon4.png */,
@@ -889,7 +901,13 @@
 				A63B5D631356A889004EC3D6 /* Pushpin.h */,
 				A63B5D641356A889004EC3D6 /* PushpinView.h */,
 				A63B5D651356A889004EC3D6 /* PushpinView.m */,
+				A642F1F1138A27F5007E57C6 /* PolylinePoint.h */,
+				A642F1F2138A27F5007E57C6 /* PolylinePoint.m */,
+				A642F207138A2F5D007E57C6 /* PolylineView.h */,
+				A642F208138A2F5D007E57C6 /* PolylineView.m */,
 				A63B5DCD1356B0A1004EC3D6 /* red.png */,
+				A642F1F4138A288A007E57C6 /* WorldCoordinate.h */,
+				A642F1F5138A288A007E57C6 /* WorldCoordinate.m */,
 			);
 			path = 3DAR;
 			sourceTree = "<group>";
@@ -911,7 +929,7 @@
 			);
 			name = Hood;
 			productName = BezierGarden;
-			productReference = 1D6058910D05DD3D006BFB54 /* Hood.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* Sanitas.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -974,6 +992,7 @@
 				A642F02E1389B00D007E57C6 /* crosshairs_49x30.png in Resources */,
 				A642F14C138A00B4007E57C6 /* blue_dot.png in Resources */,
 				A642F158138A0127007E57C6 /* 3dar_pano_bg.png in Resources */,
+				A642F40E138A7578007E57C6 /* 3dar_marker_icon1_focused.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1083,6 +1102,9 @@
 				A6FB95C1134B645C00F46CC5 /* ElevationGrid.m in Sources */,
 				A6FB962B134B71C800F46CC5 /* SphericalEarthProjectionModel.m in Sources */,
 				A63B5D661356A889004EC3D6 /* PushpinView.m in Sources */,
+				A642F1F3138A27F5007E57C6 /* PolylinePoint.m in Sources */,
+				A642F1F6138A288A007E57C6 /* WorldCoordinate.m in Sources */,
+				A642F209138A2F5D007E57C6 /* PolylineView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1109,7 +1131,7 @@
 					"-lxml2",
 					"-lstdc++",
 				);
-				PRODUCT_NAME = Hood;
+				PRODUCT_NAME = Sanitas;
 			};
 			name = Debug;
 		};
@@ -1132,7 +1154,7 @@
 					"-lxml2",
 					"-lstdc++",
 				);
-				PRODUCT_NAME = Hood;
+				PRODUCT_NAME = Sanitas;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1175,7 +1197,7 @@
 					"-lxml2",
 					"-lstdc++",
 				);
-				PRODUCT_NAME = Hood;
+				PRODUCT_NAME = Sanitas;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = AdHoc;

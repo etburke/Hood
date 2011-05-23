@@ -23,6 +23,8 @@
     CLLocation *gridPointNW;
     CLLocation *gridPointNE;
     CLLocation *gridPointSE;
+    CGFloat lowestElevation;
+    CGFloat highestElevation;
     
     SM3DAR_Controller *sm3dar;
 }
@@ -34,6 +36,8 @@
 @property (nonatomic, retain) CLLocation *gridPointNE;
 @property (nonatomic, retain) CLLocation *gridPointSE;
 @property (nonatomic, retain) SM3DAR_Controller *sm3dar;
+@property (nonatomic, assign) CGFloat lowestElevation;
+@property (nonatomic, assign) CGFloat highestElevation;
 
 //- (id) initFromCache;
 - (id) initFromFile:(NSString*)bundleFileName;
@@ -54,5 +58,6 @@
 - (BOOL) buildArrayFromCache;
 - (CLLocationDistance) interpolateWorldCoordinateBetweenA:(Coord3D)coordA B:(Coord3D)coordB C:(Coord3D)coordC D:(Coord3D)coordD u:(double)u v:(double)v;
 - (CLLocationDistance) interpolateBetweenA:(ElevationPoint)epa B:(ElevationPoint)epb C:(ElevationPoint)epc D:(ElevationPoint)epd u:(double)u v:(double)v;
+- (CGFloat) centerpointElevation;
 
 @end

@@ -175,8 +175,8 @@
 
 - (void) drawInGLContext 
 {
-    [self drawGrid];
     [self drawFog];
+    [self drawGrid];
 //    [self drawTexturedGrid];
 }
 
