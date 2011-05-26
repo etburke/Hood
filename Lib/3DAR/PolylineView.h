@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SM3DAR.h"
 
-@interface PolylineView : SM3DAR_PointView
+@interface PolylineView : SM3DARPointView
 {
     NSArray *coords;
     Coord3D *verts;

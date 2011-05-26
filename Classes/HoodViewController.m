@@ -113,7 +113,7 @@
         if ([location distanceFromLocation:originLocation] > maxRadius)
             continue;
         
-        coord = [SM3DAR_Controller worldCoordinateFor:location];
+        coord = [SM3DARController worldCoordinateFor:location];
         coord.z = [self.elevationGrid elevationAtLocation:location] * GRID_SCALE_VERTICAL;
         
         if (poiLocation == nil)
@@ -159,7 +159,7 @@
 - (void) addGridAtLocation:(CLLocation *)location
 {
     // Create point.
-    SM3DAR_PointOfInterest *p = [[SM3DAR_PointOfInterest alloc] initWithLocation:location
+    SM3DARPointOfInterest *p = [[SM3DARPointOfInterest alloc] initWithLocation:location
                                                                       properties:nil];
     
     GridView *gridView = [[GridView alloc] init];
@@ -181,7 +181,7 @@
 - (void) addGridAtX:(CGFloat)x Y:(CGFloat)y Z:(CGFloat)z
 {
     // Create point.
-    SM3DAR_Fixture *p = [[SM3DAR_Fixture alloc] init];
+    SM3DARFixture *p = [[SM3DARFixture alloc] init];
     
     GridView *gridView = [[GridView alloc] init];
 
@@ -204,7 +204,7 @@
 }
 
 //- (void) loadPointsOfInterest
-- (void) sm3darLoadPoints:(SM3DAR_Controller *)sm3dar
+- (void) sm3darLoadPoints:(SM3DARController *)sm3dar
 {
 //    [mapView addBackground];  
 
@@ -478,12 +478,12 @@
 
 - (void) addElevationOBJGridPoint
 {
-    // Load obj, actually it's an SM3DAR_Fixture 
+    // Load obj, actually it's an SM3DARFixture 
     // with a TexturedGeometryView
 
     /*
     // Create point.
-    SM3DAR_Fixture *p = [[SM3DAR_Fixture alloc] init];
+    SM3DARFixture *p = [[SM3DARFixture alloc] init];
     
     Coord3D coord = {
         0, 0, -100
@@ -518,7 +518,7 @@
     CLLocationDegrees latitude = [latStr doubleValue];
     CLLocationDegrees longitude = [lngStr doubleValue];
 
-    SM3DAR_Point *poi = [mapView.sm3dar initPointOfInterestWithLatitude:latitude 
+    SM3DARPoint *poi = [mapView.sm3dar initPointOfInterestWithLatitude:latitude 
                                                         longitude:longitude 
                                                          altitude:0 
                                                             title:@""
@@ -595,7 +595,7 @@
         
         NSMutableArray *allPoints = [NSMutableArray arrayWithCapacity:[cities count]];
         
-        mapView.sm3dar.markerViewClass = [SM3DAR_IconMarkerView class];
+        mapView.sm3dar.markerViewClass = [SM3DARIconMarkerView class];
         
         CLLocation *locx = nil;
         
@@ -609,13 +609,13 @@
             CLLocationDegrees latitude = [latString doubleValue];
             CLLocationDegrees longitude = [lngString doubleValue];
             
-            SM3DAR_Point *point = [mapView.sm3dar initPointOfInterestWithLatitude:latitude 
+            SM3DARPoint *point = [mapView.sm3dar initPointOfInterestWithLatitude:latitude 
                                           longitude:longitude 
                                            altitude:0 
                                               title:poiTitle 
                                            subtitle:poiSubtitle 
                                     markerViewClass:nil
-                                    //markerViewClass:[SM3DAR_IconMarkerView class] 
+                                    //markerViewClass:[SM3DARIconMarkerView class] 
                                          properties:nil];
             
          
@@ -639,7 +639,7 @@
 }
 
 /*
-- (void) sm3darLogoWasTapped:(SM3DAR_Controller *)sm3dar
+- (void) sm3darLogoWasTapped:(SM3DARController *)sm3dar
 {
     if (mapView.hidden || mapView.alpha < 0.1)
     {
@@ -669,7 +669,7 @@
                                                   verticalAccuracy:-1 
                                                          timestamp:nil] autorelease];
                              
-    SM3DAR_PointOfInterest *point = [[[SM3DAR_PointOfInterest alloc] initWithLocation:location 
+    SM3DARPointOfInterest *point = [[[SM3DARPointOfInterest alloc] initWithLocation:location 
                                                                                 title:title
                                                                              subtitle:nil 
                                                                                   url:nil] autorelease];    

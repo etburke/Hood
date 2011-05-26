@@ -13,9 +13,9 @@
 #import "Joystick.h"
 #import "ElevationGrid.h"
 
-@interface HoodViewController : UIViewController <SM3DAR_Delegate, CLLocationManagerDelegate, MKMapViewDelegate>
+@interface HoodViewController : UIViewController <SM3DARDelegate, CLLocationManagerDelegate, MKMapViewDelegate>
 {
-	SM3DAR_Controller *sm3dar;
+	SM3DARController *sm3dar;
     IBOutlet SM3DARMapView *mapView;
     BOOL loaded;
     

@@ -10,7 +10,7 @@
 #import "SM3DAR.h"
 
 
-@interface PolylinePoint : SM3DAR_PointOfInterest 
+@interface PolylinePoint : SM3DARPointOfInterest 
 {
     NSArray *coords;
 }

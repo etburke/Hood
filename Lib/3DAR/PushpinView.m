@@ -95,7 +95,7 @@ static unsigned short rlLineIndex[2] =
     /*
     if ([label.text length] == 0)
     {
-        SM3DAR_PointOfInterest *poi = (SM3DAR_PointOfInterest *)self.point;
+        SM3DARPointOfInterest *poi = (SM3DARPointOfInterest *)self.point;
 
         if (poi)
         {

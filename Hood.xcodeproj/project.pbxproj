@@ -136,7 +136,6 @@
 		A63B5D661356A889004EC3D6 /* PushpinView.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B5D651356A889004EC3D6 /* PushpinView.m */; };
 		A63B5DCE1356B0A1004EC3D6 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = A63B5DCD1356B0A1004EC3D6 /* red.png */; };
 		A642F02E1389B00D007E57C6 /* crosshairs_49x30.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F02D1389B00D007E57C6 /* crosshairs_49x30.png */; };
-		A642F0571389B2FE007E57C6 /* lib3DAR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A642F0561389B2FE007E57C6 /* lib3DAR.a */; };
 		A642F14C138A00B4007E57C6 /* blue_dot.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F14B138A00B4007E57C6 /* blue_dot.png */; };
 		A642F158138A0127007E57C6 /* 3dar_pano_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F157138A0127007E57C6 /* 3dar_pano_bg.png */; };
 		A642F1F3138A27F5007E57C6 /* PolylinePoint.m in Sources */ = {isa = PBXBuildFile; fileRef = A642F1F2138A27F5007E57C6 /* PolylinePoint.m */; };
@@ -144,6 +143,7 @@
 		A642F209138A2F5D007E57C6 /* PolylineView.m in Sources */ = {isa = PBXBuildFile; fileRef = A642F208138A2F5D007E57C6 /* PolylineView.m */; };
 		A642F40E138A7578007E57C6 /* 3dar_marker_icon1_focused.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F40D138A7578007E57C6 /* 3dar_marker_icon1_focused.png */; };
 		A648DDDF1362CE5C00BC529E /* 84_white_topnotch.png in Resources */ = {isa = PBXBuildFile; fileRef = A648DDDE1362CE5C00BC529E /* 84_white_topnotch.png */; };
+		A6AAD19A138E2F3A00D66AA5 /* lib3DAR_v0_9_5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6AAD199138E2F3A00D66AA5 /* lib3DAR_v0_9_5.a */; };
 		A6DEEB1712FE7C990009DE15 /* WaveGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEEB1612FE7C990009DE15 /* WaveGrid.m */; };
 		A6FB95C1134B645C00F46CC5 /* ElevationGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FB95BF134B645C00F46CC5 /* ElevationGrid.m */; };
 		A6FB962B134B71C800F46CC5 /* SphericalEarthProjectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FB962A134B71C800F46CC5 /* SphericalEarthProjectionModel.m */; };
@@ -393,7 +393,6 @@
 		A63B5D651356A889004EC3D6 /* PushpinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushpinView.m; sourceTree = "<group>"; };
 		A63B5DCD1356B0A1004EC3D6 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
 		A642F02D1389B00D007E57C6 /* crosshairs_49x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crosshairs_49x30.png; sourceTree = "<group>"; };
-		A642F0561389B2FE007E57C6 /* lib3DAR.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib3DAR.a; path = "../../Library/iOS/build/Debug-iphoneos/lib3DAR.a"; sourceTree = SOURCE_ROOT; };
 		A642F14B138A00B4007E57C6 /* blue_dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_dot.png; sourceTree = "<group>"; };
 		A642F157138A0127007E57C6 /* 3dar_pano_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_pano_bg.png; sourceTree = "<group>"; };
 		A642F1F1138A27F5007E57C6 /* PolylinePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolylinePoint.h; sourceTree = "<group>"; };
@@ -404,6 +403,7 @@
 		A642F208138A2F5D007E57C6 /* PolylineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolylineView.m; sourceTree = "<group>"; };
 		A642F40D138A7578007E57C6 /* 3dar_marker_icon1_focused.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_marker_icon1_focused.png; sourceTree = "<group>"; };
 		A648DDDE1362CE5C00BC529E /* 84_white_topnotch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 84_white_topnotch.png; sourceTree = "<group>"; };
+		A6AAD199138E2F3A00D66AA5 /* lib3DAR_v0_9_5.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = lib3DAR_v0_9_5.a; sourceTree = "<group>"; };
 		A6DEEB1512FE7C990009DE15 /* WaveGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveGrid.h; sourceTree = "<group>"; };
 		A6DEEB1612FE7C990009DE15 /* WaveGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveGrid.m; sourceTree = "<group>"; };
 		A6DEEB1A12FE7D770009DE15 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
@@ -434,7 +434,7 @@
 				4DE6785D125CBBBE0080EEB0 /* OpenGLES.framework in Frameworks */,
 				4DE6785F125CBBBE0080EEB0 /* QuartzCore.framework in Frameworks */,
 				4DE67948125CBFE70080EEB0 /* SystemConfiguration.framework in Frameworks */,
-				A642F0571389B2FE007E57C6 /* lib3DAR.a in Frameworks */,
+				A6AAD19A138E2F3A00D66AA5 /* lib3DAR_v0_9_5.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -880,7 +880,7 @@
 		4DF1E3F1126194C600DD1E46 /* 3DAR */ = {
 			isa = PBXGroup;
 			children = (
-				A642F0561389B2FE007E57C6 /* lib3DAR.a */,
+				A6AAD199138E2F3A00D66AA5 /* lib3DAR_v0_9_5.a */,
 				4DF1E3F2126194C600DD1E46 /* 3dar.plist */,
 				4DF1E3F3126194C600DD1E46 /* 3dar_logo.png */,
 				4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */,

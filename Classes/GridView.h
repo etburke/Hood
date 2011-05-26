@@ -14,7 +14,7 @@
 // Works well for grid size 25km
 
 
-@interface GridView : SM3DAR_MarkerView
+@interface GridView : SM3DARMarkerView
 {
     CGFloat redColor;
     CGFloat greenColor;

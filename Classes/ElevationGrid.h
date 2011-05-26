@@ -26,7 +26,7 @@
     CGFloat lowestElevation;
     CGFloat highestElevation;
     
-    SM3DAR_Controller *sm3dar;
+    SM3DARController *sm3dar;
 }
 
 @property (nonatomic, retain) CLLocation *gridCenter;
@@ -35,7 +35,7 @@
 @property (nonatomic, retain) CLLocation *gridPointNW;
 @property (nonatomic, retain) CLLocation *gridPointNE;
 @property (nonatomic, retain) CLLocation *gridPointSE;
-@property (nonatomic, retain) SM3DAR_Controller *sm3dar;
+@property (nonatomic, retain) SM3DARController *sm3dar;
 @property (nonatomic, assign) CGFloat lowestElevation;
 @property (nonatomic, assign) CGFloat highestElevation;
 

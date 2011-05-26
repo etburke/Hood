@@ -45,7 +45,7 @@
     
     Coord3D c;
     
-    c = [SM3DAR_Controller worldCoordinateFor:[self toLocation]];
+    c = [SM3DARController worldCoordinateFor:[self toLocation]];
     
     
     if (first)

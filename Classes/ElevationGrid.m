@@ -369,7 +369,7 @@
 
             // Project the point.
             
-            worldCoordinateDataHigh[j][i] = [SM3DAR_Controller worldCoordinateFor:tmpLocation];            
+            worldCoordinateDataHigh[j][i] = [SM3DARController worldCoordinateFor:tmpLocation];            
         }
         
 
@@ -647,7 +647,7 @@
 
                         // Convert location to world coordinate.
                         
-                        Coord3D c = [SM3DAR_Controller worldCoordinateFor:tmpLocation];
+                        Coord3D c = [SM3DARController worldCoordinateFor:tmpLocation];
                         c.z -= sm3dar.userLocation.altitude;
                         worldCoordinateDataHigh[i][j] = c;
                         [tmpLocation release];
