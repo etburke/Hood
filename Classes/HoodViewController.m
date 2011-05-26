@@ -547,7 +547,7 @@
 {
     originLocation = [[CLLocation alloc] initWithLatitude:40.036097 longitude:-105.306102];
     
-    NSLog(@"\n\nMoving to Mt. Sanitas\n\n");
+    NSLog(@"\n\nMoving to Chautauqua\n\n");
     
     [mapView.sm3dar changeCurrentLocation:originLocation];
    
@@ -556,7 +556,7 @@
 
     CLLocationDistance actualOriginElevation = [elevationGrid elevationAtLocation:originLocation];
     
-    NSLog(@"Origin elevation for Mt. Sanitas is %.1f", actualOriginElevation);
+    NSLog(@"Origin elevation for Chautauqua is %.1f", actualOriginElevation);
     
     CLLocation *gridLocation = [[CLLocation alloc] initWithCoordinate:originLocation.coordinate 
                                                    altitude:-(elevationGrid.lowestElevation * GRID_SCALE_VERTICAL)

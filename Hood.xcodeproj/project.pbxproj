@@ -157,7 +157,7 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* BezierGardenAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BezierGardenAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* BezierGardenAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BezierGardenAppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* Sanitas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sanitas.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* Chautauqua.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chautauqua.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2899E5210DE3E06400AC0155 /* BezierGardenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BezierGardenViewController.xib; sourceTree = "<group>"; };
@@ -476,7 +476,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* Sanitas.app */,
+				1D6058910D05DD3D006BFB54 /* Chautauqua.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -929,7 +929,7 @@
 			);
 			name = Hood;
 			productName = BezierGarden;
-			productReference = 1D6058910D05DD3D006BFB54 /* Sanitas.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* Chautauqua.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1131,7 +1131,7 @@
 					"-lxml2",
 					"-lstdc++",
 				);
-				PRODUCT_NAME = Sanitas;
+				PRODUCT_NAME = Chautauqua;
 			};
 			name = Debug;
 		};
@@ -1154,7 +1154,7 @@
 					"-lxml2",
 					"-lstdc++",
 				);
-				PRODUCT_NAME = Sanitas;
+				PRODUCT_NAME = Chautauqua;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1197,7 +1197,7 @@
 					"-lxml2",
 					"-lstdc++",
 				);
-				PRODUCT_NAME = Sanitas;
+				PRODUCT_NAME = Chautauqua;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = AdHoc;
