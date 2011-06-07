@@ -65,6 +65,7 @@
     
     // fill horizontal strip of triangles.
 	
+    glDisable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	
 	bool fill = true;

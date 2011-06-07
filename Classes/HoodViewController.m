@@ -427,8 +427,13 @@
     coord.latitude = latitude;
     coord.longitude = longitude;
 
+    CLLocationDistance altitude = ([elevationGrid elevationAtCoordinate:coord] - 
+                                   [elevationGrid lowestElevation]) * GRID_SCALE_VERTICAL;
+    
+    altitude += 1.0;
+
     CLLocation *location = [[[CLLocation alloc] initWithCoordinate:coord 
-                                                         altitude:[self.elevationGrid elevationAtCoordinate:coord]
+                                                         altitude:altitude
                                                horizontalAccuracy:-1 
                                                  verticalAccuracy:-1 
                                                          timestamp:nil] autorelease];
@@ -469,12 +474,10 @@
         else
         {
             [self addGridScene];
-
-http://maps.google.com/maps/place?cid=13048026345962796583&q=moscone+center&gl=us&dtab=0&sll=37.784181,-122.401299&sspn=0.009344,0.01929&ie=UTF8&ll=
             
             [self addOBJNamed:@"Moscone.obj" atLatitude:37.784173 longitude:-122.401557];
 
-            Coord3D c = { 0, 0, elevationGrid.highestElevation + MIN_CAMERA_ALTITUDE_METERS };
+            Coord3D c = { 0, 0, (elevationGrid.highestElevation + MIN_CAMERA_ALTITUDE_METERS)*GRID_SCALE_VERTICAL };
             cameraOffset = c;
 
             [mapView.sm3dar setCameraPosition:cameraOffset];
