@@ -125,6 +125,9 @@
         
 		glDrawElements(GL_LINE_STRIP, gridSize, GL_UNSIGNED_SHORT, lineIndex);
     }
+
+    glDisable(GL_DEPTH_TEST);
+
 }
 
 /*

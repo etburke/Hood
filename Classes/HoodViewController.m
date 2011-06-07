@@ -411,6 +411,41 @@
 }
 */
 
+- (void) addOBJNamed:(NSString *)objName atLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude
+{
+    SM3DARTexturedGeometryView *modelView = [[[SM3DARTexturedGeometryView alloc] 
+                                              initWithOBJ:objName 
+                                              textureNamed:nil] autorelease];
+    
+    modelView.color = [UIColor blueColor];
+
+    
+    
+    // Add a point with a 3D view to the 3DAR scene.
+
+    CLLocationCoordinate2D coord;
+    coord.latitude = latitude;
+    coord.longitude = longitude;
+
+    CLLocation *location = [[[CLLocation alloc] initWithCoordinate:coord 
+                                                         altitude:[self.elevationGrid elevationAtCoordinate:coord]
+                                               horizontalAccuracy:-1 
+                                                 verticalAccuracy:-1 
+                                                         timestamp:nil] autorelease];
+    
+    SM3DARPoint *poi = [[mapView.sm3dar addPointAtLocation:location 
+                                                     title:objName 
+                                                  subtitle:nil 
+                                                       url:nil 
+                                                properties:nil 
+                                                      view:modelView] autorelease];
+                        
+    
+    // (OPTIONAL) Add a map annotation for this point.
+    
+    [mapView addAnnotation:(SM3DARPointOfInterest*)poi]; 
+}
+
 #pragma mark CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -434,7 +469,10 @@
         else
         {
             [self addGridScene];
-            [self fetchGeoloqiHistory];
+
+http://maps.google.com/maps/place?cid=13048026345962796583&q=moscone+center&gl=us&dtab=0&sll=37.784181,-122.401299&sspn=0.009344,0.01929&ie=UTF8&ll=
+            
+            [self addOBJNamed:@"Moscone.obj" atLatitude:37.784173 longitude:-122.401557];
 
             Coord3D c = { 0, 0, elevationGrid.highestElevation + MIN_CAMERA_ALTITUDE_METERS };
             cameraOffset = c;
@@ -545,9 +583,9 @@
 
 - (void) addElevationGridPoint
 {
-    originLocation = [[CLLocation alloc] initWithLatitude:40.036097 longitude:-105.306102];
+    originLocation = [[CLLocation alloc] initWithLatitude:37.755175 longitude:-122.445001];
     
-    NSLog(@"\n\nMoving to Chautauqua\n\n");
+    NSLog(@"\n\nMoving to SF\n\n");
     
     [mapView.sm3dar changeCurrentLocation:originLocation];
    
@@ -556,7 +594,7 @@
 
     CLLocationDistance actualOriginElevation = [elevationGrid elevationAtLocation:originLocation];
     
-    NSLog(@"Origin elevation for Chautauqua is %.1f", actualOriginElevation);
+    NSLog(@"Origin elevation for SF is %.1f", actualOriginElevation);
     
     CLLocation *gridLocation = [[CLLocation alloc] initWithCoordinate:originLocation.coordinate 
                                                    altitude:-(elevationGrid.lowestElevation * GRID_SCALE_VERTICAL)

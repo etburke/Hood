@@ -1,10 +1,26 @@
 /*
- *  3DAR Version 0.9.5
+ *  3DAR Version 0.9.6
  *
  *  SM3DAR.h
  *
  *  Copyright 2009 Spot Metrix, Inc. All rights reserved.
  *  http://3DAR.us
+ *
+ *
+ *  Changes since v0.9.5
+ *  ~~~~~~~~~~~~~~~~~~~~
+ *   Bug fix:
+ *     - Marker views were not tappable because of a view hierarchy problem.
+ *
+ *   SM3DARMapView: Added new convenience method for creating a POI with a non-default view.
+ *     - (void) addAnnotation:(id)object withPointView:(UIView *)poiView
+ *
+ *   SM3DARController: Added new convenience methods for creating an autoreleased POI with a view.
+ *     - (SM3DARPoint *) addPointAtLocation:(CLLocation *)poiLocation title:(NSString *)poiTitle subtitle:(NSString *)poiSubtitle url:(NSURL *)poiURL properties:(NSDictionary *)poiProperties view:(UIView *)poiView
+ *     - (SM3DARPoint *) addPointAtLatitude:(CLLocationDegrees)poiLatitude longitude:(CLLocationDegrees)poiLongitude altitude:(CLLocationDistance)poiAltitude title:(NSString *)poiTitle view:(UIView *)poiView
+ *   
+ *   SM3DARController: Additions.
+ *     - (void)cycleCameraAltitude;
  *
  */
 
@@ -13,10 +29,9 @@
 #import <CoreLocation/CoreLocation.h>
 
 
-/*************************************************
- 
+/************************************************* 
  //
- // Typical usage: 
+ // Typical SM3DARMapView usage.
  //
  - (void) viewDidLoad 
  {
@@ -24,8 +39,11 @@
  mapView.delegate = self;
  mapView.showsUserLocation = YES;
  
- [self.view addSubview:mapView];    
  
+ // Only add the mapView and call init3DAR 
+ // if the mapView is not already set up in an .xib file.
+ 
+ [self.view addSubview:mapView];   
  [mapView init3DAR];
  } 
  
@@ -33,7 +51,6 @@
  { 
  [mapView addAnnotation:myAnnotation];
  }
- 
  ************************************************/
 
 @protocol SM3DARPointProtocol;
@@ -74,6 +91,7 @@ typedef NSObject<SM3DARPointProtocol> SM3DARPoint;
 
 - (void) init3DAR;
 - (void) add3darContainer:(SM3DARController *)sm3dar;
+- (void) addAnnotation:(id)object withPointView:(UIView *)poiView;
 - (void) zoomMapToFitPointsIncludingUserLocation:(BOOL)includeUser;
 - (void) zoomMapToFit;
 - (void) startCamera;
@@ -194,6 +212,8 @@ typedef struct
 - (void)forceRelease;
 - (void)setFrame:(CGRect)newFrame;
 - (void)addPoint:(SM3DARPoint*)point;
+- (SM3DARPoint*)addPointAtLocation:(CLLocation *)poiLocation title:(NSString *)poiTitle subtitle:(NSString *)poiSubtitle url:(NSURL *)poiURL properties:(NSDictionary *)poiProperties view:(UIView *)poiView;
+- (SM3DARPoint*)addPointAtLatitude:(CLLocationDegrees)poiLatitude longitude:(CLLocationDegrees)poiLongitude altitude:(CLLocationDistance)poiAltitude title:(NSString *)poiTitle view:(UIView*)poiView;
 - (void)addPointOfInterest:(SM3DARPoint*)point;
 - (void)addPointsOfInterest:(NSArray*)points;
 - (void)addPointsOfInterest:(NSArray*)points addToMap:(BOOL)addToMap;
@@ -243,8 +263,9 @@ typedef struct
 - (Coord3D)solarPositionScaled:(CGFloat)meters;
 - (void)initOrigin;
 - (Coord3D)ray:(CGPoint)screenPoint;
-- (void) setCameraAltitudeMeters:(CGFloat)altitude;
-- (void) setCameraPosition:(Coord3D)coordRelativeToOrigin;
+- (void)setCameraAltitudeMeters:(CGFloat)altitude;
+- (void)setCameraPosition:(Coord3D)coordRelativeToOrigin;
+- (void)cycleCameraAltitude;
 
 @end
 
@@ -288,8 +309,9 @@ typedef struct
 @property (nonatomic, assign) NSUInteger identifier;
 @property (nonatomic, assign) CGFloat gearPosition;
 
-- (id)initWithLocation:(CLLocation*)loc properties:(NSDictionary*)props;
-- (id)initWithLocation:(CLLocation*)loc title:(NSString*)title subtitle:(NSString*)subtitle url:(NSURL*)url;
+- (id)initWithLocation:(CLLocation*)theLocation title:(NSString*)theTitle subtitle:(NSString*)theSubtitle url:(NSURL*)theURL properties:(NSDictionary *)theProperties;
+- (id)initWithLocation:(CLLocation*)theLocation title:(NSString*)theTitle subtitle:(NSString*)theSubtitle url:(NSURL*)theURL;
+- (id)initWithLocation:(CLLocation*)theLocation properties:(NSDictionary*)theProperties;
 - (CGFloat)distanceInMetersFrom:(CLLocation*)otherPoint;
 - (CGFloat)distanceInMetersFromCurrentLocation;
 - (NSString*)formattedDistanceInMetersFrom:(CLLocation*)otherPoint;
@@ -464,3 +486,6 @@ typedef struct
 #define SM3DAR_POI_URL @"url"
 #define SM3DAR_POI_VIEW_CLASS_NAME @"view_class_name"
 #define SM3DAR_POI_DEFAULT_VIEW_CLASS_NAME @"SM3DARIconMarkerView"
+#define SM3DAR_DEFAULT_CAMERA_ALTITUDE_LOW 3.5f
+#define SM3DAR_DEFAULT_CAMERA_ALTITUDE_MID 50.0f
+#define SM3DAR_DEFAULT_CAMERA_ALTITUDE_HIGH 350.0f
