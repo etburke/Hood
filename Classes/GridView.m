@@ -20,7 +20,7 @@
 {
     NSLog(@"[GV] buildView");    
     
-//    texture = [Texture newTextureFromImage:@"hurryupthomas.png"];
+    texture = [Texture newTextureFromResource:@"hurryupthomas.png"];
 }
 
 - (void) drawFog
@@ -55,9 +55,10 @@
 	
     glEnableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     
 	glVertexPointer(3, GL_FLOAT, 0, verts);
+    glTexCoordPointer(3, GL_FLOAT, 0, verts);
     
     glLineWidth(1.0);
     
@@ -67,7 +68,20 @@
 	
     glDisable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
+    glEnable(GL_TEXTURE_2D);
+    
+    // Bind to the loaded texture.
 	
+    glBindTexture(GL_TEXTURE_2D, gridTexture.handle);
+    
+    // Scale the coordinates to 0..1 space.
+    
+    glMatrixMode(GL_TEXTURE_MATRIX);
+    
+    float scale = 1.0 / 30000.0;
+    glScalef(s, s, 1);
+    
+    
 	bool fill = true;
 	
 	if (fill)

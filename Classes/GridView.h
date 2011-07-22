@@ -19,7 +19,7 @@
     CGFloat redColor;
     CGFloat greenColor;
     CGFloat blueColor;
-//    Texture *gridTexture;
+    Texture *gridTexture;
 }
 
 @end
