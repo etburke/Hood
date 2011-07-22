@@ -145,6 +145,15 @@
 		A648DDDF1362CE5C00BC529E /* 84_white_topnotch.png in Resources */ = {isa = PBXBuildFile; fileRef = A648DDDE1362CE5C00BC529E /* 84_white_topnotch.png */; };
 		A6901AEE139DFF21006394EC /* lib3DAR_v0_9_6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6901AED139DFF21006394EC /* lib3DAR_v0_9_6.a */; };
 		A6901B1B139E0469006394EC /* Moscone.obj in Resources */ = {isa = PBXBuildFile; fileRef = A6901B1A139E0469006394EC /* Moscone.obj */; };
+		A6CC079613D693070025CE66 /* ufo.obj in Resources */ = {isa = PBXBuildFile; fileRef = A6CC078F13D693070025CE66 /* ufo.obj */; };
+		A6CC079713D693070025CE66 /* triangle.obj in Resources */ = {isa = PBXBuildFile; fileRef = A6CC079013D693070025CE66 /* triangle.obj */; };
+		A6CC079813D693070025CE66 /* tetrahedron.obj in Resources */ = {isa = PBXBuildFile; fileRef = A6CC079113D693070025CE66 /* tetrahedron.obj */; };
+		A6CC079913D693070025CE66 /* star.obj in Resources */ = {isa = PBXBuildFile; fileRef = A6CC079213D693070025CE66 /* star.obj */; };
+		A6CC079A13D693070025CE66 /* sphere.obj in Resources */ = {isa = PBXBuildFile; fileRef = A6CC079313D693070025CE66 /* sphere.obj */; };
+		A6CC079B13D693070025CE66 /* skyscraper.obj in Resources */ = {isa = PBXBuildFile; fileRef = A6CC079413D693070025CE66 /* skyscraper.obj */; };
+		A6CC079C13D693070025CE66 /* pyramid.obj in Resources */ = {isa = PBXBuildFile; fileRef = A6CC079513D693070025CE66 /* pyramid.obj */; };
+		A6CC07A613D694170025CE66 /* Square.obj in Resources */ = {isa = PBXBuildFile; fileRef = A6CC07A513D694170025CE66 /* Square.obj */; };
+		A6CC07AA13D694B70025CE66 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = A6CC07A913D694B70025CE66 /* cube.obj */; };
 		A6DEEB1712FE7C990009DE15 /* WaveGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DEEB1612FE7C990009DE15 /* WaveGrid.m */; };
 		A6FB95C1134B645C00F46CC5 /* ElevationGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FB95BF134B645C00F46CC5 /* ElevationGrid.m */; };
 		A6FB962B134B71C800F46CC5 /* SphericalEarthProjectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FB962A134B71C800F46CC5 /* SphericalEarthProjectionModel.m */; };
@@ -158,7 +167,7 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* BezierGardenAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BezierGardenAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* BezierGardenAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BezierGardenAppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* Moscone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moscone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* Portland.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Portland.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2899E5210DE3E06400AC0155 /* BezierGardenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BezierGardenViewController.xib; sourceTree = "<group>"; };
@@ -406,6 +415,15 @@
 		A648DDDE1362CE5C00BC529E /* 84_white_topnotch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 84_white_topnotch.png; sourceTree = "<group>"; };
 		A6901AED139DFF21006394EC /* lib3DAR_v0_9_6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = lib3DAR_v0_9_6.a; sourceTree = "<group>"; };
 		A6901B1A139E0469006394EC /* Moscone.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Moscone.obj; sourceTree = "<group>"; };
+		A6CC078F13D693070025CE66 /* ufo.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ufo.obj; sourceTree = "<group>"; };
+		A6CC079013D693070025CE66 /* triangle.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle.obj; sourceTree = "<group>"; };
+		A6CC079113D693070025CE66 /* tetrahedron.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tetrahedron.obj; sourceTree = "<group>"; };
+		A6CC079213D693070025CE66 /* star.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star.obj; sourceTree = "<group>"; };
+		A6CC079313D693070025CE66 /* sphere.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sphere.obj; sourceTree = "<group>"; };
+		A6CC079413D693070025CE66 /* skyscraper.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skyscraper.obj; sourceTree = "<group>"; };
+		A6CC079513D693070025CE66 /* pyramid.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pyramid.obj; sourceTree = "<group>"; };
+		A6CC07A513D694170025CE66 /* Square.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Square.obj; sourceTree = "<group>"; };
+		A6CC07A913D694B70025CE66 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		A6DEEB1512FE7C990009DE15 /* WaveGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveGrid.h; sourceTree = "<group>"; };
 		A6DEEB1612FE7C990009DE15 /* WaveGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveGrid.m; sourceTree = "<group>"; };
 		A6DEEB1A12FE7D770009DE15 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
@@ -478,7 +496,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* Moscone.app */,
+				1D6058910D05DD3D006BFB54 /* Portland.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -508,6 +526,15 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A6CC07A513D694170025CE66 /* Square.obj */,
+				A6CC078F13D693070025CE66 /* ufo.obj */,
+				A6CC07A913D694B70025CE66 /* cube.obj */,
+				A6CC079013D693070025CE66 /* triangle.obj */,
+				A6CC079113D693070025CE66 /* tetrahedron.obj */,
+				A6CC079213D693070025CE66 /* star.obj */,
+				A6CC079313D693070025CE66 /* sphere.obj */,
+				A6CC079413D693070025CE66 /* skyscraper.obj */,
+				A6CC079513D693070025CE66 /* pyramid.obj */,
 				2DFCAB6613189E1F00434EA0 /* arc.obj */,
 				A6FD740D12F5630B005C70C2 /* 84_white.png */,
 				A648DDDE1362CE5C00BC529E /* 84_white_topnotch.png */,
@@ -932,7 +959,7 @@
 			);
 			name = Hood;
 			productName = BezierGarden;
-			productReference = 1D6058910D05DD3D006BFB54 /* Moscone.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* Portland.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -997,6 +1024,15 @@
 				A642F158138A0127007E57C6 /* 3dar_pano_bg.png in Resources */,
 				A642F40E138A7578007E57C6 /* 3dar_marker_icon1_focused.png in Resources */,
 				A6901B1B139E0469006394EC /* Moscone.obj in Resources */,
+				A6CC079613D693070025CE66 /* ufo.obj in Resources */,
+				A6CC079713D693070025CE66 /* triangle.obj in Resources */,
+				A6CC079813D693070025CE66 /* tetrahedron.obj in Resources */,
+				A6CC079913D693070025CE66 /* star.obj in Resources */,
+				A6CC079A13D693070025CE66 /* sphere.obj in Resources */,
+				A6CC079B13D693070025CE66 /* skyscraper.obj in Resources */,
+				A6CC079C13D693070025CE66 /* pyramid.obj in Resources */,
+				A6CC07A613D694170025CE66 /* Square.obj in Resources */,
+				A6CC07AA13D694B70025CE66 /* cube.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1135,7 +1171,7 @@
 					"-lxml2",
 					"-lstdc++",
 				);
-				PRODUCT_NAME = Moscone;
+				PRODUCT_NAME = Portland;
 			};
 			name = Debug;
 		};
@@ -1158,7 +1194,7 @@
 					"-lxml2",
 					"-lstdc++",
 				);
-				PRODUCT_NAME = Moscone;
+				PRODUCT_NAME = Portland;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1201,7 +1237,7 @@
 					"-lxml2",
 					"-lstdc++",
 				);
-				PRODUCT_NAME = Moscone;
+				PRODUCT_NAME = Portland;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = AdHoc;

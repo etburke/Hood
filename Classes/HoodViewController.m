@@ -14,7 +14,7 @@
 #import "WorldCoordinate.h"
 #import "PolylinePoint.h"
 
-#define MIN_CAMERA_ALTITUDE_METERS 20.0    // Lower than 275 meters may look bad.
+#define MIN_CAMERA_ALTITUDE_METERS 2.0    // Lower than 275 meters may look bad.
 #define MAX_CAMERA_ALTITUDE_METERS 10000.0
 #define MAX_SPEED 350.0f
 
@@ -204,14 +204,13 @@
 }
 
 //- (void) loadPointsOfInterest
-- (void) sm3darLoadPoints:(SM3DARController *)sm3dar
+- (void) sm3darLoadPoints:(SM3DARController *)_sm3dar
 {
-//    [mapView addBackground];  
+    [self addGridScene];
 
-    // Load after location update.
-//   [self addGridScene];
-//    [self loadSingleHoodPoint];
-    
+    mapView.delegate = self;
+
+    sm3dar.delegate = self;
 }
 
 #pragma mark -
@@ -417,6 +416,7 @@
                                               initWithOBJ:objName 
                                               textureNamed:nil] autorelease];
     
+    modelView.sizeScalar = 100.0;
     modelView.color = [UIColor blueColor];
 
     
@@ -427,8 +427,7 @@
     coord.latitude = latitude;
     coord.longitude = longitude;
 
-    CLLocationDistance altitude = ([elevationGrid elevationAtCoordinate:coord] - 
-                                   [elevationGrid lowestElevation]) * GRID_SCALE_VERTICAL;
+    CLLocationDistance altitude = ([elevationGrid elevationAtCoordinate:coord]) * GRID_SCALE_VERTICAL;
     
     altitude += 1.0;
 
@@ -445,6 +444,45 @@
                                                 properties:nil 
                                                       view:modelView] autorelease];
                         
+    
+    // (OPTIONAL) Add a map annotation for this point.
+    
+    [mapView addAnnotation:(SM3DARPointOfInterest*)poi]; 
+}
+
+- (void) addMarkerIconNamed:(NSString *)markerIconName atLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude title:(NSString *)poiTitle
+{
+    // Add a point with a 3D view to the 3DAR scene.
+    
+    CLLocationCoordinate2D coord;
+    coord.latitude = latitude;
+    coord.longitude = longitude;
+    
+    //CLLocationDistance altitude = [elevationGrid elevationAtCoordinate:coord] * GRID_SCALE_VERTICAL;
+    
+    CLLocationDistance altitude = ([elevationGrid elevationAtCoordinate:coord] - 
+                                   [elevationGrid lowestElevation]) * GRID_SCALE_VERTICAL;
+    
+    altitude += 1.0;
+    
+    CLLocation *location = [[[CLLocation alloc] initWithCoordinate:coord 
+                                                          altitude:altitude
+                                                horizontalAccuracy:-1 
+                                                  verticalAccuracy:-1 
+                                                         timestamp:nil] autorelease];
+    
+    SM3DARIconMarkerView *marker = [[[SM3DARIconMarkerView alloc] initWithFrame:CGRectZero] autorelease];
+    marker.icon.image = [UIImage imageNamed:markerIconName];
+    
+    SM3DARPoint *poi = [[mapView.sm3dar addPointAtLocation:location 
+                                                     title:poiTitle 
+                                                  subtitle:nil 
+                                                       url:nil 
+                                                properties:nil 
+                                                      view:marker] autorelease];
+    
+    
+    
     
     // (OPTIONAL) Add a map annotation for this point.
     
@@ -586,9 +624,9 @@
 
 - (void) addElevationGridPoint
 {
-    originLocation = [[CLLocation alloc] initWithLatitude:37.755175 longitude:-122.445001];
+    originLocation = [[CLLocation alloc] initWithLatitude:45.523563 longitude:-122.675099];
     
-    NSLog(@"\n\nMoving to SF\n\n");
+    NSLog(@"\n\nMoving to downtown Portland\n\n");
     
     [mapView.sm3dar changeCurrentLocation:originLocation];
    
@@ -597,10 +635,11 @@
 
     CLLocationDistance actualOriginElevation = [elevationGrid elevationAtLocation:originLocation];
     
-    NSLog(@"Origin elevation for SF is %.1f", actualOriginElevation);
+    NSLog(@"Origin elevation is %.1f", actualOriginElevation);
     
     CLLocation *gridLocation = [[CLLocation alloc] initWithCoordinate:originLocation.coordinate 
-                                                   altitude:-(elevationGrid.lowestElevation * GRID_SCALE_VERTICAL)
+//                                                   altitude:-(elevationGrid.lowestElevation * GRID_SCALE_VERTICAL)
+                                                   altitude:(actualOriginElevation * GRID_SCALE_VERTICAL)
                                          horizontalAccuracy:-1 
                                            verticalAccuracy:-1 
                                                   timestamp:nil];
@@ -722,14 +761,36 @@
 {
     [self addElevationGridPoint];
     
+//    Coord3D c = { 0, 0, (elevationGrid.highestElevation + MIN_CAMERA_ALTITUDE_METERS)*GRID_SCALE_VERTICAL };
+
+    CLLocationDistance actualOriginElevation = [elevationGrid elevationAtLocation:originLocation];
+    
+    Coord3D c = { 
+        0, 
+        0, 
+        (actualOriginElevation + MIN_CAMERA_ALTITUDE_METERS)*GRID_SCALE_VERTICAL 
+    };
+    
+    cameraOffset = c;
+    
+    [mapView.sm3dar setCameraPosition:cameraOffset];
+    
+    
 //    [self addPointAtLatitude:originLocation.coordinate.latitude longitude:originLocation.coordinate.longitude title:@"Mt. Sanitas"];
 //    [self addPointAtLatitude:40.014986 longitude:-105.270546 title:@"Boulder, Colorado"];
 
-//    [self addPointAtLatitude:45.627559 longitude:-122.656914 title:@"Columbia Land Trust"];
-//    [self addPointAtLatitude:45.512332 longitude:-122.592874 title:@"Mt. Tabor"];
-//    [self addPointAtLatitude:45.525165 longitude:-122.716212 title:@"Pittock Mansion"];
-//    [self addPointAtLatitude:45.522759 longitude:-122.676001 title:@"Big Pink"];
-    
+    [self addPointAtLatitude:45.627559 longitude:-122.656914 title:@"Columbia Land Trust"];
+    [self addOBJNamed:@"cube.obj" atLatitude:45.627559 longitude:-122.656914];
+
+    [self addPointAtLatitude:45.512332 longitude:-122.592874 title:@"Mt. Tabor"];
+    [self addOBJNamed:@"cube.obj" atLatitude:45.512332 longitude:-122.592874];
+
+    [self addPointAtLatitude:45.525165 longitude:-122.716212 title:@"Pittock Mansion"];
+    [self addOBJNamed:@"cube.obj" atLatitude:45.525165 longitude:-122.716212];
+
+    [self addPointAtLatitude:45.522759 longitude:-122.676001 title:@"Big Pink"];
+    [self addOBJNamed:@"cube.obj" atLatitude:45.522759 longitude:-122.676001];
+
 //    [mapView.sm3dar zoomMapToFit];    
 }
 
@@ -743,5 +804,16 @@
     [mapView.sm3dar setCameraPosition:cameraOffset];
     
 }
+
+- (void) sm3dar:(SM3DARController *)sm3dar didChangeFocusToPOI:(SM3DARPoint *)newPOI fromPOI:(SM3DARPoint *)oldPOI
+{
+    NSLog(@"focused: %@", newPOI.title);
+}
+
+- (void) sm3dar:(SM3DARController *)sm3dar didChangeSelectionToPOI:(SM3DARPoint*)newPOI fromPOI:(SM3DARPoint*)oldPOI
+{
+    NSLog(@"selected: %@", newPOI.title);
+}
+
 
 @end

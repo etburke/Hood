@@ -43,6 +43,7 @@
 - (void) addWaveGridPoint;
 - (void) addGridScene;
 - (IBAction) moveToUserLocation;
+- (void) addMarkerIconNamed:(NSString *)markerIconName atLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude title:(NSString *)poiTitle;
 
 @end
 
