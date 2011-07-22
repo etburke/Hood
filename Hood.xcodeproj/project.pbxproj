@@ -136,10 +136,10 @@
 		A63B5D661356A889004EC3D6 /* PushpinView.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B5D651356A889004EC3D6 /* PushpinView.m */; };
 		A63B5DCE1356B0A1004EC3D6 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = A63B5DCD1356B0A1004EC3D6 /* red.png */; };
 		A6422D9013D90DA8008B53A4 /* PortlandMap.png in Resources */ = {isa = PBXBuildFile; fileRef = A6422D8F13D90DA8008B53A4 /* PortlandMap.png */; };
-		A6422DBB13D9124F008B53A4 /* lib3DAR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6422DBA13D9124F008B53A4 /* lib3DAR.a */; };
 		A6422E2913D91AEA008B53A4 /* elevation_google_lat45.5_lon-122.7_samples155_size30000.txt in Resources */ = {isa = PBXBuildFile; fileRef = A6422E2813D91AEA008B53A4 /* elevation_google_lat45.5_lon-122.7_samples155_size30000.txt */; };
 		A6422E3613D91C82008B53A4 /* PortlandBingMap2048.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A6422E3413D91C82008B53A4 /* PortlandBingMap2048.jpg */; };
 		A6422E3713D91C82008B53A4 /* PortlandAerial2048.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A6422E3513D91C82008B53A4 /* PortlandAerial2048.jpg */; };
+		A6422EA413D9299C008B53A4 /* lib3DAR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6422EA313D9299C008B53A4 /* lib3DAR.a */; };
 		A642F02E1389B00D007E57C6 /* crosshairs_49x30.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F02D1389B00D007E57C6 /* crosshairs_49x30.png */; };
 		A642F14C138A00B4007E57C6 /* blue_dot.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F14B138A00B4007E57C6 /* blue_dot.png */; };
 		A642F158138A0127007E57C6 /* 3dar_pano_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F157138A0127007E57C6 /* 3dar_pano_bg.png */; };
@@ -407,10 +407,10 @@
 		A63B5D651356A889004EC3D6 /* PushpinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushpinView.m; sourceTree = "<group>"; };
 		A63B5DCD1356B0A1004EC3D6 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
 		A6422D8F13D90DA8008B53A4 /* PortlandMap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PortlandMap.png; sourceTree = "<group>"; };
-		A6422DBA13D9124F008B53A4 /* lib3DAR.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib3DAR.a; path = "../../Library/iOS/build/Debug-iphoneos/lib3DAR.a"; sourceTree = SOURCE_ROOT; };
 		A6422E2813D91AEA008B53A4 /* elevation_google_lat45.5_lon-122.7_samples155_size30000.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "elevation_google_lat45.5_lon-122.7_samples155_size30000.txt"; sourceTree = "<group>"; };
 		A6422E3413D91C82008B53A4 /* PortlandBingMap2048.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = PortlandBingMap2048.jpg; sourceTree = "<group>"; };
 		A6422E3513D91C82008B53A4 /* PortlandAerial2048.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = PortlandAerial2048.jpg; sourceTree = "<group>"; };
+		A6422EA313D9299C008B53A4 /* lib3DAR.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = lib3DAR.a; sourceTree = "<group>"; };
 		A642F02D1389B00D007E57C6 /* crosshairs_49x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crosshairs_49x30.png; sourceTree = "<group>"; };
 		A642F14B138A00B4007E57C6 /* blue_dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_dot.png; sourceTree = "<group>"; };
 		A642F157138A0127007E57C6 /* 3dar_pano_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_pano_bg.png; sourceTree = "<group>"; };
@@ -462,7 +462,7 @@
 				4DE6785D125CBBBE0080EEB0 /* OpenGLES.framework in Frameworks */,
 				4DE6785F125CBBBE0080EEB0 /* QuartzCore.framework in Frameworks */,
 				4DE67948125CBFE70080EEB0 /* SystemConfiguration.framework in Frameworks */,
-				A6422DBB13D9124F008B53A4 /* lib3DAR.a in Frameworks */,
+				A6422EA413D9299C008B53A4 /* lib3DAR.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -922,7 +922,7 @@
 		4DF1E3F1126194C600DD1E46 /* 3DAR */ = {
 			isa = PBXGroup;
 			children = (
-				A6422DBA13D9124F008B53A4 /* lib3DAR.a */,
+				A6422EA313D9299C008B53A4 /* lib3DAR.a */,
 				4DF1E3F2126194C600DD1E46 /* 3dar.plist */,
 				4DF1E3F3126194C600DD1E46 /* 3dar_logo.png */,
 				4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */,
@@ -1180,7 +1180,6 @@
 				INFOPLIST_FILE = "Hood-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../Library/iOS/build/Debug-iphoneos\"",
 					"\"$(SRCROOT)/Lib/3DAR\"",
 				);
 				OTHER_LDFLAGS = (

@@ -206,11 +206,12 @@
 //- (void) loadPointsOfInterest
 - (void) sm3darLoadPoints:(SM3DARController *)_sm3dar
 {
+    
+    NSLog(@"\n\nLoading scene...\n\n");
+    
+//    [mapView addBackground];
     [self addGridScene];
 
-    mapView.delegate = self;
-
-    sm3dar.delegate = self;
 }
 
 #pragma mark -
@@ -346,10 +347,13 @@
 {
     [super viewDidLoad];   
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"3darDisableLocationServices"])
-    {
-        [self sm3darLoadPoints:mapView.sm3dar];
-    }
+    mapView.sm3dar.delegate = mapView.delegate = self;
+    
+    
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"3darDisableLocationServices"])
+//    {
+//        [self sm3darLoadPoints:mapView.sm3dar];
+//    }
     
 //    joystick = [[Joystick alloc] initWithBackground:[UIImage imageNamed:@"128_white.png"]];
 //    joystick.center = CGPointMake(160, 406);
@@ -807,7 +811,7 @@
 
 - (void) sm3dar:(SM3DARController *)sm3dar didChangeFocusToPOI:(SM3DARPoint *)newPOI fromPOI:(SM3DARPoint *)oldPOI
 {
-    NSLog(@"focused: %@", newPOI.title);
+//    NSLog(@"focused: %@", newPOI.title);
 }
 
 - (void) sm3dar:(SM3DARController *)sm3dar didChangeSelectionToPOI:(SM3DARPoint*)newPOI fromPOI:(SM3DARPoint*)oldPOI
