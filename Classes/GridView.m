@@ -12,7 +12,7 @@
 
 - (void) dealloc
 {
-//    [texture release];
+    [gridTexture release];
     [super dealloc];
 }
 
@@ -20,7 +20,9 @@
 {
     NSLog(@"[GV] buildView");    
     
-    gridTexture = [Texture newTextureFromResource:@"PortlandMap.png"];
+//    gridTexture = [Texture newTextureFromResource:@"PortlandMap.png"];
+    gridTexture = [Texture newTextureFromResource:@"PortlandBingMap2048.jpg"];
+//    gridTexture = [Texture newTextureFromResource:@"PortlandAerial2048.jpg"];
 }
 
 - (void) drawFog

@@ -137,6 +137,9 @@
 		A63B5DCE1356B0A1004EC3D6 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = A63B5DCD1356B0A1004EC3D6 /* red.png */; };
 		A6422D9013D90DA8008B53A4 /* PortlandMap.png in Resources */ = {isa = PBXBuildFile; fileRef = A6422D8F13D90DA8008B53A4 /* PortlandMap.png */; };
 		A6422DBB13D9124F008B53A4 /* lib3DAR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6422DBA13D9124F008B53A4 /* lib3DAR.a */; };
+		A6422E2913D91AEA008B53A4 /* elevation_google_lat45.5_lon-122.7_samples155_size30000.txt in Resources */ = {isa = PBXBuildFile; fileRef = A6422E2813D91AEA008B53A4 /* elevation_google_lat45.5_lon-122.7_samples155_size30000.txt */; };
+		A6422E3613D91C82008B53A4 /* PortlandBingMap2048.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A6422E3413D91C82008B53A4 /* PortlandBingMap2048.jpg */; };
+		A6422E3713D91C82008B53A4 /* PortlandAerial2048.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A6422E3513D91C82008B53A4 /* PortlandAerial2048.jpg */; };
 		A642F02E1389B00D007E57C6 /* crosshairs_49x30.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F02D1389B00D007E57C6 /* crosshairs_49x30.png */; };
 		A642F14C138A00B4007E57C6 /* blue_dot.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F14B138A00B4007E57C6 /* blue_dot.png */; };
 		A642F158138A0127007E57C6 /* 3dar_pano_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F157138A0127007E57C6 /* 3dar_pano_bg.png */; };
@@ -405,6 +408,9 @@
 		A63B5DCD1356B0A1004EC3D6 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
 		A6422D8F13D90DA8008B53A4 /* PortlandMap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PortlandMap.png; sourceTree = "<group>"; };
 		A6422DBA13D9124F008B53A4 /* lib3DAR.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib3DAR.a; path = "../../Library/iOS/build/Debug-iphoneos/lib3DAR.a"; sourceTree = SOURCE_ROOT; };
+		A6422E2813D91AEA008B53A4 /* elevation_google_lat45.5_lon-122.7_samples155_size30000.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "elevation_google_lat45.5_lon-122.7_samples155_size30000.txt"; sourceTree = "<group>"; };
+		A6422E3413D91C82008B53A4 /* PortlandBingMap2048.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = PortlandBingMap2048.jpg; sourceTree = "<group>"; };
+		A6422E3513D91C82008B53A4 /* PortlandAerial2048.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = PortlandAerial2048.jpg; sourceTree = "<group>"; };
 		A642F02D1389B00D007E57C6 /* crosshairs_49x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crosshairs_49x30.png; sourceTree = "<group>"; };
 		A642F14B138A00B4007E57C6 /* blue_dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_dot.png; sourceTree = "<group>"; };
 		A642F157138A0127007E57C6 /* 3dar_pano_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_pano_bg.png; sourceTree = "<group>"; };
@@ -528,6 +534,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A6422E3413D91C82008B53A4 /* PortlandBingMap2048.jpg */,
+				A6422E3513D91C82008B53A4 /* PortlandAerial2048.jpg */,
+				A6422E2813D91AEA008B53A4 /* elevation_google_lat45.5_lon-122.7_samples155_size30000.txt */,
 				A6422D8F13D90DA8008B53A4 /* PortlandMap.png */,
 				A6CC07A513D694170025CE66 /* Square.obj */,
 				A6CC078F13D693070025CE66 /* ufo.obj */,
@@ -1037,6 +1046,9 @@
 				A6CC07A613D694170025CE66 /* Square.obj in Resources */,
 				A6CC07AA13D694B70025CE66 /* cube.obj in Resources */,
 				A6422D9013D90DA8008B53A4 /* PortlandMap.png in Resources */,
+				A6422E2913D91AEA008B53A4 /* elevation_google_lat45.5_lon-122.7_samples155_size30000.txt in Resources */,
+				A6422E3613D91C82008B53A4 /* PortlandBingMap2048.jpg in Resources */,
+				A6422E3713D91C82008B53A4 /* PortlandAerial2048.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
