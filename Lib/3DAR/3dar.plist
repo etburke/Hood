@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>3darDrawGroundplaneGrid</key>
-	<true/>
+	<false/>
 	<key>3darDisableLocationServices</key>
 	<true/>
 	<key>3darMapMode</key>

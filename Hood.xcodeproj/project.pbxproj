@@ -135,6 +135,8 @@
 		A63B5D5C1356A878004EC3D6 /* pushpin_1.0.obj in Resources */ = {isa = PBXBuildFile; fileRef = A63B5D511356A878004EC3D6 /* pushpin_1.0.obj */; };
 		A63B5D661356A889004EC3D6 /* PushpinView.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B5D651356A889004EC3D6 /* PushpinView.m */; };
 		A63B5DCE1356B0A1004EC3D6 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = A63B5DCD1356B0A1004EC3D6 /* red.png */; };
+		A6422D9013D90DA8008B53A4 /* PortlandMap.png in Resources */ = {isa = PBXBuildFile; fileRef = A6422D8F13D90DA8008B53A4 /* PortlandMap.png */; };
+		A6422DBB13D9124F008B53A4 /* lib3DAR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6422DBA13D9124F008B53A4 /* lib3DAR.a */; };
 		A642F02E1389B00D007E57C6 /* crosshairs_49x30.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F02D1389B00D007E57C6 /* crosshairs_49x30.png */; };
 		A642F14C138A00B4007E57C6 /* blue_dot.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F14B138A00B4007E57C6 /* blue_dot.png */; };
 		A642F158138A0127007E57C6 /* 3dar_pano_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F157138A0127007E57C6 /* 3dar_pano_bg.png */; };
@@ -143,7 +145,6 @@
 		A642F209138A2F5D007E57C6 /* PolylineView.m in Sources */ = {isa = PBXBuildFile; fileRef = A642F208138A2F5D007E57C6 /* PolylineView.m */; };
 		A642F40E138A7578007E57C6 /* 3dar_marker_icon1_focused.png in Resources */ = {isa = PBXBuildFile; fileRef = A642F40D138A7578007E57C6 /* 3dar_marker_icon1_focused.png */; };
 		A648DDDF1362CE5C00BC529E /* 84_white_topnotch.png in Resources */ = {isa = PBXBuildFile; fileRef = A648DDDE1362CE5C00BC529E /* 84_white_topnotch.png */; };
-		A6901AEE139DFF21006394EC /* lib3DAR_v0_9_6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6901AED139DFF21006394EC /* lib3DAR_v0_9_6.a */; };
 		A6901B1B139E0469006394EC /* Moscone.obj in Resources */ = {isa = PBXBuildFile; fileRef = A6901B1A139E0469006394EC /* Moscone.obj */; };
 		A6CC079613D693070025CE66 /* ufo.obj in Resources */ = {isa = PBXBuildFile; fileRef = A6CC078F13D693070025CE66 /* ufo.obj */; };
 		A6CC079713D693070025CE66 /* triangle.obj in Resources */ = {isa = PBXBuildFile; fileRef = A6CC079013D693070025CE66 /* triangle.obj */; };
@@ -402,6 +403,8 @@
 		A63B5D641356A889004EC3D6 /* PushpinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushpinView.h; sourceTree = "<group>"; };
 		A63B5D651356A889004EC3D6 /* PushpinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushpinView.m; sourceTree = "<group>"; };
 		A63B5DCD1356B0A1004EC3D6 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
+		A6422D8F13D90DA8008B53A4 /* PortlandMap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PortlandMap.png; sourceTree = "<group>"; };
+		A6422DBA13D9124F008B53A4 /* lib3DAR.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib3DAR.a; path = "../../Library/iOS/build/Debug-iphoneos/lib3DAR.a"; sourceTree = SOURCE_ROOT; };
 		A642F02D1389B00D007E57C6 /* crosshairs_49x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crosshairs_49x30.png; sourceTree = "<group>"; };
 		A642F14B138A00B4007E57C6 /* blue_dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_dot.png; sourceTree = "<group>"; };
 		A642F157138A0127007E57C6 /* 3dar_pano_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_pano_bg.png; sourceTree = "<group>"; };
@@ -413,7 +416,6 @@
 		A642F208138A2F5D007E57C6 /* PolylineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolylineView.m; sourceTree = "<group>"; };
 		A642F40D138A7578007E57C6 /* 3dar_marker_icon1_focused.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3dar_marker_icon1_focused.png; sourceTree = "<group>"; };
 		A648DDDE1362CE5C00BC529E /* 84_white_topnotch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 84_white_topnotch.png; sourceTree = "<group>"; };
-		A6901AED139DFF21006394EC /* lib3DAR_v0_9_6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = lib3DAR_v0_9_6.a; sourceTree = "<group>"; };
 		A6901B1A139E0469006394EC /* Moscone.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Moscone.obj; sourceTree = "<group>"; };
 		A6CC078F13D693070025CE66 /* ufo.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ufo.obj; sourceTree = "<group>"; };
 		A6CC079013D693070025CE66 /* triangle.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle.obj; sourceTree = "<group>"; };
@@ -454,7 +456,7 @@
 				4DE6785D125CBBBE0080EEB0 /* OpenGLES.framework in Frameworks */,
 				4DE6785F125CBBBE0080EEB0 /* QuartzCore.framework in Frameworks */,
 				4DE67948125CBFE70080EEB0 /* SystemConfiguration.framework in Frameworks */,
-				A6901AEE139DFF21006394EC /* lib3DAR_v0_9_6.a in Frameworks */,
+				A6422DBB13D9124F008B53A4 /* lib3DAR.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +528,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A6422D8F13D90DA8008B53A4 /* PortlandMap.png */,
 				A6CC07A513D694170025CE66 /* Square.obj */,
 				A6CC078F13D693070025CE66 /* ufo.obj */,
 				A6CC07A913D694B70025CE66 /* cube.obj */,
@@ -910,7 +913,7 @@
 		4DF1E3F1126194C600DD1E46 /* 3DAR */ = {
 			isa = PBXGroup;
 			children = (
-				A6901AED139DFF21006394EC /* lib3DAR_v0_9_6.a */,
+				A6422DBA13D9124F008B53A4 /* lib3DAR.a */,
 				4DF1E3F2126194C600DD1E46 /* 3dar.plist */,
 				4DF1E3F3126194C600DD1E46 /* 3dar_logo.png */,
 				4DF1E3F6126194C600DD1E46 /* SM3DAR_keys.txt */,
@@ -1033,6 +1036,7 @@
 				A6CC079C13D693070025CE66 /* pyramid.obj in Resources */,
 				A6CC07A613D694170025CE66 /* Square.obj in Resources */,
 				A6CC07AA13D694B70025CE66 /* cube.obj in Resources */,
+				A6422D9013D90DA8008B53A4 /* PortlandMap.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

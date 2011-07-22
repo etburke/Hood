@@ -20,7 +20,7 @@
 {
     NSLog(@"[GV] buildView");    
     
-    texture = [Texture newTextureFromResource:@"hurryupthomas.png"];
+    gridTexture = [Texture newTextureFromResource:@"PortlandMap.png"];
 }
 
 - (void) drawFog
@@ -76,16 +76,24 @@
     
     // Scale the coordinates to 0..1 space.
     
-    glMatrixMode(GL_TEXTURE_MATRIX);
-    
-    float scale = 1.0 / 30000.0;
-    glScalef(s, s, 1);
+    glMatrixMode(GL_TEXTURE);
+
     
     
+    float s = 1.0 / 30000.0;
+    glLoadIdentity();
+    glTranslatef(-0.5, -0.5, 0);
+    glScalef(s, -s, 1);
+    glMatrixMode(GL_MODELVIEW);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
 	bool fill = true;
 	
 	if (fill)
-		glColor4f(1,.84,0,1);
+		glColor4f(1,1,1,1);
+		//glColor4f(1,.84,0,1);
         //glColor4f(0,0,1,1);
 	else	
 		glColorMask(0,0,0,0);			// Turn of visible filling.
@@ -109,6 +117,8 @@
 		glDrawElements(GL_TRIANGLE_STRIP, ct, GL_UNSIGNED_SHORT, lineIndex);
     }
 	
+    
+    /*
     // draw horizontal lines.
     
 	glColorMask(1,1,1,1);
@@ -140,7 +150,9 @@
         
 		glDrawElements(GL_LINE_STRIP, gridSize, GL_UNSIGNED_SHORT, lineIndex);
     }
-
+*/
+    
+    
     glDisable(GL_DEPTH_TEST);
 
 }
@@ -194,7 +206,7 @@
 
 - (void) drawInGLContext 
 {
-    [self drawFog];
+//    [self drawFog];
     [self drawGrid];
 //    [self drawTexturedGrid];
 }
